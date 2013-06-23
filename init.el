@@ -1,9 +1,10 @@
 (add-to-list 'load-path "~/.emacs.d/local-lisp/")
 (require 'comment-dwim-line)
+
 ;;;;;;;;;;;
 ;; SLIME ;;
 ;;;;;;;;;;;
-;; (package-initialize)
+(package-initialize)
 (setq slime-lisp-implementations
       '((clisp ("/usr/local/bin/clisp"))
 	(sbcl ("/usr/local/bin/sbcl"))
@@ -98,3 +99,4 @@
  ;; If there is more than one, they won't work right.
  '(highlight-indentation-current-column-face ((((class color) (min-colors 89)) (:background "#eee8d5"))))
  '(highlight-indentation-face ((((class color) (min-colors 89)) (:background "#eee8d5")))))
+
