@@ -5,3 +5,4 @@ games/
 abbrev_defs
 *.elc
 *~
+ac-comphist.dat
