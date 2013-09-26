@@ -30,6 +30,7 @@
 (global-unset-key (kbd "M-;"))
 (define-key global-map (kbd "M-;") 'comment-dwim-line)
 
+
 ;;;;;;;;;;;;;
 ;; paredit ;;
 ;;;;;;;;;;;;;
@@ -72,7 +73,7 @@
  '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
-    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3c708b84612872e720796ea1b069cf3c8b3e909a2e1da04131f40e307605b7f9" default)))
+    ("fa189fcf5074d4964f0a53f58d17c7e360bb8f879bd968ec4a56dc36b0013d29" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3c708b84612872e720796ea1b069cf3c8b3e909a2e1da04131f40e307605b7f9" default)))
  '(exec-path
    (quote
     ("/usr/local/bin" "/Users/joe/.virtualenvs/linggle-flask/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/usr/local/Cellar/emacs/HEAD/libexec/emacs/24.3.50/i386-apple-darwin12.4.0")))
@@ -87,6 +88,8 @@
     (("gnu" . "http://elpa.gnu.org/packages/")
      ("melpa" . "http://melpa.milkbox.net/packages/")
      ("marmalade" . "http://marmalade-repo.org/packages/"))))
+ '(scroll-margin 3)
+ '(scroll-step 1)
  '(show-paren-delay 0.1)
  '(show-paren-mode t)
  '(show-paren-ring-bell-on-mismatch t)
