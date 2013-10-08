@@ -1,6 +1,46 @@
 (add-to-list 'load-path "~/.emacs.d/local-lisp/")
 (require 'comment-dwim-line)
 
+;;;;;;;;;;;;;
+;; ipython ;;
+;;;;;;;;;;;;;
+(setq
+ python-shell-interpreter "ipython"
+ python-shell-interpreter-args ""
+ python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+ python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+ python-shell-completion-setup-code
+   "from IPython.core.completerlib import module_completion"
+ python-shell-completion-module-string-code
+   "';'.join(module_completion('''%s'''))\n"
+ python-shell-completion-string-code
+   "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
+
+;;;;;;;;;;
+;; Jedi ;;
+;;;;;;;;;;
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:setup-keys t)                      ; optional
+(setq jedi:complete-on-dot t)                 ; optional
+
+
+;;;;;;;;;;
+;; Smex ;;
+;;;;;;;;;;
+(global-set-key [(meta x)] (lambda ()
+                             (interactive)
+                             (or (boundp 'smex-cache)
+                                 (smex-initialize))
+                             (global-set-key [(meta x)] 'smex)
+                             (smex)))
+
+(global-set-key [(shift meta x)] (lambda ()
+                                   (interactive)
+                                   (or (boundp 'smex-cache)
+                                       (smex-initialize))
+                                   (global-set-key [(shift meta x)] 'smex-major-mode-commands)
+                                   (smex-major-mode-commands)))
+
 ;;;;;;;;;;;
 ;; SLIME ;;
 ;;;;;;;;;;;
@@ -94,7 +134,8 @@
  '(show-paren-mode t)
  '(show-paren-ring-bell-on-mismatch t)
  '(show-paren-style (quote mixed))
- '(tool-bar-mode nil))
+ '(tool-bar-mode nil)
+ '(xterm-mouse-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
