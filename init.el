@@ -1,4 +1,7 @@
 (add-to-list 'load-path "~/.emacs.d/local-lisp/")
+(package-initialize)
+(require 'dired-x)
+
 (require 'comment-dwim-line)
 
 ;;;;;;;;;;;;;
@@ -41,16 +44,20 @@
                                    (global-set-key [(shift meta x)] 'smex-major-mode-commands)
                                    (smex-major-mode-commands)))
 
+
+
 ;;;;;;;;;;;
 ;; SLIME ;;
 ;;;;;;;;;;;
-(package-initialize)
 (setq slime-lisp-implementations
       '((clisp ("/usr/local/bin/clisp"))
 	(sbcl ("/usr/local/bin/sbcl"))
 	))
 (require 'slime-autoloads)
 (slime-setup '(slime-fancy slime-asdf slime-tramp)) 
+
+
+
 
 ;;;;;;;;;;;;;;;;
 ;; keybinding ;;
@@ -110,6 +117,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(autopair-global-mode t)
  '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
