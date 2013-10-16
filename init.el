@@ -1,4 +1,7 @@
 (add-to-list 'load-path "~/.emacs.d/local-lisp/")
+(package-initialize)
+(require 'dired-x)
+
 (require 'comment-dwim-line)
 
 ;;;;;;;;;;;;;
@@ -41,16 +44,20 @@
                                    (global-set-key [(shift meta x)] 'smex-major-mode-commands)
                                    (smex-major-mode-commands)))
 
+
+
 ;;;;;;;;;;;
 ;; SLIME ;;
 ;;;;;;;;;;;
-(package-initialize)
 (setq slime-lisp-implementations
       '((clisp ("/usr/local/bin/clisp"))
 	(sbcl ("/usr/local/bin/sbcl"))
 	))
 (require 'slime-autoloads)
 (slime-setup '(slime-fancy slime-asdf slime-tramp)) 
+
+
+
 
 ;;;;;;;;;;;;;;;;
 ;; keybinding ;;
