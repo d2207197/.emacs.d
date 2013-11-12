@@ -27,6 +27,18 @@
 (setq jedi:complete-on-dot t)                 ; optional
 
 
+;;;;;;;;;;;;;;;
+;; Yasnippet ;;
+;;;;;;;;;;;;;;;
+(require 'yasnippet)
+(yas-global-mode 1)
+;; (define-key yas-minor-mode-map (kbd "TAB") nil)
+;; (define-key yas-minor-mode-map (kbd "C-M-y") 'yas-expand)
+
+
+
+
+
 ;;;;;;;;;;
 ;; Smex ;;
 ;;;;;;;;;;
@@ -77,7 +89,6 @@
 (global-unset-key (kbd "M-;"))
 (define-key global-map (kbd "M-;") 'comment-dwim-line)
 
-
 ;;;;;;;;;;;;;
 ;; paredit ;;
 ;;;;;;;;;;;;;
@@ -117,11 +128,14 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ac-use-menu-map t)
+ '(ac-use-overriding-local-map t)
  '(autopair-global-mode t)
+ '(comint-prompt-read-only t)
  '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
-    ("fa189fcf5074d4964f0a53f58d17c7e360bb8f879bd968ec4a56dc36b0013d29" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3c708b84612872e720796ea1b069cf3c8b3e909a2e1da04131f40e307605b7f9" default)))
+    ("99cbc2aaa2b77374c2c06091494bd9d2ebfe6dc5f64c7ccdb36c083aff892f7d" "fa189fcf5074d4964f0a53f58d17c7e360bb8f879bd968ec4a56dc36b0013d29" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3c708b84612872e720796ea1b069cf3c8b3e909a2e1da04131f40e307605b7f9" default)))
  '(exec-path
    (quote
     ("/usr/local/bin" "/Users/joe/.virtualenvs/linggle-flask/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/usr/local/Cellar/emacs/HEAD/libexec/emacs/24.3.50/i386-apple-darwin12.4.0")))
@@ -130,6 +144,8 @@
  '(ido-mode (quote both) nil (ido))
  '(inhibit-startup-screen t)
  '(initial-buffer-choice "~/projects")
+ '(jedi:install-imenu t)
+ '(jedi:key-complete [C-/])
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
  '(package-archives
    (quote
@@ -149,6 +165,5 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(highlight-indentation-current-column-face ((((class color) (min-colors 89)) (:background "#eee8d5"))))
- '(highlight-indentation-face ((((class color) (min-colors 89)) (:background "#eee8d5")))))
+ )
 
