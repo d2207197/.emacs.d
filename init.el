@@ -12,6 +12,22 @@
 (require 'slime-autoloads)
 (slime-setup '(slime-fancy slime-asdf slime-tramp)) 
 
+
+;;;;;;;;;;;;;
+;; ipython ;;
+;;;;;;;;;;;;;
+(setq
+ python-shell-interpreter "ipython"
+ python-shell-interpreter-args ""
+ python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+ python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+ python-shell-completion-setup-code
+   "from IPython.core.completerlib import module_completion"
+ python-shell-completion-module-string-code
+   "';'.join(module_completion('''%s'''))\n"
+ python-shell-completion-string-code
+   "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
+
 ;;;;;;;;;;;;;;;;
 ;; keybinding ;;
 ;;;;;;;;;;;;;;;;
@@ -87,6 +103,8 @@
     (("gnu" . "http://elpa.gnu.org/packages/")
      ("melpa" . "http://melpa.milkbox.net/packages/")
      ("marmalade" . "http://marmalade-repo.org/packages/"))))
+ '(scroll-margin 5)
+ '(scroll-step 1)
  '(show-paren-delay 0.1)
  '(show-paren-mode t)
  '(show-paren-ring-bell-on-mismatch t)
@@ -97,6 +115,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(highlight-indentation-current-column-face ((((class color) (min-colors 89)) (:background "#eee8d5"))))
- '(highlight-indentation-face ((((class color) (min-colors 89)) (:background "#eee8d5")))))
+ '(highlight-indentation-current-column-face ((t (:background "gray27"))))
+ '(highlight-indentation-face ((t (:background "gray17")))))
 
