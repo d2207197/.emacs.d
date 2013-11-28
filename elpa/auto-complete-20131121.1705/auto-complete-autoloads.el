@@ -1,10 +1,10 @@
 ;;; auto-complete-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+
 
-;;;### (autoloads nil "auto-complete" "auto-complete.el" (21048 14557
-;;;;;;  0 0))
+;;;### (autoloads (auto-complete) "auto-complete" "auto-complete.el"
+;;;;;;  (21142 60684 581974 85000))
 ;;; Generated autoloads from auto-complete.el
 
 (autoload 'auto-complete "auto-complete" "\
@@ -15,13 +15,15 @@ Start auto-completion at current point.
 ;;;***
 
 ;;;### (autoloads nil nil ("auto-complete-config.el" "auto-complete-pkg.el")
-;;;;;;  (21048 14557 906703 0))
+;;;;;;  (21142 60684 649910 858000))
 
 ;;;***
 
+(provide 'auto-complete-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
+;; coding: utf-8
 ;; End:
 ;;; auto-complete-autoloads.el ends here
