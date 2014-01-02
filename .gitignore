@@ -8,3 +8,5 @@ abbrev_defs
 ac-comphist.dat
 elpa/archives/
 /.org-id-locations
+server/
+var/
