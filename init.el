@@ -183,7 +183,7 @@
  '(autopair-global-mode t)
  '(column-number-mode t)
  '(custom-enabled-themes (quote (afternoon)))
- '(custom-safe-themes (quote ("e49b9cfa39ce92b424a30cbd74386a5fcb854195cf1a8e18536388cbc2179bf6" "2283e0e235d6f00b717ccd7b1f22aa29ce042f0f845936a221012566a810773d" "e16a771a13a202ee6e276d06098bc77f008b73bbac4d526f160faa2d76c1dd0e" "99cbc2aaa2b77374c2c06091494bd9d2ebfe6dc5f64c7ccdb36c083aff892f7d" "fa189fcf5074d4964f0a53f58d17c7e360bb8f879bd968ec4a56dc36b0013d29" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3c708b84612872e720796ea1b069cf3c8b3e909a2e1da04131f40e307605b7f9" default)))
+ '(custom-safe-themes (quote ("f0ea6118d1414b24c2e4babdc8e252707727e7b4ff2e791129f240a2b3093e32" "e49b9cfa39ce92b424a30cbd74386a5fcb854195cf1a8e18536388cbc2179bf6" "2283e0e235d6f00b717ccd7b1f22aa29ce042f0f845936a221012566a810773d" "e16a771a13a202ee6e276d06098bc77f008b73bbac4d526f160faa2d76c1dd0e" "99cbc2aaa2b77374c2c06091494bd9d2ebfe6dc5f64c7ccdb36c083aff892f7d" "fa189fcf5074d4964f0a53f58d17c7e360bb8f879bd968ec4a56dc36b0013d29" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3c708b84612872e720796ea1b069cf3c8b3e909a2e1da04131f40e307605b7f9" default)))
  '(dired-auto-revert-buffer t)
  '(dynamic-fonts-preferred-monospace-fonts (quote ("Monaco" "Consolas" "Menlo" "DejaVu Sans Mono" "Droid Sans Mono Pro" "Droid Sans Mono" "Inconsolata" "Source Code Pro" "Lucida Console" "Envy Code R" "Andale Mono" "Lucida Sans Typewriter" "monoOne" "Lucida Typewriter" "Panic Sans" "Bitstream Vera Sans Mono" "HyperFont" "PT Mono" "Ti92Pluspc" "Excalibur Monospace" "Courier New" "Courier" "Cousine" "Fira Mono" "Lekton" "Ubuntu Mono" "Liberation Mono" "BPmono" "Free Mono" "Anonymous Pro" "ProFont" "ProFontWindows" "Latin Modern Mono" "Code 2002" "ProggyCleanTT" "ProggyTinyTT" "Heiti TC")))
  '(dynamic-fonts-preferred-proportional-fonts (quote ("Lucida Grande" "Segoe UI" "DejaVu Sans" "Bitstream Vera" "Tahoma" "Verdana" "Helvetica" "Arial Unicode MS" "Arial" "Heiti TC")))
@@ -193,7 +193,7 @@
  '(ido-mode (quote both) nil (ido))
  '(inhibit-startup-screen t)
  '(initial-buffer-choice "~/Coding")
- '(insert-shebang-custom-headers (quote (("py" . "#/usr/bin/env python
+ '(insert-shebang-custom-headers (quote (("py" . "#!/usr/bin/env python
 # -*- coding: utf-8 -*-") ("" . ""))))
  '(line-number-mode t)
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
