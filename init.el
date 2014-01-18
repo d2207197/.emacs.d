@@ -135,18 +135,30 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(autopair-global-mode t)
  '(custom-enabled-themes (quote (monokai)))
- '(custom-safe-themes (quote ("99cbc2aaa2b77374c2c06091494bd9d2ebfe6dc5f64c7ccdb36c083aff892f7d" "fa189fcf5074d4964f0a53f58d17c7e360bb8f879bd968ec4a56dc36b0013d29" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3c708b84612872e720796ea1b069cf3c8b3e909a2e1da04131f40e307605b7f9" default)))
- '(exec-path (quote ("/usr/local/bin" "/Users/joe/.virtualenvs/linggle-flask/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/usr/local/Cellar/emacs/HEAD/libexec/emacs/24.3.50/i386-apple-darwin12.4.0")))
+ '(custom-safe-themes
+   (quote
+    ("99cbc2aaa2b77374c2c06091494bd9d2ebfe6dc5f64c7ccdb36c083aff892f7d" "fa189fcf5074d4964f0a53f58d17c7e360bb8f879bd968ec4a56dc36b0013d29" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3c708b84612872e720796ea1b069cf3c8b3e909a2e1da04131f40e307605b7f9" default)))
+ '(exec-path
+   (quote
+    ("/usr/local/bin" "/Users/joe/.virtualenvs/linggle-flask/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/usr/local/Cellar/emacs/HEAD/libexec/emacs/24.3.50/i386-apple-darwin12.4.0")))
  '(global-linum-mode t)
  '(ido-everywhere nil)
  '(ido-mode (quote both) nil (ido))
  '(inhibit-startup-screen t)
  '(initial-buffer-choice "~/projects")
- '(insert-shebang-custom-headers (quote (("py" . "#/usr/bin/env python
-# -*- coding: utf-8 -*-") ("" . ""))))
+ '(insert-shebang-custom-headers
+   (quote
+    (("py" . "#/usr/bin/env python
+# -*- coding: utf-8 -*-")
+     ("" . ""))))
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
- '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "http://melpa.milkbox.net/packages/") ("marmalade" . "http://marmalade-repo.org/packages/"))))
+ '(package-archives
+   (quote
+    (("gnu" . "http://elpa.gnu.org/packages/")
+     ("melpa" . "http://melpa.milkbox.net/packages/")
+     ("marmalade" . "http://marmalade-repo.org/packages/"))))
  '(scroll-margin 3)
  '(scroll-step 1)
  '(show-paren-delay 0.1)
