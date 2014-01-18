@@ -6,3 +6,7 @@ abbrev_defs
 *.elc
 *~
 ac-comphist.dat
+elpa/archives/
+/.org-id-locations
+server/
+var/

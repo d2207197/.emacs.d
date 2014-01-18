@@ -3,7 +3,8 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "elpy" "elpy.el" (21138 62205 152411 431000))
+;;;### (autoloads (elpy-mode elpy-disable elpy-enable) "elpy" "elpy.el"
+;;;;;;  (21142 60677 0 0))
 ;;; Generated autoloads from elpy.el
 
 (autoload 'elpy-enable "elpy" "\
@@ -38,8 +39,8 @@ more structured list.
 
 ;;;***
 
-;;;### (autoloads nil nil ("elpy-pkg.el" "elpy-refactor.el") (21138
-;;;;;;  62205 229160 275000))
+;;;### (autoloads nil nil ("elpy-pkg.el" "elpy-refactor.el") (21142
+;;;;;;  60677 975256 0))
 
 ;;;***
 
