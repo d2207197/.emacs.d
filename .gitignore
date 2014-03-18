@@ -12,3 +12,4 @@ server/
 var/
 
 /bookmarks
+/el-get/.status.el.old
