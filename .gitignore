@@ -10,3 +10,5 @@ elpa/archives/
 /.org-id-locations
 server/
 var/
+
+/bookmarks
