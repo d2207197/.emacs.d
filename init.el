@@ -1,5 +1,5 @@
 (add-to-list 'load-path "~/.emacs.d/local-lisp/")
-;; (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
 ;; (getenv "PATH")
 (setenv "PATH" (concat "/usr/local/bin" ":" (getenv "PATH")))
@@ -10,16 +10,22 @@
 ;; Set to <your Dropbox root directory>/MobileOrg.
 (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
 
+(load "~/.emacs.d/local-lisp/secrets.el")
 
 (package-initialize)
 (require 'dired-x)
 (require 'dired+)
 (require 'comment-dwim-line)
 (require 'code-folding)
-(require 'qiang-font)
+(when window-system
+  (require 'qiang-font))
 (require 'tex-site nil 'noerror)
 (require 'el-get)
 (require 'electric-case)
+
+
+(setq sml/theme 'dark)
+(sml/setup)
 
 ;;;;;;;;;;;;
 ;; el-get ;;
@@ -431,8 +437,6 @@
      (other . "gnu"))))
  '(case-fold-search t)
  '(column-number-mode t)
-
-
  '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
@@ -480,6 +484,7 @@
 # -*- coding: utf-8 -*-")
      ("" . ""))))
  '(line-number-mode t)
+ '(line-spacing nil)
  '(magit-use-overlays nil)
  '(markdown-open-command "open -a Marked %o")
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
@@ -511,6 +516,7 @@
      ("melpa" . "http://melpa.milkbox.net/packages/")
      ("marmalade" . "http://marmalade-repo.org/packages/")
      ("org" . "http://orgmode.org/elpa/"))))
+ '(paradox-automatically-star t)
  '(preview-LaTeX-command
    (quote
     ("%`%l \"\\nonstopmode\\nofiles\\PassOptionsToPackage{"
@@ -527,13 +533,17 @@
  '(show-paren-style (quote mixed))
  '(tool-bar-mode nil)
  '(tramp-default-method "sshx")
- '(xterm-mouse-mode t))
+ '(xterm-mouse-mode t)
+ '(yas-prompt-functions
+   (quote
+    (yas-dropdown-prompt yas-ido-prompt yas-completing-prompt yas-x-prompt yas-no-prompt))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(highlight-symbol-face ((t (:background "dark slate blue" :foreground "gray78")))))
+ '(default ((t (:inherit nil :stipple nil :background "color-234" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 1 :width normal :foundry "default" :family "default"))))
+ '(highlight-symbol-face ((t (:underline "steel blue")))))
 
 
 (put 'narrow-to-region 'disabled nil)
