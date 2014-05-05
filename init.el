@@ -17,7 +17,7 @@
 (require 'comment-dwim-line)
 (require 'code-folding)
 (require 'qiang-font)
-(require 'tex-site)
+(require 'tex-site nil 'noerror)
 (require 'el-get)
 (require 'electric-case)
 
