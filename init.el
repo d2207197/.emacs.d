@@ -91,7 +91,7 @@
 ;;                                   global-semantic-idle-summary-mode
 ;;                                   global-semantic-mru-bookmark-mode))
 ;; (semantic-mode 1)
-(require 'malabar-mode)
+(require 'malabar-mode-autoloads)
 (setq malabar-groovy-lib-dir "~/.emacs/malabar-lib/")
 (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
 
@@ -128,7 +128,7 @@
 ;; Yasnippet ;;
 ;;;;;;;;;;;;;;;
 (require 'yasnippet)
-(yas-global-mode 1)
+;; (yas-global-mode 1)
 ;; (define-key yas-minor-mode-map (kbd "TAB") nil)
 ;; (define-key yas-minor-mode-map (kbd "C-M-y") 'yas-expand)
 
@@ -162,7 +162,7 @@
 	(sbcl ("/usr/local/bin/sbcl"))
 	))
 (require 'slime-autoloads)
-(slime-setup '(slime-fancy slime-asdf slime-tramp)) 
+;; (slime-setup '(slime-fancy slime-asdf slime-tramp)) 
 
 
 
@@ -477,7 +477,7 @@
  '(ido-mode (quote both) nil (ido))
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
- '(initial-buffer-choice "~/Coding")
+ '(initial-buffer-choice "~/")
  '(insert-shebang-custom-headers
    (quote
     (("py" . "#!/usr/bin/env python
@@ -534,6 +534,7 @@
  '(tool-bar-mode nil)
  '(tramp-default-method "sshx")
  '(xterm-mouse-mode t)
+ '(yas-global-mode t nil (yasnippet))
  '(yas-prompt-functions
    (quote
     (yas-dropdown-prompt yas-ido-prompt yas-completing-prompt yas-x-prompt yas-no-prompt))))
@@ -542,7 +543,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "color-234" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 1 :width normal :foundry "default" :family "default"))))
+ '(default ((t (:inherit nil :stipple nil :background "#1c1c1c" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 1 :width normal :foundry "default" :family "default"))))
  '(highlight-symbol-face ((t (:underline "steel blue")))))
 
 
