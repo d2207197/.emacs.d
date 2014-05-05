@@ -10,6 +10,7 @@
 ;; Set to <your Dropbox root directory>/MobileOrg.
 (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
 
+(load "~/.emacs.d/local-lisp/secrets.el")
 
 (package-initialize)
 (require 'dired-x)
@@ -509,6 +510,7 @@
      ("melpa" . "http://melpa.milkbox.net/packages/")
      ("marmalade" . "http://marmalade-repo.org/packages/")
      ("org" . "http://orgmode.org/elpa/"))))
+ '(paradox-automatically-star t)
  '(preview-LaTeX-command
    (quote
     ("%`%l \"\\nonstopmode\\nofiles\\PassOptionsToPackage{"
