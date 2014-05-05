@@ -57,7 +57,7 @@ Compute the checksum of the given package, and put it in the kill-ring
 ;;;***
 
 ;;;### (autoloads nil "el-get/el-get-list-packages" "el-get/el-get-list-packages.el"
-;;;;;;  (21315 27145 0 0))
+;;;;;;  (21351 747 0 0))
 ;;; Generated autoloads from el-get/el-get-list-packages.el
 
 (autoload 'el-get-list-packages "el-get/el-get-list-packages" "\
@@ -271,7 +271,7 @@ Displays a list of all of the current user's gists in a new buffer.
 ;;;***
 
 ;;;### (autoloads nil "highlight-symbol/highlight-symbol" "highlight-symbol/highlight-symbol.el"
-;;;;;;  (21319 24614 0 0))
+;;;;;;  (21351 749 0 0))
 ;;; Generated autoloads from highlight-symbol/highlight-symbol.el
 
 (autoload 'highlight-symbol-mode "highlight-symbol/highlight-symbol" "\
@@ -369,8 +369,8 @@ as the ewoc pretty-printer.
 ;;;;;;  "el-get/el-get-methods.el" "el-get/el-get-notify.el" "el-get/el-get-recipes.el"
 ;;;;;;  "el-get/el-get-status.el" "gh/gh-pkg.el" "gh/gh-profile.el"
 ;;;;;;  "gh/gh.el" "logito/logito.el" "pcache/pcache-tests.el" "pcache/pcache.el"
-;;;;;;  "request/request-deferred.el" "request/request.el") (21319
-;;;;;;  24619 998192 0))
+;;;;;;  "request/request-deferred.el" "request/request.el") (21351
+;;;;;;  762 712054 0))
 
 ;;;***
 
