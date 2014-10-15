@@ -369,8 +369,8 @@ as the ewoc pretty-printer.
 ;;;;;;  "el-get/el-get-methods.el" "el-get/el-get-notify.el" "el-get/el-get-recipes.el"
 ;;;;;;  "el-get/el-get-status.el" "gh/gh-pkg.el" "gh/gh-profile.el"
 ;;;;;;  "gh/gh.el" "logito/logito.el" "pcache/pcache-tests.el" "pcache/pcache.el"
-;;;;;;  "request/request-deferred.el" "request/request.el") (21351
-;;;;;;  762 712054 0))
+;;;;;;  "request/request-deferred.el" "request/request.el") (21400
+;;;;;;  3450 141561 0))
 
 ;;;***
 

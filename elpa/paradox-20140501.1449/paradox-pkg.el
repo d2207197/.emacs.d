@@ -1,1 +1,0 @@
-(define-package "paradox" "20140501.1449" "A modern Packages Menu. Colored, with package ratings, and customizable." '((emacs "24.1") (tabulated-list "1.0") (package "1.0") (dash "2.6.0") (cl-lib "1.0")) :url "http://github.com/Bruce-Connor/paradox" :keywords ("package" "packages" "mode-line"))

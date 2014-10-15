@@ -1,0 +1,3 @@
+[submodule "local-lisp/ensime-src"]
+	path = local-lisp/ensime-src
+	url = https://github.com/ensime/ensime-src.git
