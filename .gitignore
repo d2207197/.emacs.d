@@ -15,3 +15,14 @@ var/
 /el-get/.status.el.old
 
 /semanticdb/
+/.emacs.desktop
+/.emacs.desktop.lock
+/.python-environments
+/.mc-lists.el
+/history
+/projectile-bookmarks.eld
+/request/curl-cookie-jar
+/request
+/srecode-map.el
+/eshell
+/desktop

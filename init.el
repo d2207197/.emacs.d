@@ -1,5 +1,8 @@
+
+
 (add-to-list 'load-path "~/.emacs.d/local-lisp/")
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+
 
 ;; (getenv "PATH")
 (setenv "PATH" (concat "/usr/local/bin" ":" (getenv "PATH")))
@@ -12,6 +15,13 @@
 
 (load "~/.emacs.d/local-lisp/secrets.el")
 
+  ;; (add-to-list 'load-path "~/.emacs.d/elpa/auctex-11.87.5")
+
+
+(add-to-list 'load-path "~/.emacs.d/elpa/auctex-11.87.5")
+;; (require 'tex-site nil 'noerror)
+(require 'tex-site)
+
 (package-initialize)
 (require 'dired-x)
 (require 'dired+)
@@ -19,13 +29,84 @@
 (require 'code-folding)
 (when window-system
   (require 'qiang-font))
-(require 'tex-site nil 'noerror)
 (require 'el-get)
 (require 'electric-case)
+;; (require 'ensime)			;
 
 
-(setq sml/theme 'dark)
+
+(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+
+(require 'latex-pretty-symbols)
+(require 'latex-extra)
+(eval-after-load 'latex '(latex/setup-keybinds))
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+
+
+;;;;;;;;;;;
+;; dired ;;
+;;;;;;;;;;;
+    (setq-default dired-omit-files-p t) ; this is buffer-local variable
+
+  (setq dired-omit-files
+          (concat dired-omit-files "\\|^\\..+$"))
+
+;;;;;;;;;;;;;;;
+;; mode-line ;;
+;;;;;;;;;;;;;;;
+
+;; (setq sml/theme 'dark)
+;; (sml/setup)
+(require 'smart-mode-line)
 (sml/setup)
+
+
+;;;;;;;;;;;;;;;
+;; key-chord ;;
+;;;;;;;;;;;;;;;
+(require 'view)
+(require 'undo-tree)
+(require 'key-chord)
+
+(key-chord-mode t)
+(setq key-chord-two-keys-delay .025
+      key-chord-one-key-delay .020)
+
+(dolist (binding
+         `((" e" . previous-multiframe-window)
+           (" o" . next-multiframe-window)
+           (" l" . ibuffer)
+
+           ;; (" e" . magit-status)
+
+           (" m" . er/expand-region)
+
+           (" q" . quake-mode)
+
+           (" 0" . delete-window)
+           (" 1" . delete-other-windows)
+           (" 2" . split-window-below)
+           (" 3" . split-window-right)
+           ;; (" =" . winstack-push)
+           ;; (" -" . winstack-pop)
+
+           (" w" . whitespace-mode)
+           ("tm" . undo-tree-undo)
+           ("tr" . undo-tree-redo)
+           ("tb" . undo-tree-switch-branch)
+           ("tv" . undo-tree-visualize)
+           
+           ("ek" . View-scroll-half-page-forward)
+           ("e," . View-scroll-half-page-backward)
+
+           (" b" . ido-switch-buffer)
+           (" f" . ido-find-file)
+           (" s" . save-buffer)
+
+           (" x" . shell)
+
+           ))
+  (key-chord-define-global (car binding) (cdr binding)))
 
 ;;;;;;;;;;;;
 ;; el-get ;;
@@ -71,6 +152,7 @@
 )
 
 
+
 ; (setq default-frame-alist (font . "Apple LiGothic Medium 12")) 
 
 
@@ -91,9 +173,9 @@
 ;;                                   global-semantic-idle-summary-mode
 ;;                                   global-semantic-mru-bookmark-mode))
 ;; (semantic-mode 1)
-(require 'malabar-mode-autoloads)
-(setq malabar-groovy-lib-dir "~/.emacs/malabar-lib/")
-(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
+;; (require 'malabar-mode-autoloads)
+;; (setq malabar-groovy-lib-dir "~/.emacs/malabar-lib/")
+;; (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
 
 ;;;;;;;;;;;;;
 ;; ipython ;;
@@ -114,15 +196,45 @@
 ;;;;;;;;;;;;
 ;; python ;;
 ;;;;;;;;;;;;
-(add-hook 'python-mode-hook 'insert-shebang)
+;; (add-hook 'python-mode-hook 'insert-shebang)
+;; (add-hook 'python-mode-hook 'highlight-indentation-mode)
 
+(require 'indent-guide)
+
+(global-set-key (kbd "M-/") (make-hippie-expand-function
+                             '(try-expand-dabbrev-visible
+                               try-expand-dabbrev
+                               try-complete-file-name-partially
+                               try-complete-file-name
+                               try-expand-dabbrev-all-buffers) t))
 
 ;;;;;;;;;;
 ;; Jedi ;;
 ;;;;;;;;;;
-(add-hook 'python-mode-hook 'jedi:setup)
+
 (setq jedi:setup-keys t)                      ; optional
 (setq jedi:complete-on-dot t)                 ; optional
+(add-hook 'python-mode-hook 'jedi:setup)
+
+;;;;;;;;;
+;; phi ;;
+;;;;;;;;;
+;; (require 'phi-search)
+;; (global-set-key (kbd "C-s") 'phi-search)
+;; (global-set-key (kbd "C-r") 'phi-search-backward)
+(require 'phi-autopair)
+(phi-autopair-global-mode)
+
+
+;;;;;;;;
+;; mc ;;
+;;;;;;;;
+(require 'multiple-cursors)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+
 
 ;;;;;;;;;;;;;;;
 ;; Yasnippet ;;
@@ -174,6 +286,7 @@
 
 (global-unset-key (kbd "C-x C-b"))
 (define-key global-map (kbd "C-x C-b") 'ibuffer)
+(add-hook 'ibuffer-mode-hook 'ibuffer-auto-mode)
 
 (global-unset-key (kbd "M-RET"))
 (define-key global-map (kbd "M-RET") 'view-mode)
@@ -225,6 +338,37 @@
 (defalias 'ack-find-file 'ack-and-a-half-find-file)
 (defalias 'ack-find-file-same 'ack-and-a-half-find-file-same)
 
+
+
+;;;;;;;;;;
+;; misc ;;
+;;;;;;;;;;
+
+;; (global-unset-key (kbd "C-0"))
+(define-key global-map (kbd "s-i") 'iterm-here)
+(define-key global-map (kbd "s-b") 'ido-switch-buffer)
+
+(defun iterm-here ()
+  (interactive)
+  (dired-smart-shell-command "open -a iTerm $PWD" nil nil))
+
+(define-key global-map (kbd "C-0") 'delete-window)
+(define-key global-map (kbd "C-1") 'delete-other-windows)
+(define-key global-map (kbd "C-2") 'split-window-below)
+(define-key global-map (kbd "C-3") 'split-window-right)
+
+
+
+(define-key input-decode-map "\e[1;10A" [M-S-up])
+(define-key input-decode-map "\e[1;10B" [M-S-down])
+(define-key input-decode-map "\e[1;10C" [M-S-right])
+(define-key input-decode-map "\e[1;10D" [M-S-left])
+
+(define-key input-decode-map "\e[1;3A" [M-up])
+(define-key input-decode-map "\e[1;3B" [M-down])
+(define-key input-decode-map "\e[1;3C" [M-right])
+(define-key input-decode-map "\e[1;3D" [M-left])
+
 ;;;;;;;;;;;;;;;
 ;; Customize ;;
 ;;;;;;;;;;;;;;;
@@ -235,6 +379,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(TeX-PDF-mode t)
+ '(TeX-auto-save t)
  '(TeX-command-list
    (quote
     (("TeX" "%(PDF)%(tex) %`%S%(PDFout)%(mode)%' %t" TeX-run-TeX nil
@@ -273,6 +418,7 @@
      ("Clean" "TeX-clean" TeX-run-function nil t :help "Delete generated intermediate files")
      ("Clean All" "(TeX-clean t)" TeX-run-function nil t :help "Delete generated intermediate and output files")
      ("Other" "" TeX-run-command t t :help "Run an arbitrary command"))))
+ '(TeX-engine (quote xetex))
  '(TeX-expand-list
    (quote
     (("%p" TeX-printer-query)
@@ -414,6 +560,7 @@
                  t)))
      ("%b" TeX-current-file-name-master-relative)
      ("%m" preview-create-subdirectory))))
+ '(TeX-parse-self t)
  '(TeX-source-correlate-method (quote auto))
  '(TeX-source-correlate-mode t)
  '(TeX-source-correlate-start-server t)
@@ -440,7 +587,9 @@
  '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
-    ("60f04e478dedc16397353fb9f33f0d895ea3dab4f581307fbf0aa2f07e658a40" "9c26d896b2668f212f39f5b0206c5e3f0ac301611ced8a6f74afe4ee9c7e6311" "f0ea6118d1414b24c2e4babdc8e252707727e7b4ff2e791129f240a2b3093e32" "e49b9cfa39ce92b424a30cbd74386a5fcb854195cf1a8e18536388cbc2179bf6" "2283e0e235d6f00b717ccd7b1f22aa29ce042f0f845936a221012566a810773d" "e16a771a13a202ee6e276d06098bc77f008b73bbac4d526f160faa2d76c1dd0e" "99cbc2aaa2b77374c2c06091494bd9d2ebfe6dc5f64c7ccdb36c083aff892f7d" "fa189fcf5074d4964f0a53f58d17c7e360bb8f879bd968ec4a56dc36b0013d29" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3c708b84612872e720796ea1b069cf3c8b3e909a2e1da04131f40e307605b7f9" default)))
+    ("756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" "57f8801351e8b7677923c9fe547f7e19f38c99b80d68c34da6fa9b94dc6d3297" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "60f04e478dedc16397353fb9f33f0d895ea3dab4f581307fbf0aa2f07e658a40" "9c26d896b2668f212f39f5b0206c5e3f0ac301611ced8a6f74afe4ee9c7e6311" "f0ea6118d1414b24c2e4babdc8e252707727e7b4ff2e791129f240a2b3093e32" "e49b9cfa39ce92b424a30cbd74386a5fcb854195cf1a8e18536388cbc2179bf6" "2283e0e235d6f00b717ccd7b1f22aa29ce042f0f845936a221012566a810773d" "e16a771a13a202ee6e276d06098bc77f008b73bbac4d526f160faa2d76c1dd0e" "99cbc2aaa2b77374c2c06091494bd9d2ebfe6dc5f64c7ccdb36c083aff892f7d" "fa189fcf5074d4964f0a53f58d17c7e360bb8f879bd968ec4a56dc36b0013d29" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3c708b84612872e720796ea1b069cf3c8b3e909a2e1da04131f40e307605b7f9" default)))
+ '(delete-selection-mode t)
+ '(desktop-save-mode t)
  '(dired-auto-revert-buffer t)
  '(dynamic-fonts-preferred-monospace-fonts
    (quote
@@ -448,16 +597,22 @@
  '(dynamic-fonts-preferred-proportional-fonts
    (quote
     ("Lucida Grande" "Segoe UI" "DejaVu Sans" "Bitstream Vera" "Tahoma" "Verdana" "Helvetica" "Arial Unicode MS" "Arial" "Heiti TC")))
+ '(el-get-git-shallow-clone t)
+ '(ensime-auto-connect (quote ask))
  '(exec-path
    (quote
     ("/usr/local/bin" "/Users/joe/.virtualenvs/linggle-flask/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/usr/local/Cellar/emacs/HEAD/libexec/emacs/24.3.50/i386-apple-darwin12.4.0")))
+ '(flx-ido-mode t)
+ '(global-discover-mode t)
+ '(global-hl-line-mode nil)
  '(global-linum-mode t)
  '(global-subword-mode t)
+ '(global-visual-line-mode t)
  '(ibuffer-saved-filter-groups nil)
  '(ibuffer-saved-filters
    (quote
-    (("*"
-      ((name . "^[^*]")))
+    (("e"
+      ((name . "^[^*].*")))
      ("gnus"
       ((or
         (mode . message-mode)
@@ -473,8 +628,11 @@
         (mode . java-mode)
         (mode . idl-mode)
         (mode . lisp-mode)))))))
- '(ido-everywhere nil)
+ '(ido-everywhere t)
  '(ido-mode (quote both) nil (ido))
+ '(ido-use-faces nil)
+ '(ido-vertical-mode t)
+ '(indent-guide-global-mode t)
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(initial-buffer-choice "~/")
@@ -483,10 +641,11 @@
     (("py" . "#!/usr/bin/env python
 # -*- coding: utf-8 -*-")
      ("" . ""))))
+ '(keyfreq-mode t)
  '(line-number-mode t)
  '(line-spacing nil)
- '(magit-use-overlays nil)
  '(markdown-open-command "open -a Marked %o")
+ '(mouse-wheel-progressive-speed nil)
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
  '(org-agenda-files
    (quote
@@ -517,22 +676,31 @@
      ("marmalade" . "http://marmalade-repo.org/packages/")
      ("org" . "http://orgmode.org/elpa/"))))
  '(paradox-automatically-star t)
+ '(pdf-latex-command "xelatex")
+ '(phi-autopair-global-mode nil)
  '(preview-LaTeX-command
    (quote
     ("%`%l \"\\nonstopmode\\nofiles\\PassOptionsToPackage{"
      ("," . preview-required-option-list)
      "}{preview}\\AtBeginDocument{\\ifx\\ifPreview\\undefined" preview-default-preamble "\\fi}\"%' %t")))
+ '(recentf-max-saved-items 100)
  '(recentf-mode t)
+ '(reftex-plug-into-AUCTeX t)
  '(safe-local-variable-values (quote ((TeX-engine . XeLaTeX))))
+ '(savehist-mode t)
  '(scroll-margin 5)
  '(scroll-step 1)
+ '(server-mode t)
  '(server-use-tcp t)
  '(show-paren-delay 0.1)
  '(show-paren-mode t)
  '(show-paren-ring-bell-on-mismatch t)
  '(show-paren-style (quote mixed))
+ '(size-indication-mode t)
  '(tool-bar-mode nil)
  '(tramp-default-method "sshx")
+ '(which-function-mode t)
+ '(winner-mode t)
  '(xterm-mouse-mode t)
  '(yas-global-mode t nil (yasnippet))
  '(yas-prompt-functions
@@ -543,7 +711,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#1c1c1c" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 1 :width normal :foundry "default" :family "default"))))
+ '(default ((t (:inherit nil :stipple nil :background "#272822" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "nil" :family "Monaco"))))
  '(highlight-symbol-face ((t (:underline "steel blue")))))
 
 
