@@ -114,9 +114,8 @@ the recipe, then return nil."
           ;; since symlink is not exactly reliable on those systems
           (copy-directory (el-get-elpa-package-directory package)
                           (file-name-as-directory (expand-file-name package el-get-dir)))
-        (message "%s"
-                 (shell-command
-                  (format "cd %s && ln -s \"%s\" \"%s\"" el-get-dir elpa-dir package)))))))
+        (let ((default-directory el-get-dir))
+          (make-symbolic-link elpa-dir package))))))
 
 (eval-when-compile
   ;; `condition-case-unless-debug' was introduced in 24.1, but was
@@ -139,6 +138,7 @@ the recipe, then return nil."
          ;; Prepend elpa-repo to `package-archives' for new package.el
          (package-archives (append (when elpa-repo (list elpa-repo))
                                    (when (boundp 'package-archives) package-archives))))
+    (el-get-insecure-check package url)
 
     (unless (and elpa-dir (file-directory-p elpa-dir))
       ;; package-install does these only for interactive calls
@@ -156,7 +156,7 @@ the recipe, then return nil."
       ;; TODO: should we refresh and retry once if package-install fails?
       ;; package-install generates autoloads, byte compiles
       (let (emacs-lisp-mode-hook fundamental-mode-hook prog-mode-hook)
-        (package-install (el-get-as-symbol package))))
+        (package-download-transaction (list (el-get-as-symbol package)))))
     ;; we symlink even when the package already is installed because it's
     ;; not an error to have installed ELPA packages before using el-get, and
     ;; that will register them
@@ -190,6 +190,7 @@ first time.")
   "Ask elpa to update given PACKAGE."
   (unless package--initialized
     (package-initialize t))
+  (el-get-insecure-check package url)
   (when el-get-elpa-do-refresh
    (package-refresh-contents)
    (when (eq el-get-elpa-do-refresh 'once)

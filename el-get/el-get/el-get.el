@@ -221,7 +221,8 @@
 
 This is useful to use for providing completion candidates for
 package names."
-  (mapcar 'el-get-source-name (el-get-read-all-recipes)))
+  (delete-dups (append (mapcar #'el-get-source-name el-get-sources)
+                       (el-get-all-recipe-file-names))))
 
 (defun el-get-error-unless-package-p (package)
   "Raise an error if PACKAGE does not name a package that has a valid recipe."
@@ -447,7 +448,19 @@ called by `el-get' (usually at startup) for each installed package."
                    postinit "post-init" package)
           (funcall maybe-lazy-eval `(el-get-load-package-user-init-file ',package))
           (funcall el-get-maybe-lazy-runsupp
-                   after "after" package)))
+                   after "after" package))
+        (when (and (not (eq method 'elpa)) ; if this isn't an elpa package
+                   ;; and we have any elpa packages installed
+                   (some (lambda (pkg-status)
+                           (let* ((pkg-info (cdr pkg-status))
+                                  (recipe (plist-get pkg-info 'recipe)))
+                             (and (equal (plist-get pkg-info 'status) "installed")
+                                  (eq (plist-get recipe :type) 'elpa))))
+                         (el-get-read-status-file)))
+          ;; tell elpa that this package has been activated, so it
+          ;; doesn't try to activate it's own package instead.
+          (require 'package)
+          (push (el-get-as-symbol package) package-activated-list)))
     (debug err
            (el-get-installation-failed package err)))
   ;; and call the global init hooks
@@ -846,14 +859,21 @@ explicitly declared in the user-init-file (.emacs)."
     ;; Filepath is dir/file
     (let ((filepath (format "%s/%s" dir filename)))
       (with-temp-file filepath
-        (insert (el-get-print-to-string source))))))
+        (emacs-lisp-mode)
+        (insert "(")
+        (loop for (prop val) on source by #'cddr
+              do (insert (format "%S %S\n" prop val)))
+        (delete-char -1) ; delete last \n
+        (insert ")\n")
+        (goto-char (point-min))
+        (indent-pp-sexp 'pretty)))))
 
 ;;;###autoload
 (defun el-get-make-recipes (&optional dir)
   "Loop over `el-get-sources' and write a recipe file for each
 entry which is not a symbol and is not already a known recipe."
   (interactive "Dsave recipes in directory: ")
-  (let* ((all (mapcar 'el-get-source-name (el-get-read-all-recipe-files)))
+  (let* ((all (el-get-read-all-recipe-names))
          (new (loop for r in el-get-sources
                     when (and (not (symbolp r))
                               (not (member (el-get-source-name r) all)))
