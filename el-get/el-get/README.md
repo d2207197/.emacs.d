@@ -54,7 +54,7 @@ packages providing some.
 # Installation
 
 El-Get is easy to install.  The only requirements to do so successfully are
-Emacs, `git` and a connection to the internet that allows you to `git clone`
+Emacs (23.4 and above), `git` and a connection to the internet that allows you to `git clone`
 repositories.
 
 If you do not already have `git` on your system, you can install it through
@@ -94,7 +94,7 @@ your `user-init-file`).
 ;; So the idea is that you copy/paste this code into your *scratch* buffer,
 ;; hit C-j, and you have a working el-get.
 (url-retrieve
- "https://raw.github.com/dimitri/el-get/master/el-get-install.el"
+ "https://raw.githubusercontent.com/dimitri/el-get/master/el-get-install.el"
  (lambda (s)
    (goto-char (point-max))
    (eval-print-last-sexp)))
@@ -142,7 +142,7 @@ Here is the basic setup to add to your `user-init-file` (`.emacs`):
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
       (url-retrieve-synchronously
-       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+       "https://raw.githubusercontent.com/dimitri/el-get/master/el-get-install.el")
     (goto-char (point-max))
     (eval-print-last-sexp)))
 

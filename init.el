@@ -51,14 +51,6 @@
   (setq dired-omit-files
           (concat dired-omit-files "\\|^\\..+$"))
 
-;;;;;;;;;;;;;;;
-;; mode-line ;;
-;;;;;;;;;;;;;;;
-
-;; (setq sml/theme 'dark)
-;; (sml/setup)
-(require 'smart-mode-line)
-(sml/setup)
 
 
 ;;;;;;;;;;;;;;;
@@ -112,6 +104,18 @@
 ;; el-get ;;
 ;;;;;;;;;;;;
 
+
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+
+(unless (require 'el-get nil 'noerror)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.githubusercontent.com/dimitri/el-get/master/el-get-install.el")
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
+
+(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
+(el-get 'sync)
 
 ;; (unless (require 'el-get nil 'noerror)
 ;;   (with-current-buffer
@@ -358,7 +362,6 @@
 (define-key global-map (kbd "C-3") 'split-window-right)
 
 
-
 (define-key input-decode-map "\e[1;10A" [M-S-up])
 (define-key input-decode-map "\e[1;10B" [M-S-down])
 (define-key input-decode-map "\e[1;10C" [M-S-right])
@@ -368,6 +371,17 @@
 (define-key input-decode-map "\e[1;3B" [M-down])
 (define-key input-decode-map "\e[1;3C" [M-right])
 (define-key input-decode-map "\e[1;3D" [M-left])
+
+
+;;;;;;;;;;;;;;;
+;; mode-line ;;
+;;;;;;;;;;;;;;;
+
+(require 'smart-mode-line)
+(setq sml/theme 'dark)
+;; (sml/setup)
+(sml/setup)
+
 
 ;;;;;;;;;;;;;;;
 ;; Customize ;;
