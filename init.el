@@ -26,7 +26,6 @@
 ;; (require 'tex-site)
 
 (package-initialize)
-(load-theme 'monokai)
 (elpy-enable)
 
 (require 'dired-x)
@@ -604,6 +603,7 @@
      (other . "gnu"))))
  '(case-fold-search t)
  '(column-number-mode t)
+ '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
     ("57f8801351e8b7677923c9fe547f7e19f38c99b80d68c34da6fa9b94dc6d3297" default)))
@@ -726,6 +726,7 @@
  '(tramp-default-method "sshx")
  '(which-function-mode t)
  '(winner-mode t)
+ '(xterm-extra-capabilities (quote (modifyOtherKeys reportBackground)))
  '(xterm-mouse-mode t)
  '(yas-global-mode t nil (yasnippet))
  '(yas-prompt-functions
