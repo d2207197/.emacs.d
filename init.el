@@ -15,14 +15,20 @@
 
 (load "~/.emacs.d/local-lisp/secrets.el")
 
-  ;; (add-to-list 'load-path "~/.emacs.d/elpa/auctex-11.87.5")
+;; (add-to-list 'load-path "~/.emacs.d/elpa/auctex-11.87.5")
+(require 'package)
+(add-to-list 'package-archives
+             '("elpy" . "http://jorgenschaefer.github.io/packages/"))
 
 
-(add-to-list 'load-path "~/.emacs.d/elpa/auctex-11.87.5")
+;; (add-to-list 'load-path "~/.emacs.d/elpa/auctex-11.87.5")
 ;; (require 'tex-site nil 'noerror)
-(require 'tex-site)
+;; (require 'tex-site)
 
 (package-initialize)
+(load-theme 'monokai)
+(elpy-enable)
+
 (require 'dired-x)
 (require 'dired+)
 (require 'comment-dwim-line)
@@ -37,10 +43,10 @@
 
 (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
-(require 'latex-pretty-symbols)
-(require 'latex-extra)
-(eval-after-load 'latex '(latex/setup-keybinds))
-(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+;; (require 'latex-pretty-symbols)
+;; (require 'latex-extra)
+;; (eval-after-load 'latex '(latex/setup-keybinds))
+;; (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 
 
 ;;;;;;;;;;;
@@ -216,9 +222,9 @@
 ;; Jedi ;;
 ;;;;;;;;;;
 
-(setq jedi:setup-keys t)                      ; optional
-(setq jedi:complete-on-dot t)                 ; optional
-(add-hook 'python-mode-hook 'jedi:setup)
+;; (setq jedi:setup-keys t)                      ; optional
+;; (setq jedi:complete-on-dot t)                 ; optional
+;; (add-hook 'python-mode-hook 'jedi:setup)
 
 ;;;;;;;;;
 ;; phi ;;
@@ -377,10 +383,10 @@
 ;; mode-line ;;
 ;;;;;;;;;;;;;;;
 
-(require 'smart-mode-line)
-(setq sml/theme 'dark)
+;; (require 'smart-mode-line)
+;; (setq sml/theme 'dark)
 ;; (sml/setup)
-(sml/setup)
+;; (sml/setup)
 
 
 ;;;;;;;;;;;;;;;
@@ -598,10 +604,9 @@
      (other . "gnu"))))
  '(case-fold-search t)
  '(column-number-mode t)
- '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
-    ("756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" "57f8801351e8b7677923c9fe547f7e19f38c99b80d68c34da6fa9b94dc6d3297" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "60f04e478dedc16397353fb9f33f0d895ea3dab4f581307fbf0aa2f07e658a40" "9c26d896b2668f212f39f5b0206c5e3f0ac301611ced8a6f74afe4ee9c7e6311" "f0ea6118d1414b24c2e4babdc8e252707727e7b4ff2e791129f240a2b3093e32" "e49b9cfa39ce92b424a30cbd74386a5fcb854195cf1a8e18536388cbc2179bf6" "2283e0e235d6f00b717ccd7b1f22aa29ce042f0f845936a221012566a810773d" "e16a771a13a202ee6e276d06098bc77f008b73bbac4d526f160faa2d76c1dd0e" "99cbc2aaa2b77374c2c06091494bd9d2ebfe6dc5f64c7ccdb36c083aff892f7d" "fa189fcf5074d4964f0a53f58d17c7e360bb8f879bd968ec4a56dc36b0013d29" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3c708b84612872e720796ea1b069cf3c8b3e909a2e1da04131f40e307605b7f9" default)))
+    ("57f8801351e8b7677923c9fe547f7e19f38c99b80d68c34da6fa9b94dc6d3297" default)))
  '(delete-selection-mode t)
  '(desktop-save-mode t)
  '(dired-auto-revert-buffer t)
@@ -612,6 +617,10 @@
    (quote
     ("Lucida Grande" "Segoe UI" "DejaVu Sans" "Bitstream Vera" "Tahoma" "Verdana" "Helvetica" "Arial Unicode MS" "Arial" "Heiti TC")))
  '(el-get-git-shallow-clone t)
+ '(elpy-mode-hook (quote (subword-mode hl-line-mode indent-guide-mode)))
+ '(elpy-modules
+   (quote
+    (elpy-module-company elpy-module-eldoc elpy-module-flymake elpy-module-pyvenv elpy-module-yasnippet elpy-module-sane-defaults)))
  '(ensime-auto-connect (quote ask))
  '(exec-path
    (quote
@@ -622,6 +631,7 @@
  '(global-linum-mode t)
  '(global-subword-mode t)
  '(global-visual-line-mode t)
+ '(hl-line-face (quote hl-line))
  '(ibuffer-saved-filter-groups nil)
  '(ibuffer-saved-filters
    (quote
@@ -646,7 +656,8 @@
  '(ido-mode (quote both) nil (ido))
  '(ido-use-faces nil)
  '(ido-vertical-mode t)
- '(indent-guide-global-mode t)
+ '(indent-guide-global-mode nil)
+ '(indent-guide-inhibit-modes (quote (dired-mode package-menu-mode)))
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(initial-buffer-choice "~/")
@@ -686,9 +697,9 @@
  '(package-archives
    (quote
     (("gnu" . "http://elpa.gnu.org/packages/")
-     ("melpa" . "http://melpa.milkbox.net/packages/")
-     ("marmalade" . "http://marmalade-repo.org/packages/")
-     ("org" . "http://orgmode.org/elpa/"))))
+     ("melpa" . "http://melpa.org/packages/")
+     ("org" . "http://orgmode.org/elpa/")
+     ("elpy" . "http://jorgenschaefer.github.io/packages/"))))
  '(paradox-automatically-star t)
  '(pdf-latex-command "xelatex")
  '(phi-autopair-global-mode nil)
@@ -725,8 +736,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#272822" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "nil" :family "Monaco"))))
- '(highlight-symbol-face ((t (:underline "steel blue")))))
+ '(highlight-symbol-face ((t (:underline "steel blue"))))
+ '(hl-line ((t (:inherit t :background "#222")))))
 
+ ;; '(default ((t (:inherit nil :stipple nil :background "#272822" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "nil" :family "Monaco"))))
 
 (put 'narrow-to-region 'disabled nil)
