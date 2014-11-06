@@ -63,47 +63,47 @@
 ;;;;;;;;;;;;;;;
 (require 'view)
 (require 'undo-tree)
-(require 'key-chord)
+;; (require 'key-chord)
 
-(key-chord-mode t)
-(setq key-chord-two-keys-delay .025
-      key-chord-one-key-delay .020)
+;; (key-chord-mode t)
+;; (setq key-chord-two-keys-delay .025
+;;       key-chord-one-key-delay .020)
 
-(dolist (binding
-         `((" e" . previous-multiframe-window)
-           (" o" . next-multiframe-window)
-           (" l" . ibuffer)
+;; (dolist (binding
+;;          `((" e" . previous-multiframe-window)
+;;            (" o" . next-multiframe-window)
+;;            (" l" . ibuffer)
 
-           ;; (" e" . magit-status)
+;;            ;; (" e" . magit-status)
 
-           (" m" . er/expand-region)
+;;            (" m" . er/expand-region)
 
-           (" q" . quake-mode)
+;;            (" q" . quake-mode)
 
-           (" 0" . delete-window)
-           (" 1" . delete-other-windows)
-           (" 2" . split-window-below)
-           (" 3" . split-window-right)
-           ;; (" =" . winstack-push)
-           ;; (" -" . winstack-pop)
+;;            (" 0" . delete-window)
+;;            (" 1" . delete-other-windows)
+;;            (" 2" . split-window-below)
+;;            (" 3" . split-window-right)
+;;            ;; (" =" . winstack-push)
+;;            ;; (" -" . winstack-pop)
 
-           (" w" . whitespace-mode)
-           ("tm" . undo-tree-undo)
-           ("tr" . undo-tree-redo)
-           ("tb" . undo-tree-switch-branch)
-           ("tv" . undo-tree-visualize)
+;;            (" w" . whitespace-mode)
+;;            ("tm" . undo-tree-undo)
+;;            ("tr" . undo-tree-redo)
+;;            ("tb" . undo-tree-switch-branch)
+;;            ("tv" . undo-tree-visualize)
            
-           ("ek" . View-scroll-half-page-forward)
-           ("e," . View-scroll-half-page-backward)
+;;            ("ek" . View-scroll-half-page-forward)
+;;            ("e," . View-scroll-half-page-backward)
 
-           (" b" . ido-switch-buffer)
-           (" f" . ido-find-file)
-           (" s" . save-buffer)
+;;            (" b" . ido-switch-buffer)
+;;            (" f" . ido-find-file)
+;;            (" s" . save-buffer)
 
-           (" x" . shell)
+;;            (" x" . shell)
 
-           ))
-  (key-chord-define-global (car binding) (cdr binding)))
+;;            ))
+;;   (key-chord-define-global (car binding) (cdr binding)))
 
 ;;;;;;;;;;;;
 ;; el-get ;;
