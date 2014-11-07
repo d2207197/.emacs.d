@@ -1,109 +1,35 @@
-
-
 (add-to-list 'load-path "~/.emacs.d/local-lisp/")
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-
 
 ;; (getenv "PATH")
 (setenv "PATH" (concat "/usr/local/bin" ":" (getenv "PATH")))
 (setenv "PATH" (concat "/usr/texbin" ":" (getenv "PATH")))
-(setq org-directory "~/Google Drive/Org")
-;; Set to the name of the file where new notes will be stored
-(setq org-mobile-inbox-for-pull "~/Google Drive/Org/flagged.org")
-;; Set to <your Dropbox root directory>/MobileOrg.
-(setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
 
 (load "~/.emacs.d/local-lisp/secrets.el")
 
-;; (add-to-list 'load-path "~/.emacs.d/elpa/auctex-11.87.5")
 (require 'package)
-(add-to-list 'package-archives
-             '("elpy" . "http://jorgenschaefer.github.io/packages/"))
-
-
-;; (add-to-list 'load-path "~/.emacs.d/elpa/auctex-11.87.5")
-;; (require 'tex-site nil 'noerror)
-;; (require 'tex-site)
-
 (package-initialize)
-(elpy-enable)
+(require 'el-get)
 
-(require 'dired-x)
-(require 'dired+)
 (require 'comment-dwim-line)
 (require 'code-folding)
-(when window-system
-  (require 'qiang-font))
-(require 'el-get)
+(when window-system (require 'qiang-font))
 (require 'electric-case)
-;; (require 'ensime)			;
+(require 'bm)
 
+;;;;;;;;;;;;;;
+;; bookmark ;;
+;;;;;;;;;;;;;;
 
+(bookmark-bmenu-list)
+(switch-to-buffer "*Bookmark List*")
 
-(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+(global-set-key (kbd "<left-fringe> <mouse-1>") 'bm-toggle-mouse)
+(global-unset-key (kbd "C-x m"))
+(global-set-key (kbd "C-x m m")   'bm-toggle)
+(global-set-key (kbd "C-x m n")   'bm-next)
+(global-set-key (kbd "C-x m p")   'bm-previous)
 
-;; (require 'latex-pretty-symbols)
-;; (require 'latex-extra)
-;; (eval-after-load 'latex '(latex/setup-keybinds))
-;; (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-
-
-;;;;;;;;;;;
-;; dired ;;
-;;;;;;;;;;;
-    (setq-default dired-omit-files-p t) ; this is buffer-local variable
-
-  (setq dired-omit-files
-          (concat dired-omit-files "\\|^\\..+$"))
-
-
-
-;;;;;;;;;;;;;;;
-;; key-chord ;;
-;;;;;;;;;;;;;;;
-(require 'view)
-(require 'undo-tree)
-;; (require 'key-chord)
-
-;; (key-chord-mode t)
-;; (setq key-chord-two-keys-delay .025
-;;       key-chord-one-key-delay .020)
-
-;; (dolist (binding
-;;          `((" e" . previous-multiframe-window)
-;;            (" o" . next-multiframe-window)
-;;            (" l" . ibuffer)
-
-;;            ;; (" e" . magit-status)
-
-;;            (" m" . er/expand-region)
-
-;;            (" q" . quake-mode)
-
-;;            (" 0" . delete-window)
-;;            (" 1" . delete-other-windows)
-;;            (" 2" . split-window-below)
-;;            (" 3" . split-window-right)
-;;            ;; (" =" . winstack-push)
-;;            ;; (" -" . winstack-pop)
-
-;;            (" w" . whitespace-mode)
-;;            ("tm" . undo-tree-undo)
-;;            ("tr" . undo-tree-redo)
-;;            ("tb" . undo-tree-switch-branch)
-;;            ("tv" . undo-tree-visualize)
-           
-;;            ("ek" . View-scroll-half-page-forward)
-;;            ("e," . View-scroll-half-page-backward)
-
-;;            (" b" . ido-switch-buffer)
-;;            (" f" . ido-find-file)
-;;            (" s" . save-buffer)
-
-;;            (" x" . shell)
-
-;;            ))
-;;   (key-chord-define-global (car binding) (cdr binding)))
 
 ;;;;;;;;;;;;
 ;; el-get ;;
@@ -111,7 +37,6 @@
 
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
       (url-retrieve-synchronously
@@ -133,6 +58,72 @@
 ;; (el-get 'sync)
 
 
+;;;;;;;;;;;;
+;; python ;;
+;;;;;;;;;;;;
+(add-hook 'python-mode-hook 'insert-shebang)
+(require 'indent-guide)
+(elpy-enable)
+
+;;;;;;;;;;;;;
+;; ipython ;;
+;;;;;;;;;;;;;
+
+;; (setq
+;;  python-shell-interpreter "ipython"
+;;  python-shell-interpreter-args ""
+;;  python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+;;  python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+;;  python-shell-completion-setup-code
+;;  "from IPython.core.completerlib import module_completion"
+;;  python-shell-completion-module-string-code
+;;  "';'.join(module_completion('''%s'''))\n"
+;;  python-shell-completion-string-code
+;;  "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
+
+;;;;;;;;;;
+;; Jedi ;;
+;;;;;;;;;;
+
+
+;; (setq jedi:setup-keys t)                      ; optional
+;; (setq jedi:complete-on-dot t)                 ; optional
+;; (add-hook 'python-mode-hook 'jedi:setup)
+
+
+;;;;;;;;;;;;;;;
+;; Undo Tree ;;
+;;;;;;;;;;;;;;;
+(require 'undo-tree)
+(global-set-key (kbd "C-?") 'undo-tree-visualize)
+
+;;;;;;;;;;;
+;; Scala ;;
+;;;;;;;;;;;
+;; (require 'ensime)
+(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+
+
+;;;;;;;;;;;
+;; LaTeX ;;
+;;;;;;;;;;;
+
+;; (require 'latex-pretty-symbols)
+;; (require 'latex-extra)
+;; (eval-after-load 'latex '(latex/setup-keybinds))
+;; (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+;; (add-to-list 'load-path "~/.emacs.d/elpa/auctex-11.87.5")
+;; (require 'tex-site nil 'noerror)
+;; (require 'tex-site)
+
+;;;;;;;;;;;
+;; dired ;;
+;;;;;;;;;;;
+(require 'dired-x)
+(require 'dired+)
+(setq-default dired-omit-files-p t) ; this is buffer-local variable
+(setq dired-omit-files
+      (concat dired-omit-files "\\|^\\..+$"))
 
 ;;;;;;;;;;
 ;; java ;;
@@ -143,27 +134,16 @@
 ;; org-mode ;;
 ;;;;;;;;;;;;;;
 
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
-;; Set to the location of your Org files on your local system
-(setq org-directory "~/Google Drive/Org")
-;; Set to the name of the file where new notes will be stored
-(setq org-mobile-inbox-for-pull "~/Google Drive/Org/flagged.org")
-;; Set to <your Dropbox root directory>/MobileOrg.
-(setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
-
-(defun markdown-regexp-right (beg end)
-  (interactive "r")
-  (replace-regexp "-\|[^-]" "-:|\n" nil beg end)    
-  (replace-regexp "-\\+-" "-|-" nil beg end)
-)
-
-
-
-; (setq default-frame-alist (font . "Apple LiGothic Medium 12")) 
-
+;; (global-set-key "\C-cl" 'org-store-link)
+;; (global-set-key "\C-cc" 'org-capture)
+;; (global-set-key "\C-ca" 'org-agenda)
+;; (global-set-key "\C-cb" 'org-iswitchb)
+;; ;; Set to the location of your Org files on your local system
+;; (setq org-directory "~/Google Drive/Org")
+;; ;; Set to the name of the file where new notes will be stored
+;; (setq org-mobile-inbox-for-pull "~/Google Drive/Org/flagged.org")
+;; ;; Set to <your Dropbox root directory>/MobileOrg.
+;; (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
 
 ;;;;;;;;;;;;;
 ;; malabar ;;
@@ -186,44 +166,6 @@
 ;; (setq malabar-groovy-lib-dir "~/.emacs/malabar-lib/")
 ;; (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
 
-;;;;;;;;;;;;;
-;; ipython ;;
-;;;;;;;;;;;;;
-(setq
- python-shell-interpreter "ipython"
- python-shell-interpreter-args ""
- python-shell-prompt-regexp "In \\[[0-9]+\\]: "
- python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
- python-shell-completion-setup-code
-   "from IPython.core.completerlib import module_completion"
- python-shell-completion-module-string-code
-   "';'.join(module_completion('''%s'''))\n"
- python-shell-completion-string-code
-   "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
-
-
-;;;;;;;;;;;;
-;; python ;;
-;;;;;;;;;;;;
-;; (add-hook 'python-mode-hook 'insert-shebang)
-;; (add-hook 'python-mode-hook 'highlight-indentation-mode)
-
-(require 'indent-guide)
-
-(global-set-key (kbd "M-/") (make-hippie-expand-function
-                             '(try-expand-dabbrev-visible
-                               try-expand-dabbrev
-                               try-complete-file-name-partially
-                               try-complete-file-name
-                               try-expand-dabbrev-all-buffers) t))
-
-;;;;;;;;;;
-;; Jedi ;;
-;;;;;;;;;;
-
-;; (setq jedi:setup-keys t)                      ; optional
-;; (setq jedi:complete-on-dot t)                 ; optional
-;; (add-hook 'python-mode-hook 'jedi:setup)
 
 ;;;;;;;;;
 ;; phi ;;
@@ -269,15 +211,10 @@
                                        (smex-initialize))
                                    (global-set-key [(shift meta x)] 'smex-major-mode-commands)
                                    (smex-major-mode-commands)))
-
-
-
-
-
-
 ;;;;;;;;;;;
 ;; SLIME ;;
 ;;;;;;;;;;;
+
 (setq slime-lisp-implementations
       '((clisp ("/usr/local/bin/clisp"))
 	(sbcl ("/usr/local/bin/sbcl"))
@@ -285,37 +222,6 @@
 (require 'slime-autoloads)
 ;; (slime-setup '(slime-fancy slime-asdf slime-tramp)) 
 
-
-
-;;;;;;;;;;;;;;;;
-;; keybinding ;;
-;;;;;;;;;;;;;;;;
-(global-unset-key (kbd "C-\\"))
-(define-key global-map (kbd "C-\\") 'set-mark-command)
-
-(global-unset-key (kbd "C-x C-b"))
-(define-key global-map (kbd "C-x C-b") 'ibuffer)
-(add-hook 'ibuffer-mode-hook 'ibuffer-auto-mode)
-
-(global-unset-key (kbd "M-RET"))
-(define-key global-map (kbd "M-RET") 'view-mode)
-
-(global-unset-key (kbd "C-x C-\\"))
-(define-key global-map (kbd "C-x C-\\") 'pop-global-mark)
-
-(global-unset-key (kbd "M-;"))
-(define-key global-map (kbd "M-;") 'comment-dwim-line)
-
-(global-unset-key (kbd "C-x C-z"))
-(define-key global-map (kbd "C-x C-z") 'magit-status)
-
-(global-unset-key (kbd "C-z"))
-(define-key global-map (kbd "C-z") 'toggle-hiding)
-(global-unset-key (kbd "C-+"))
-(define-key global-map (kbd "C-+") 'toggle-selective-display)
-
-
-(global-set-key "\C-x\ \C-r" 'recentf-open-files)
 
 ;;;;;;;;;;;;;
 ;; paredit ;;
@@ -347,13 +253,37 @@
 (defalias 'ack-find-file 'ack-and-a-half-find-file)
 (defalias 'ack-find-file-same 'ack-and-a-half-find-file-same)
 
-
-
 ;;;;;;;;;;
 ;; misc ;;
 ;;;;;;;;;;
 
-;; (global-unset-key (kbd "C-0"))
+(global-unset-key (kbd "C-\\"))
+(define-key global-map (kbd "C-\\") 'set-mark-command)
+
+(global-unset-key (kbd "C-x C-b"))
+(define-key global-map (kbd "C-x C-b") 'ibuffer)
+(add-hook 'ibuffer-mode-hook 'ibuffer-auto-mode)
+
+(require 'view)
+(global-unset-key (kbd "M-RET"))
+(define-key global-map (kbd "M-RET") 'view-mode)
+
+(global-unset-key (kbd "C-x C-\\"))
+(define-key global-map (kbd "C-x C-\\") 'pop-global-mark)
+
+(global-unset-key (kbd "M-;"))
+(define-key global-map (kbd "M-;") 'comment-dwim-line)
+
+(global-unset-key (kbd "C-x C-z"))
+(define-key global-map (kbd "C-x C-z") 'magit-status)
+
+(global-unset-key (kbd "C-z"))
+(define-key global-map (kbd "C-z") 'toggle-hiding)
+(global-unset-key (kbd "C-+"))
+(define-key global-map (kbd "C-+") 'toggle-selective-display)
+
+(global-set-key (kbd "C-x C-r") 'recentf-open-files)
+
 (define-key global-map (kbd "s-i") 'iterm-here)
 (define-key global-map (kbd "s-b") 'ido-switch-buffer)
 
@@ -377,15 +307,21 @@
 (define-key input-decode-map "\e[1;3C" [M-right])
 (define-key input-decode-map "\e[1;3D" [M-left])
 
+(global-set-key (kbd "M-/") (make-hippie-expand-function
+                             '(try-expand-dabbrev-visible
+                               try-expand-dabbrev
+                               try-complete-file-name-partially
+                               try-complete-file-name
+                               try-expand-dabbrev-all-buffers) t))
 
 ;;;;;;;;;;;;;;;
 ;; mode-line ;;
 ;;;;;;;;;;;;;;;
 
-;; (require 'smart-mode-line)
+(require 'smart-mode-line)
 ;; (setq sml/theme 'dark)
 ;; (sml/setup)
-;; (sml/setup)
+
 
 
 ;;;;;;;;;;;;;;;
@@ -596,6 +532,7 @@
      (output-html "xdg-open"))))
  '(ack-and-a-half-executable "ack")
  '(autopair-global-mode t)
+ '(bmkp-last-as-first-bookmark-file "/Users/joe/.emacs.d/bookmarks")
  '(c-default-style
    (quote
     ((java-mode . "java")
@@ -606,7 +543,7 @@
  '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
-    ("57f8801351e8b7677923c9fe547f7e19f38c99b80d68c34da6fa9b94dc6d3297" default)))
+    ("756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "57f8801351e8b7677923c9fe547f7e19f38c99b80d68c34da6fa9b94dc6d3297" default)))
  '(delete-selection-mode t)
  '(desktop-save-mode t)
  '(dired-auto-revert-buffer t)
@@ -626,11 +563,14 @@
    (quote
     ("/usr/local/bin" "/Users/joe/.virtualenvs/linggle-flask/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/usr/local/Cellar/emacs/HEAD/libexec/emacs/24.3.50/i386-apple-darwin12.4.0")))
  '(flx-ido-mode t)
- '(global-discover-mode t)
+ '(global-discover-mode nil)
  '(global-hl-line-mode nil)
  '(global-linum-mode t)
  '(global-subword-mode t)
  '(global-visual-line-mode t)
+ '(guide-key-mode t)
+ '(guide-key/guide-key-sequence (quote ("C-x" "M-s" "C-c")))
+ '(guide-key/recursive-key-sequence-flag t)
  '(hl-line-face (quote hl-line))
  '(ibuffer-saved-filter-groups nil)
  '(ibuffer-saved-filters
@@ -660,7 +600,7 @@
  '(indent-guide-inhibit-modes (quote (dired-mode package-menu-mode)))
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
- '(initial-buffer-choice "~/")
+ '(initial-buffer-choice (quote bookmark-bmenu-list))
  '(insert-shebang-custom-headers
    (quote
     (("py" . "#!/usr/bin/env python
@@ -699,7 +639,8 @@
     (("gnu" . "http://elpa.gnu.org/packages/")
      ("melpa" . "http://melpa.org/packages/")
      ("org" . "http://orgmode.org/elpa/")
-     ("elpy" . "http://jorgenschaefer.github.io/packages/"))))
+     ("elpy" . "http://jorgenschaefer.github.io/packages/")
+     ("marmalade" . "http://marmalade-repo.org/packages/"))))
  '(paradox-automatically-star t)
  '(pdf-latex-command "xelatex")
  '(phi-autopair-global-mode nil)
@@ -708,6 +649,7 @@
     ("%`%l \"\\nonstopmode\\nofiles\\PassOptionsToPackage{"
      ("," . preview-required-option-list)
      "}{preview}\\AtBeginDocument{\\ifx\\ifPreview\\undefined" preview-default-preamble "\\fi}\"%' %t")))
+ '(projectile-global-mode t)
  '(recentf-max-saved-items 100)
  '(recentf-mode t)
  '(reftex-plug-into-AUCTeX t)
@@ -722,6 +664,8 @@
  '(show-paren-ring-bell-on-mismatch t)
  '(show-paren-style (quote mixed))
  '(size-indication-mode t)
+ '(sml/theme (quote dark))
+ '(sml/vc-mode-show-backend t)
  '(tool-bar-mode nil)
  '(tramp-default-method "sshx")
  '(which-function-mode t)
@@ -743,3 +687,4 @@
  ;; '(default ((t (:inherit nil :stipple nil :background "#272822" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "nil" :family "Monaco"))))
 
 (put 'narrow-to-region 'disabled nil)
+(put 'set-goal-column 'disabled nil)
