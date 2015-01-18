@@ -1,28 +1,26 @@
-(add-to-list 'load-path "~/.emacs.d/local-lisp/")
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-
 ;; (getenv "PATH")
 (setenv "PATH" (concat "/usr/local/bin" ":" (getenv "PATH")))
 (setenv "PATH" (concat "/usr/texbin" ":" (getenv "PATH")))
 
-(load "~/.emacs.d/local-lisp/secrets.el")
 
 (require 'package)
 (package-initialize)
-(require 'el-get)
 
+
+
+;;;;;;;;;;;
+;; local ;;
+;;;;;;;;;;;
+(add-to-list 'load-path "~/.emacs.d/local-lisp/")
 (require 'comment-dwim-line)
 (require 'code-folding)
 (when window-system (require 'qiang-font))
-(require 'electric-case)
-(require 'bm)
+(load "~/.emacs.d/local-lisp/secrets.el")
 
 ;;;;;;;;;;;;;;
 ;; bookmark ;;
 ;;;;;;;;;;;;;;
-
-(bookmark-bmenu-list)
-(switch-to-buffer "*Bookmark List*")
+(require 'bm)
 
 (global-set-key (kbd "<left-fringe> <mouse-1>") 'bm-toggle-mouse)
 (global-unset-key (kbd "C-x m"))
@@ -30,11 +28,9 @@
 (global-set-key (kbd "C-x m n")   'bm-next)
 (global-set-key (kbd "C-x m p")   'bm-previous)
 
-
 ;;;;;;;;;;;;
 ;; el-get ;;
 ;;;;;;;;;;;;
-
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless (require 'el-get nil 'noerror)
@@ -61,9 +57,18 @@
 ;;;;;;;;;;;;
 ;; python ;;
 ;;;;;;;;;;;;
-(add-hook 'python-mode-hook 'insert-shebang)
-(require 'indent-guide)
-(elpy-enable)
+;; (add-hook 'python-mode-hook 'insert-shebang)
+(add-hook 'python-mode-hook 'anaconda-mode)
+(add-hook 'python-mode-hook 'eldoc-mode)
+;; (require 'indent-guide)
+
+;; (elpy-enable)
+
+;; (setq elpy-rpc-python-command "python3")
+;; (elpy-use-ipython "ipython3")
+(setq python-shell-interpreter "ipython3")
+
+(require 'py-autopep8)
 
 ;;;;;;;;;;;;;
 ;; ipython ;;
@@ -71,7 +76,7 @@
 
 ;; (setq
 ;;  python-shell-interpreter "ipython"
-;;  python-shell-interpreter-args ""
+;;  python-shell-interpreter-args "--matplotlib --pdb --nosep"
 ;;  python-shell-prompt-regexp "In \\[[0-9]+\\]: "
 ;;  python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
 ;;  python-shell-completion-setup-code
@@ -84,11 +89,29 @@
 ;;;;;;;;;;
 ;; Jedi ;;
 ;;;;;;;;;;
-
-
 ;; (setq jedi:setup-keys t)                      ; optional
 ;; (setq jedi:complete-on-dot t)                 ; optional
 ;; (add-hook 'python-mode-hook 'jedi:setup)
+
+
+;;;;;;;;;;
+;; helm ;;
+;;;;;;;;;;
+(require 'helm)
+(require 'helm-config)
+(require 'helm-projectile)
+(helm-projectile-on)
+
+;; (setq helm-M-x-fuzzy-match t)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+(global-set-key (kbd "C-x b") 'helm-mini)
+(global-set-key (kbd "C-x C-r") 'helm-recentf)
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+(global-set-key (kbd "M-s o")   'helm-swoop)
+(global-set-key (kbd "M-s /")   #'helm-multi-swoop)
+(global-set-key (kbd "C-x r l") #'helm-filtered-bookmarks)
+(global-set-key (kbd "M-s s")   #'helm-ag)
 
 
 ;;;;;;;;;;;;;;;
@@ -101,6 +124,7 @@
 ;; Scala ;;
 ;;;;;;;;;;;
 ;; (require 'ensime)
+(require 'electric-case)
 (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
 
@@ -174,7 +198,6 @@
 ;; (global-set-key (kbd "C-s") 'phi-search)
 ;; (global-set-key (kbd "C-r") 'phi-search-backward)
 (require 'phi-autopair)
-(phi-autopair-global-mode)
 
 
 ;;;;;;;;
@@ -198,19 +221,21 @@
 ;;;;;;;;;;
 ;; Smex ;;
 ;;;;;;;;;;
-(global-set-key [(meta x)] (lambda ()
-                             (interactive)
-                             (or (boundp 'smex-cache)
-                                 (smex-initialize))
-                             (global-set-key [(meta x)] 'smex)
-                             (smex)))
 
-(global-set-key [(shift meta x)] (lambda ()
-                                   (interactive)
-                                   (or (boundp 'smex-cache)
-                                       (smex-initialize))
-                                   (global-set-key [(shift meta x)] 'smex-major-mode-commands)
-                                   (smex-major-mode-commands)))
+;; (global-set-key [(meta x)] (lambda ()
+;;                              (interactive)
+;;                              (or (boundp 'smex-cache)
+;;                                  (smex-initialize))
+;;                              (global-set-key [(meta x)] 'smex)
+;;                              (smex)))
+
+;; (global-set-key [(shift meta x)] (lambda ()
+;;                                    (interactive)
+;;                                    (or (boundp 'smex-cache)
+;;                                        (smex-initialize))
+;;                                    (global-set-key [(shift meta x)] 'smex-major-mode-commands)
+;;                                    (smex-major-mode-commands)))
+
 ;;;;;;;;;;;
 ;; SLIME ;;
 ;;;;;;;;;;;
@@ -246,12 +271,12 @@
 ;;;;;;;;;
 ;; ACK ;;
 ;;;;;;;;;
-(require 'ack-and-a-half)
-;; Create shorter aliases
-(defalias 'ack 'ack-and-a-half)
-(defalias 'ack-same 'ack-and-a-half-same)
-(defalias 'ack-find-file 'ack-and-a-half-find-file)
-(defalias 'ack-find-file-same 'ack-and-a-half-find-file-same)
+;; (require 'ack-and-a-half)
+;; ;; Create shorter aliases
+;; (defalias 'ack 'ack-and-a-half)
+;; (defalias 'ack-same 'ack-and-a-half-same)
+;; (defalias 'ack-find-file 'ack-and-a-half-find-file)
+;; (defalias 'ack-find-file-same 'ack-and-a-half-find-file-same)
 
 ;;;;;;;;;;
 ;; misc ;;
@@ -260,9 +285,9 @@
 (global-unset-key (kbd "C-\\"))
 (define-key global-map (kbd "C-\\") 'set-mark-command)
 
-(global-unset-key (kbd "C-x C-b"))
-(define-key global-map (kbd "C-x C-b") 'ibuffer)
-(add-hook 'ibuffer-mode-hook 'ibuffer-auto-mode)
+;; (global-unset-key (kbd "C-x C-b"))
+;; (define-key global-map (kbd "C-x C-b") 'ibuffer)
+;; (add-hook 'ibuffer-mode-hook 'ibuffer-auto-mode)
 
 (require 'view)
 (global-unset-key (kbd "M-RET"))
@@ -277,19 +302,26 @@
 (global-unset-key (kbd "C-x C-z"))
 (define-key global-map (kbd "C-x C-z") 'magit-status)
 
-(global-unset-key (kbd "C-z"))
-(define-key global-map (kbd "C-z") 'toggle-hiding)
-(global-unset-key (kbd "C-+"))
-(define-key global-map (kbd "C-+") 'toggle-selective-display)
+;; (global-unset-key (kbd "C-z"))
+;; (define-key global-map (kbd "C-z") 'toggle-hiding)
+;; (global-unset-key (kbd "C-+"))
+;; (define-key global-map (kbd "C-+") 'toggle-selective-display)
 
-(global-set-key (kbd "C-x C-r") 'recentf-open-files)
-
-(define-key global-map (kbd "s-i") 'iterm-here)
-(define-key global-map (kbd "s-b") 'ido-switch-buffer)
+;; (global-set-key (kbd "C-x C-r") 'recentf-open-files)
 
 (defun iterm-here ()
   (interactive)
   (dired-smart-shell-command "open -a iTerm $PWD" nil nil))
+
+(defun reveal-here ()
+  (interactive)
+  (dired-smart-shell-command "open $PWD" nil nil))
+
+
+(define-key global-map (kbd "s-i") 'iterm-here)
+(define-key global-map (kbd "s-r") 'reveal-here)
+(define-key global-map (kbd "s-b") 'ido-switch-buffer)
+
 
 (define-key global-map (kbd "C-0") 'delete-window)
 (define-key global-map (kbd "C-1") 'delete-other-windows)
@@ -322,6 +354,14 @@
 ;; (setq sml/theme 'dark)
 ;; (sml/setup)
 
+
+;;;;;;;;;;;
+;; direx ;;
+;;;;;;;;;;;
+(require 'popwin)
+(push '(direx:direx-mode :position bottom :width 40 :dedicated t)
+      popwin:special-display-config)
+(global-set-key (kbd "C-x C-j") 'direx:jump-to-directory-other-window)
 
 
 ;;;;;;;;;;;;;;;
@@ -531,7 +571,8 @@
      (output-pdf "skim")
      (output-html "xdg-open"))))
  '(ack-and-a-half-executable "ack")
- '(autopair-global-mode t)
+ '(autopair-global-mode nil)
+ '(before-save-hook (quote (py-autopep8-before-save)))
  '(bmkp-last-as-first-bookmark-file "/Users/joe/.emacs.d/bookmarks")
  '(c-default-style
    (quote
@@ -540,10 +581,11 @@
      (other . "gnu"))))
  '(case-fold-search t)
  '(column-number-mode t)
+ '(current-language-environment "UTF-8")
  '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
-    ("756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "57f8801351e8b7677923c9fe547f7e19f38c99b80d68c34da6fa9b94dc6d3297" default)))
+    ("4e262566c3d57706c70e403d440146a5440de056dfaeb3062f004da1711d83fc" "64581032564feda2b5f2cf389018b4b9906d98293d84d84142d90d7986032d33" "0e7da2c7c64fb5d4764250ffa4b8b33c0946577108d1d6444f1020d0dabba784" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "57f8801351e8b7677923c9fe547f7e19f38c99b80d68c34da6fa9b94dc6d3297" default)))
  '(delete-selection-mode t)
  '(desktop-save-mode t)
  '(dired-auto-revert-buffer t)
@@ -554,10 +596,10 @@
    (quote
     ("Lucida Grande" "Segoe UI" "DejaVu Sans" "Bitstream Vera" "Tahoma" "Verdana" "Helvetica" "Arial Unicode MS" "Arial" "Heiti TC")))
  '(el-get-git-shallow-clone t)
- '(elpy-mode-hook (quote (subword-mode hl-line-mode indent-guide-mode)))
+ '(elpy-mode-hook (quote (subword-mode hl-line-mode)))
  '(elpy-modules
    (quote
-    (elpy-module-company elpy-module-eldoc elpy-module-flymake elpy-module-pyvenv elpy-module-yasnippet elpy-module-sane-defaults)))
+    (elpy-module-company elpy-module-eldoc elpy-module-flymake elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-yasnippet elpy-module-sane-defaults)))
  '(ensime-auto-connect (quote ask))
  '(exec-path
    (quote
@@ -571,6 +613,22 @@
  '(guide-key-mode t)
  '(guide-key/guide-key-sequence (quote ("C-x" "M-s" "C-c")))
  '(guide-key/recursive-key-sequence-flag t)
+ '(helm-adaptive-mode t nil (helm-adaptive))
+ '(helm-apropos-fuzzy-match t)
+ '(helm-autoresize-mode t)
+ '(helm-buffers-favorite-modes
+   (quote
+    (lisp-interaction-mode emacs-lisp-mode text-mode org-mode python-mode lua-mode)))
+ '(helm-buffers-fuzzy-matching t)
+ '(helm-descbinds-mode t)
+ '(helm-ff-search-library-in-sexp t)
+ '(helm-file-cache-fuzzy-match t)
+ '(helm-grep-default-command "ack-grep -Hn --no-group --no-color %e %p %f")
+ '(helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f")
+ '(helm-match-plugin-mode t nil (helm-match-plugin))
+ '(helm-mode t)
+ '(helm-recentf-fuzzy-match t)
+ '(helm-time-zone-home-location "Taipei")
  '(hl-line-face (quote hl-line))
  '(ibuffer-saved-filter-groups nil)
  '(ibuffer-saved-filters
@@ -592,15 +650,14 @@
         (mode . java-mode)
         (mode . idl-mode)
         (mode . lisp-mode)))))))
- '(ido-everywhere t)
- '(ido-mode (quote both) nil (ido))
+ '(ido-everywhere nil)
+ '(ido-mode nil nil (ido))
  '(ido-use-faces nil)
  '(ido-vertical-mode t)
  '(indent-guide-global-mode nil)
  '(indent-guide-inhibit-modes (quote (dired-mode package-menu-mode)))
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
- '(initial-buffer-choice (quote bookmark-bmenu-list))
  '(insert-shebang-custom-headers
    (quote
     (("py" . "#!/usr/bin/env python
@@ -609,6 +666,7 @@
  '(keyfreq-mode t)
  '(line-number-mode t)
  '(line-spacing nil)
+ '(magit-use-overlays nil)
  '(markdown-open-command "open -a Marked %o")
  '(mouse-wheel-progressive-speed nil)
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
@@ -643,17 +701,27 @@
      ("marmalade" . "http://marmalade-repo.org/packages/"))))
  '(paradox-automatically-star t)
  '(pdf-latex-command "xelatex")
- '(phi-autopair-global-mode nil)
+ '(phi-autopair-global-mode t)
+ '(popwin-mode t)
  '(preview-LaTeX-command
    (quote
     ("%`%l \"\\nonstopmode\\nofiles\\PassOptionsToPackage{"
      ("," . preview-required-option-list)
      "}{preview}\\AtBeginDocument{\\ifx\\ifPreview\\undefined" preview-default-preamble "\\fi}\"%' %t")))
  '(projectile-global-mode t)
+ '(py-autopep8-options (quote ("\"--max-line-length=100\"")))
+ '(python-check-command "pyflakes")
+ '(python-shell-interpreter "ipython" t)
+ '(python-shell-interpreter-args "--matplotlib --pdb --nosep")
  '(recentf-max-saved-items 100)
  '(recentf-mode t)
  '(reftex-plug-into-AUCTeX t)
- '(safe-local-variable-values (quote ((TeX-engine . XeLaTeX))))
+ '(safe-local-variable-values
+   (quote
+    ((TeX-command-extra-options . "-shell-escape")
+     (TeX-command-extra-options . -shell-escape)
+     (TeX-master . master)
+     (TeX-engine . XeLaTeX))))
  '(savehist-mode t)
  '(scroll-margin 5)
  '(scroll-step 1)
@@ -666,6 +734,21 @@
  '(size-indication-mode t)
  '(sml/theme (quote dark))
  '(sml/vc-mode-show-backend t)
+ '(syslog-debug-face
+   (quote
+    ((t :background unspecified :foreground "#A1EFE4" :weight bold))))
+ '(syslog-error-face
+   (quote
+    ((t :background unspecified :foreground "#F92672" :weight bold))))
+ '(syslog-hour-face (quote ((t :background unspecified :foreground "#A6E22E"))))
+ '(syslog-info-face
+   (quote
+    ((t :background unspecified :foreground "#66D9EF" :weight bold))))
+ '(syslog-ip-face (quote ((t :background unspecified :foreground "#E6DB74"))))
+ '(syslog-su-face (quote ((t :background unspecified :foreground "#FD5FF0"))))
+ '(syslog-warn-face
+   (quote
+    ((t :background unspecified :foreground "#FD971F" :weight bold))))
  '(tool-bar-mode nil)
  '(tramp-default-method "sshx")
  '(which-function-mode t)
@@ -681,10 +764,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(highlight-symbol-face ((t (:underline "steel blue"))))
- '(hl-line ((t (:inherit t :background "#222")))))
+ '(highlight-symbol-face ((t (:background "gray10")))))
 
  ;; '(default ((t (:inherit nil :stipple nil :background "#272822" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "nil" :family "Monaco"))))
 
 (put 'narrow-to-region 'disabled nil)
 (put 'set-goal-column 'disabled nil)
+(put 'dired-find-alternate-file 'disabled nil)
