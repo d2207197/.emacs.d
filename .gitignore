@@ -28,3 +28,4 @@ var/
 /desktop
 helm-adaptive-history
 projectile.cache
+ede-projects.el
