@@ -58,9 +58,8 @@
 ;; python ;;
 ;;;;;;;;;;;;
 ;; (add-hook 'python-mode-hook 'insert-shebang)
-(add-hook 'python-mode-hook 'anaconda-mode)
-(add-hook 'python-mode-hook 'eldoc-mode)
-;; (require 'indent-guide)
+;; (add-hook 'python-mode-hook 'anaconda-mode)
+;; (add-hook 'python-mode-hook 'eldoc-mode)
 
 ;; (elpy-enable)
 
@@ -100,6 +99,13 @@
 (require 'helm)
 (require 'helm-config)
 (require 'helm-projectile)
+(require 'helm-mode)
+(require 'helm-misc)
+(require 'helm-files)
+(require 'helm-locate)
+(require 'helm-buffers)
+(require 'helm-match-plugin)
+
 (helm-projectile-on)
 
 ;; (setq helm-M-x-fuzzy-match t)
@@ -168,6 +174,18 @@
 ;; (setq org-mobile-inbox-for-pull "~/Google Drive/Org/flagged.org")
 ;; ;; Set to <your Dropbox root directory>/MobileOrg.
 ;; (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
+
+;;;;;;;
+;; C ;;
+;;;;;;;
+(require 'cc-mode)
+(require 'semantic)
+
+(global-semanticdb-minor-mode 1)
+(global-semantic-idle-scheduler-mode 1)
+
+(semantic-mode 1)
+
 
 ;;;;;;;;;;;;;
 ;; malabar ;;
@@ -573,7 +591,9 @@
  '(ack-and-a-half-executable "ack")
  '(autopair-global-mode nil)
  '(before-save-hook (quote (py-autopep8-before-save)))
- '(bmkp-last-as-first-bookmark-file "/Users/joe/.emacs.d/bookmarks")
+ '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
+ '(browse-url-generic-args (quote ("-a" "Safari")))
+ '(browse-url-generic-program "open")
  '(c-default-style
    (quote
     ((java-mode . "java")
@@ -595,6 +615,7 @@
  '(dynamic-fonts-preferred-proportional-fonts
    (quote
     ("Lucida Grande" "Segoe UI" "DejaVu Sans" "Bitstream Vera" "Tahoma" "Verdana" "Helvetica" "Arial Unicode MS" "Arial" "Heiti TC")))
+ '(ecb-options-version "2.40")
  '(el-get-git-shallow-clone t)
  '(elpy-mode-hook (quote (subword-mode hl-line-mode)))
  '(elpy-modules
@@ -608,6 +629,11 @@
  '(global-discover-mode nil)
  '(global-hl-line-mode nil)
  '(global-linum-mode t)
+ '(global-semantic-decoration-mode t)
+ '(global-semantic-highlight-func-mode t)
+ '(global-semantic-idle-summary-mode t)
+ '(global-semantic-mru-bookmark-mode t)
+ '(global-semantic-stickyfunc-mode t)
  '(global-subword-mode t)
  '(global-visual-line-mode t)
  '(guide-key-mode t)
@@ -625,9 +651,13 @@
  '(helm-file-cache-fuzzy-match t)
  '(helm-grep-default-command "ack-grep -Hn --no-group --no-color %e %p %f")
  '(helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f")
+ '(helm-gtags-display-style (quote detail))
+ '(helm-gtags-suggested-key-mapping t)
+ '(helm-gtags-use-input-at-cursor t)
  '(helm-match-plugin-mode t nil (helm-match-plugin))
  '(helm-mode t)
  '(helm-recentf-fuzzy-match t)
+ '(helm-swoop-speed-or-color t)
  '(helm-time-zone-home-location "Taipei")
  '(hl-line-face (quote hl-line))
  '(ibuffer-saved-filter-groups nil)
@@ -654,8 +684,6 @@
  '(ido-mode nil nil (ido))
  '(ido-use-faces nil)
  '(ido-vertical-mode t)
- '(indent-guide-global-mode nil)
- '(indent-guide-inhibit-modes (quote (dired-mode package-menu-mode)))
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(insert-shebang-custom-headers
