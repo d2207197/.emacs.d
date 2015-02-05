@@ -739,7 +739,7 @@
  '(projectile-global-mode t)
  '(py-autopep8-options (quote ("\"--max-line-length=100\"")))
  '(python-check-command "pyflakes")
- '(python-shell-interpreter "ipython" t)
+ '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--matplotlib --pdb --nosep")
  '(recentf-max-saved-items 100)
  '(recentf-mode t)
