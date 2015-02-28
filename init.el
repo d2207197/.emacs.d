@@ -2,20 +2,59 @@
 (setenv "PATH" (concat "/usr/local/bin" ":" (getenv "PATH")))
 (setenv "PATH" (concat "/usr/texbin" ":" (getenv "PATH")))
 
+(setq mac-command-modifier 'meta) ; make cmd key do Meta
+(setq mac-option-modifier 'super) ; make opt key do Super
+(setq mac-control-modifier 'control) ; make Control key do Control
+(setq ns-function-modifier 'hyper)  ; make Fn key do Hyper
 
 (require 'package)
 (package-initialize)
 
-
-
-;;;;;;;;;;;
-;; local ;;
-;;;;;;;;;;;
 (add-to-list 'load-path "~/.emacs.d/local-lisp/")
-(require 'comment-dwim-line)
-(require 'code-folding)
-(when window-system (require 'qiang-font))
 (load "~/.emacs.d/local-lisp/secrets.el")
+
+;; (require 'code-folding)
+
+;;;;;;;;;;
+;; file ;;
+;;;;;;;;;;
+(global-set-key (kbd "C-x C-u") 'revert-buffer)
+
+;;;;;;;;;;;;
+;; search ;;
+;;;;;;;;;;;;
+(require 'anzu)
+(global-anzu-mode +1)
+(global-set-key (kbd "M-%") 'anzu-query-replace)
+(global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
+
+;;;;;;;;;;;;;;
+;; register ;;
+;;;;;;;;;;;;;;
+(global-set-key (kbd "C-x r i") 'helm-register)
+
+;;;;;;;;;;;
+;; usage ;;
+;;;;;;;;;;;
+(setq guru-warn-only t)
+
+
+;;;;;;;;;;;;;
+;; comment ;;
+;;;;;;;;;;;;;
+(global-set-key (kbd "C-;") #'comment-line)
+;; (require 'comment-dwim-line)
+
+;;;;;;;;;;;
+;; font ;;
+;;;;;;;;;;;
+(when window-system (require 'qiang-font))
+
+
+;;;;;;;;;;
+;; move ;;
+;;;;;;;;;;
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
 ;;;;;;;;;;;;;;
 ;; bookmark ;;
@@ -28,9 +67,14 @@
 (global-set-key (kbd "C-x m n")   'bm-next)
 (global-set-key (kbd "C-x m p")   'bm-previous)
 
-;;;;;;;;;;;;
-;; el-get ;;
-;;;;;;;;;;;;
+;;;;;;;;;;
+;; mark ;;
+;;;;;;;;;;
+(global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
+
+;;;;;;;;;;;;;
+;; package ;;
+;;;;;;;;;;;;;
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless (require 'el-get nil 'noerror)
@@ -61,10 +105,11 @@
 ;; (add-hook 'python-mode-hook 'anaconda-mode)
 ;; (add-hook 'python-mode-hook 'eldoc-mode)
 
-;; (elpy-enable)
 
-;; (setq elpy-rpc-python-command "python3")
-;; (elpy-use-ipython "ipython3")
+(elpy-enable)
+
+(setq elpy-rpc-python-command "python3")
+(elpy-use-ipython "ipython3")
 (setq python-shell-interpreter "ipython3")
 
 (require 'py-autopep8)
@@ -108,6 +153,24 @@
 
 (helm-projectile-on)
 
+
+;; (defun helm-backspace ()
+;;   "Forward to `backward-delete-char'.
+;; On error (read-only), quit without selecting."
+;;   (interactive)
+;;   (condition-case nil
+;;       (backward-delete-char 1)
+;;     (error
+;;      (helm-keyboard-quit))))
+;; (define-key helm-map (kbd "DEL") 'helm-backspace)
+;; (defun fu/helm-find-files-navigate-forward (orig-fun &rest args)
+;;   (if (file-directory-p (helm-get-selection))
+;;       (apply orig-fun args)
+;;     (helm-maybe-exit-minibuffer)))
+;; (advice-add 'helm-execute-persistent-action :around #'fu/helm-find-files-navigate-forward)
+;; (define-key helm-find-files-map (kbd "RET") 'helm-execute-persistent-action)
+
+
 ;; (setq helm-M-x-fuzzy-match t)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
@@ -118,13 +181,14 @@
 (global-set-key (kbd "M-s /")   #'helm-multi-swoop)
 (global-set-key (kbd "C-x r l") #'helm-filtered-bookmarks)
 (global-set-key (kbd "M-s s")   #'helm-ag)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
 
 
 ;;;;;;;;;;;;;;;
 ;; Undo Tree ;;
 ;;;;;;;;;;;;;;;
 (require 'undo-tree)
-(global-set-key (kbd "C-?") 'undo-tree-visualize)
+;; (global-set-key (kbd "C-?") 'undo-tree-visualize)
 
 ;;;;;;;;;;;
 ;; Scala ;;
@@ -164,10 +228,15 @@
 ;; org-mode ;;
 ;;;;;;;;;;;;;;
 
-;; (global-set-key "\C-cl" 'org-store-link)
+(define-key org-mode-map (kbd "C-c %") nil)
+(define-key org-mode-map (kbd "C-c &") nil)
+(define-key org-mode-map (kbd "C-c C-9") 'org-mark-ring-goto)
+(define-key org-mode-map (kbd "C-c C-0") 'org-mark-ring-push)
+
+(global-set-key (kbd "C-c l") 'org-store-link)
 ;; (global-set-key "\C-cc" 'org-capture)
-;; (global-set-key "\C-ca" 'org-agenda)
-;; (global-set-key "\C-cb" 'org-iswitchb)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
 ;; ;; Set to the location of your Org files on your local system
 ;; (setq org-directory "~/Google Drive/Org")
 ;; ;; Set to the name of the file where new notes will be stored
@@ -180,10 +249,12 @@
 ;;;;;;;
 (require 'cc-mode)
 (require 'semantic)
+(cscope-setup)
 
 (global-semanticdb-minor-mode 1)
 (global-semantic-idle-scheduler-mode 1)
-
+(add-hook 'c-mode-common-hook 'helm-gtags-mode)
+(add-hook 'c-mode-common-hook 'cscope-minor-mode)
 (semantic-mode 1)
 
 
@@ -266,18 +337,81 @@
 ;; (slime-setup '(slime-fancy slime-asdf slime-tramp)) 
 
 
+;;;;;;;;;;;;
+;; parens ;;
+;;;;;;;;;;;;
+
+(require 'change-inner)
+(global-set-key (kbd "M-i") 'change-inner)
+(global-set-key (kbd "M-o") 'change-outer)
+
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
+
+
+(require 'smartparens-config)
+
+(define-key sp-keymap (kbd "C-M-f") 'sp-forward-sexp)
+(define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
+
+(define-key sp-keymap (kbd "C-M-d") 'sp-down-sexp)
+(define-key sp-keymap (kbd "C-M-a") 'sp-backward-down-sexp)
+(define-key sp-keymap (kbd "C-S-a") 'sp-beginning-of-sexp)
+(define-key sp-keymap (kbd "C-S-d") 'sp-end-of-sexp)
+
+(define-key sp-keymap (kbd "C-M-e") 'sp-up-sexp)
+(define-key emacs-lisp-mode-map (kbd ")") 'sp-up-sexp)
+(define-key sp-keymap (kbd "C-M-u") 'sp-backward-up-sexp)
+(define-key sp-keymap (kbd "C-M-t") 'sp-transpose-sexp)
+
+(define-key sp-keymap (kbd "C-M-n") 'sp-next-sexp)
+(define-key sp-keymap (kbd "C-M-p") 'sp-previous-sexp)
+
+(define-key sp-keymap (kbd "C-M-k") 'sp-kill-sexp)
+(define-key sp-keymap (kbd "C-M-w") 'sp-copy-sexp)
+
+(define-key sp-keymap (kbd "M-<delete>") 'sp-unwrap-sexp)
+(define-key sp-keymap (kbd "M-<backspace>") 'sp-backward-unwrap-sexp)
+
+(define-key sp-keymap (kbd "C-<right>") 'sp-forward-slurp-sexp)
+(define-key sp-keymap (kbd "C-<left>") 'sp-forward-barf-sexp)
+(define-key sp-keymap (kbd "C-M-<left>") 'sp-backward-slurp-sexp)
+(define-key sp-keymap (kbd "C-M-<right>") 'sp-backward-barf-sexp)
+
+(define-key sp-keymap (kbd "M-D") 'sp-splice-sexp)
+(define-key sp-keymap (kbd "C-M-<delete>") 'sp-splice-sexp-killing-forward)
+(define-key sp-keymap (kbd "C-M-<backspace>") 'sp-splice-sexp-killing-backward)
+(define-key sp-keymap (kbd "C-S-<backspace>") 'sp-splice-sexp-killing-around)
+
+(define-key sp-keymap (kbd "C-]") 'sp-select-next-thing-exchange)
+(define-key sp-keymap (kbd "C-\"") 'sp-select-previous-thing)
+(define-key sp-keymap (kbd "C-'") 'sp-select-next-thing)
+
+(define-key sp-keymap (kbd "M-F") 'sp-forward-symbol)
+(define-key sp-keymap (kbd "M-B") 'sp-backward-symbol)
+
+(define-key sp-keymap (kbd "H-t") 'sp-prefix-tag-object)
+(define-key sp-keymap (kbd "H-p") 'sp-prefix-pair-object)
+(define-key sp-keymap (kbd "H-s c") 'sp-convolute-sexp)
+(define-key sp-keymap (kbd "H-s a") 'sp-absorb-sexp)
+(define-key sp-keymap (kbd "H-s e") 'sp-emit-sexp)
+(define-key sp-keymap (kbd "H-s p") 'sp-add-to-previous-sexp)
+(define-key sp-keymap (kbd "H-s n") 'sp-add-to-next-sexp)
+(define-key sp-keymap (kbd "H-s j") 'sp-join-sexp)
+(define-key sp-keymap (kbd "H-s s") 'sp-split-sexp)
+
 ;;;;;;;;;;;;;
 ;; paredit ;;
 ;;;;;;;;;;;;;
 
-(autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
-(add-hook 'slime-repl-mode-hook       #'enable-paredit-mode)
-(add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
-(add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-(add-hook 'ielm-mode-hook             #'enable-paredit-mode)
-(add-hook 'lisp-mode-hook             #'enable-paredit-mode)
-(add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-(add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+;; (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+;; (add-hook 'slime-repl-mode-hook       #'enable-paredit-mode)
+;; (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+;; (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+;; (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+;; (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+;; (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+;; (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
 
 ;; Stop SLIME's REPL from grabbing DEL,
 ;; which is annoying when backspacing over a '('
@@ -285,6 +419,8 @@
   (define-key slime-repl-mode-map
     (read-kbd-macro paredit-backward-delete-key) nil))
 (add-hook 'slime-repl-mode-hook 'override-slime-repl-bindings-with-paredit)
+
+
 
 ;;;;;;;;;
 ;; ACK ;;
@@ -345,6 +481,8 @@
 (define-key global-map (kbd "C-1") 'delete-other-windows)
 (define-key global-map (kbd "C-2") 'split-window-below)
 (define-key global-map (kbd "C-3") 'split-window-right)
+(define-key global-map (kbd "M-p") 'ace-window)
+
 
 
 (define-key input-decode-map "\e[1;10A" [M-S-up])
@@ -609,6 +747,9 @@
  '(delete-selection-mode t)
  '(desktop-save-mode t)
  '(dired-auto-revert-buffer t)
+ '(dired-hide-details-hide-information-lines nil)
+ '(dired-hide-details-hide-symlink-targets nil)
+ '(dired-isearch-filenames t)
  '(dynamic-fonts-preferred-monospace-fonts
    (quote
     ("Monaco" "Consolas" "Menlo" "DejaVu Sans Mono" "Droid Sans Mono Pro" "Droid Sans Mono" "Inconsolata" "Source Code Pro" "Lucida Console" "Envy Code R" "Andale Mono" "Lucida Sans Typewriter" "monoOne" "Lucida Typewriter" "Panic Sans" "Bitstream Vera Sans Mono" "HyperFont" "PT Mono" "Ti92Pluspc" "Excalibur Monospace" "Courier New" "Courier" "Cousine" "Fira Mono" "Lekton" "Ubuntu Mono" "Liberation Mono" "BPmono" "Free Mono" "Anonymous Pro" "ProFont" "ProFontWindows" "Latin Modern Mono" "Code 2002" "ProggyCleanTT" "ProggyTinyTT" "Heiti TC")))
@@ -626,6 +767,9 @@
    (quote
     ("/usr/local/bin" "/Users/joe/.virtualenvs/linggle-flask/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/usr/local/Cellar/emacs/HEAD/libexec/emacs/24.3.50/i386-apple-darwin12.4.0")))
  '(flx-ido-mode t)
+ '(global-auto-revert-mode t)
+ '(global-diff-hl-mode t)
+ '(global-dired-hide-details-mode nil)
  '(global-discover-mode nil)
  '(global-hl-line-mode nil)
  '(global-linum-mode t)
@@ -635,10 +779,12 @@
  '(global-semantic-mru-bookmark-mode t)
  '(global-semantic-stickyfunc-mode t)
  '(global-subword-mode t)
+ '(global-undo-tree-mode t)
  '(global-visual-line-mode t)
  '(guide-key-mode t)
  '(guide-key/guide-key-sequence (quote ("C-x" "M-s" "C-c")))
  '(guide-key/recursive-key-sequence-flag t)
+ '(guru-global-mode t)
  '(helm-adaptive-mode t nil (helm-adaptive))
  '(helm-apropos-fuzzy-match t)
  '(helm-autoresize-mode t)
@@ -647,9 +793,11 @@
     (lisp-interaction-mode emacs-lisp-mode text-mode org-mode python-mode lua-mode)))
  '(helm-buffers-fuzzy-matching t)
  '(helm-descbinds-mode t)
+ '(helm-ff-auto-update-initial-value t)
  '(helm-ff-search-library-in-sexp t)
+ '(helm-ff-skip-boring-files t)
  '(helm-file-cache-fuzzy-match t)
- '(helm-grep-default-command "ack-grep -Hn --no-group --no-color %e %p %f")
+ '(helm-grep-default-command "ack -Hn --no-group --no-color %e %p %f")
  '(helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f")
  '(helm-gtags-display-style (quote detail))
  '(helm-gtags-suggested-key-mapping t)
@@ -659,6 +807,7 @@
  '(helm-recentf-fuzzy-match t)
  '(helm-swoop-speed-or-color t)
  '(helm-time-zone-home-location "Taipei")
+ '(helm-tramp-verbose 3)
  '(hl-line-face (quote hl-line))
  '(ibuffer-saved-filter-groups nil)
  '(ibuffer-saved-filters
@@ -695,7 +844,8 @@
  '(line-number-mode t)
  '(line-spacing nil)
  '(magit-use-overlays nil)
- '(markdown-open-command "open -a Marked %o")
+ '(markdown-command "multimarkdown")
+ '(markdown-open-command "/Applications/Marked.app/Contents/MacOS/Marked")
  '(mouse-wheel-progressive-speed nil)
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
  '(org-agenda-files
@@ -720,6 +870,7 @@
  '(org-latex-to-pdf-process
    (quote
     ("xelatex -interaction nonstopmode -output-directory %o %f" "xelatex -interaction nonstopmode -output-directory %o %f" "xelatex -interaction nonstopmode -output-directory %o %f")))
+ '(org-startup-indented t)
  '(package-archives
    (quote
     (("gnu" . "http://elpa.gnu.org/packages/")
@@ -727,9 +878,14 @@
      ("org" . "http://orgmode.org/elpa/")
      ("elpy" . "http://jorgenschaefer.github.io/packages/")
      ("marmalade" . "http://marmalade-repo.org/packages/"))))
+ '(package-selected-packages
+   (quote
+    (ace-window change-inner auto-complete persistent-soft cython-mode perspective bind-key anaconda-mode company helm load-relative projectile guru-mode diff-hl volatile-highlights zenburn-theme yaml-mode yagist xterm-color xcscope wgrep-ack web-mode vlf virtualenv undo-tree tabbar ssh-config-mode sr-speedbar solarized-theme smex smartparens smart-operator smart-mode-line-powerline-theme slime realgud rainbow-mode rainbow-delimiters py-autopep8 project-explorer pig-snippets pig-mode phi-search phi-autopair pdf-tools paradox palette osx-plist org-trello org-pandoc org nose nginx-mode neotree multiple-cursors monokai-theme minimap markdown-mode malabar-mode makey magit lua-mode linum-relative latex-preview-pane latex-pretty-symbols latex-extra keyfreq key-chord js2-mode jinja2-mode jedi-direx insert-shebang iedit idomenu ido-vertical-mode htmlize highlight-symbol highlight-stages help-fns+ helm-swoop helm-spotify helm-projectile helm-ls-hg helm-ls-git helm-gtags helm-descbinds helm-ag helm-ack haskell-mode guide-key gtags god-mode gitignore-mode gitconfig-mode gist ggtags fuzzy font-utils flycheck flx-ido floobits fancy-narrow expand-region esxml ensime elpy elnode electric-case ein ecb dirtree dired+ diminish cyberpunk-theme css-eldoc company-math company-auctex company-anaconda command-log-mode cdlatex bookmark+ bm autopair auctex-latexmk anzu afternoon-theme ack ace-jump-mode ac-math 2048-game)))
  '(paradox-automatically-star t)
+ '(paradox-display-download-count t)
+ '(paradox-execute-asynchronously (quote ask))
  '(pdf-latex-command "xelatex")
- '(phi-autopair-global-mode t)
+ '(phi-autopair-global-mode nil)
  '(popwin-mode t)
  '(preview-LaTeX-command
    (quote
@@ -756,10 +912,12 @@
  '(server-mode t)
  '(server-use-tcp t)
  '(show-paren-delay 0.1)
- '(show-paren-mode t)
+ '(show-paren-mode nil)
  '(show-paren-ring-bell-on-mismatch t)
  '(show-paren-style (quote mixed))
+ '(show-smartparens-global-mode t)
  '(size-indication-mode t)
+ '(smartparens-global-strict-mode t)
  '(sml/theme (quote dark))
  '(sml/vc-mode-show-backend t)
  '(syslog-debug-face
