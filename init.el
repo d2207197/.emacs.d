@@ -10,6 +10,8 @@
 (require 'package)
 (package-initialize)
 
+(require 'bind-key)
+
 (add-to-list 'load-path "~/.emacs.d/local-lisp/")
 (load "~/.emacs.d/local-lisp/secrets.el")
 
@@ -18,20 +20,22 @@
 ;;;;;;;;;;
 ;; file ;;
 ;;;;;;;;;;
-(global-set-key (kbd "C-x C-u") 'revert-buffer)
+;; (global-set-key (kbd "C-x C-u") 'revert-buffer)
+(bind-key "C-x C-u" 'revert-buffer)
+
 
 ;;;;;;;;;;;;
 ;; search ;;
 ;;;;;;;;;;;;
 (require 'anzu)
 (global-anzu-mode +1)
-(global-set-key (kbd "M-%") 'anzu-query-replace)
-(global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
+(bind-key "M-%" 'anzu-query-replace)
+(bind-key "C-M-%" 'anzu-query-replace-regexp)
 
 ;;;;;;;;;;;;;;
 ;; register ;;
 ;;;;;;;;;;;;;;
-(global-set-key (kbd "C-x r i") 'helm-register)
+(bind-key "C-x r i" 'helm-register)
 
 ;;;;;;;;;;;
 ;; usage ;;
@@ -42,7 +46,7 @@
 ;;;;;;;;;;;;;
 ;; comment ;;
 ;;;;;;;;;;;;;
-(global-set-key (kbd "C-;") #'comment-line)
+(bind-key "C-;" #'comment-line)
 ;; (require 'comment-dwim-line)
 
 ;;;;;;;;;;;
@@ -54,23 +58,23 @@
 ;;;;;;;;;;
 ;; move ;;
 ;;;;;;;;;;
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+(bind-key "C-c SPC" 'ace-jump-mode )
 
 ;;;;;;;;;;;;;;
 ;; bookmark ;;
 ;;;;;;;;;;;;;;
 (require 'bm)
 
-(global-set-key (kbd "<left-fringe> <mouse-1>") 'bm-toggle-mouse)
+(bind-key "<left-fringe> <mouse-1>" 'bm-toggle-mouse)
 (global-unset-key (kbd "C-x m"))
-(global-set-key (kbd "C-x m m")   'bm-toggle)
-(global-set-key (kbd "C-x m n")   'bm-next)
-(global-set-key (kbd "C-x m p")   'bm-previous)
+(bind-key "C-x m m"   'bm-toggle)
+(bind-key "C-x m n"   'bm-next)
+(bind-key "C-x m p"   'bm-previous)
 
 ;;;;;;;;;;
 ;; mark ;;
 ;;;;;;;;;;
-(global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
+(bind-key "C-h SPC" 'helm-all-mark-rings)
 
 ;;;;;;;;;;;;;
 ;; package ;;
@@ -162,33 +166,33 @@
 ;;       (backward-delete-char 1)
 ;;     (error
 ;;      (helm-keyboard-quit))))
-;; (define-key helm-map (kbd "DEL") 'helm-backspace)
+;; (bind-key "DEL" 'helm-backspace helm-map)
 ;; (defun fu/helm-find-files-navigate-forward (orig-fun &rest args)
 ;;   (if (file-directory-p (helm-get-selection))
 ;;       (apply orig-fun args)
 ;;     (helm-maybe-exit-minibuffer)))
 ;; (advice-add 'helm-execute-persistent-action :around #'fu/helm-find-files-navigate-forward)
-;; (define-key helm-find-files-map (kbd "RET") 'helm-execute-persistent-action)
+;; (bind-key "RET" 'helm-execute-persistent-action helm-find-files-map)
 
 
 ;; (setq helm-M-x-fuzzy-match t)
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-(global-set-key (kbd "C-x b") 'helm-mini)
-(global-set-key (kbd "C-x C-r") 'helm-recentf)
-(global-set-key (kbd "M-y") 'helm-show-kill-ring)
-(global-set-key (kbd "M-s o")   'helm-swoop)
-(global-set-key (kbd "M-s /")   #'helm-multi-swoop)
-(global-set-key (kbd "C-x r l") #'helm-filtered-bookmarks)
-(global-set-key (kbd "M-s s")   #'helm-ag)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(bind-key "M-x" 'helm-M-x)
+(bind-key "C-x C-b" 'helm-buffers-list)
+(bind-key "C-x b" 'helm-mini)
+(bind-key "C-x C-r" 'helm-recentf)
+(bind-key "M-y" 'helm-show-kill-ring)
+(bind-key "M-s o"   'helm-swoop)
+(bind-key "M-s /"   #'helm-multi-swoop)
+(bind-key "C-x r l" #'helm-filtered-bookmarks)
+(bind-key "M-s s"   #'helm-ag)
+(bind-key "C-x C-f" 'helm-find-files)
 
 
 ;;;;;;;;;;;;;;;
 ;; Undo Tree ;;
 ;;;;;;;;;;;;;;;
 (require 'undo-tree)
-;; (global-set-key (kbd "C-?") 'undo-tree-visualize)
+;; (bind-key "C-?" 'undo-tree-visualize)
 
 ;;;;;;;;;;;
 ;; Scala ;;
@@ -228,12 +232,12 @@
 ;; org-mode ;;
 ;;;;;;;;;;;;;;
 
-(define-key org-mode-map (kbd "C-c %") nil)
-(define-key org-mode-map (kbd "C-c &") nil)
-(define-key org-mode-map (kbd "C-c C-9") 'org-mark-ring-goto)
-(define-key org-mode-map (kbd "C-c C-0") 'org-mark-ring-push)
+(bind-key "C-c %" nil org-mode-map)
+(bind-key "C-c &" nil org-mode-map)
+(bind-key "C-c C-9" 'org-mark-ring-goto org-mode-map)
+(bind-key "C-c C-0" 'org-mark-ring-push org-mode-map)
 
-(global-set-key (kbd "C-c l") 'org-store-link)
+(bind-key "C-c l" 'org-store-link)
 ;; (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
@@ -284,8 +288,8 @@
 ;; phi ;;
 ;;;;;;;;;
 ;; (require 'phi-search)
-;; (global-set-key (kbd "C-s") 'phi-search)
-;; (global-set-key (kbd "C-r") 'phi-search-backward)
+;; (bind-key "C-s" 'phi-search)
+;; (bind-key "C-r" 'phi-search-backward)
 (require 'phi-autopair)
 
 
@@ -293,10 +297,10 @@
 ;; mc ;;
 ;;;;;;;;
 (require 'multiple-cursors)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(bind-key "C->" 'mc/mark-next-like-this)
+(bind-key "C-<" 'mc/mark-previous-like-this)
+(bind-key "C-c C-<" 'mc/mark-all-like-this)
+(bind-key "C-S-c C-S-c" 'mc/edit-lines)
 
 
 ;;;;;;;;;;;;;;;
@@ -304,8 +308,8 @@
 ;;;;;;;;;;;;;;;
 (require 'yasnippet)
 ;; (yas-global-mode 1)
-;; (define-key yas-minor-mode-map (kbd "TAB") nil)
-;; (define-key yas-minor-mode-map (kbd "C-M-y") 'yas-expand)
+;; (bind-key "TAB" nil yas-minor-mode-map)
+;; (bind-key "C-M-y" 'yas-expand yas-minor-mode-map)
 
 ;;;;;;;;;;
 ;; Smex ;;
@@ -342,63 +346,63 @@
 ;;;;;;;;;;;;
 
 (require 'change-inner)
-(global-set-key (kbd "M-i") 'change-inner)
-(global-set-key (kbd "M-o") 'change-outer)
+(bind-key "M-i" 'change-inner)
+(bind-key "M-o" 'change-outer)
 
 (require 'expand-region)
-(global-set-key (kbd "C-=") 'er/expand-region)
+(bind-key "C-=" 'er/expand-region)
 
 
 (require 'smartparens-config)
 
-(define-key sp-keymap (kbd "C-M-f") 'sp-forward-sexp)
-(define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
+(bind-key "C-M-f" 'sp-forward-sexp sp-keymap)
+(bind-key "C-M-b" 'sp-backward-sexp sp-keymap)
 
-(define-key sp-keymap (kbd "C-M-d") 'sp-down-sexp)
-(define-key sp-keymap (kbd "C-M-a") 'sp-backward-down-sexp)
-(define-key sp-keymap (kbd "C-S-a") 'sp-beginning-of-sexp)
-(define-key sp-keymap (kbd "C-S-d") 'sp-end-of-sexp)
+(bind-key "C-M-d" 'sp-down-sexp sp-keymap)
+(bind-key "C-M-a" 'sp-backward-down-sexp sp-keymap)
+(bind-key "C-S-a" 'sp-beginning-of-sexp sp-keymap)
+(bind-key "C-S-d" 'sp-end-of-sexp sp-keymap)
 
-(define-key sp-keymap (kbd "C-M-e") 'sp-up-sexp)
+(bind-key "C-M-e" 'sp-up-sexp sp-keymap)
 (define-key emacs-lisp-mode-map (kbd ")") 'sp-up-sexp)
-(define-key sp-keymap (kbd "C-M-u") 'sp-backward-up-sexp)
-(define-key sp-keymap (kbd "C-M-t") 'sp-transpose-sexp)
+(bind-key "C-M-u" 'sp-backward-up-sexp sp-keymap)
+(bind-key "C-M-t" 'sp-transpose-sexp sp-keymap)
 
-(define-key sp-keymap (kbd "C-M-n") 'sp-next-sexp)
-(define-key sp-keymap (kbd "C-M-p") 'sp-previous-sexp)
+(bind-key "C-M-n" 'sp-next-sexp sp-keymap)
+(bind-key "C-M-p" 'sp-previous-sexp sp-keymap)
 
-(define-key sp-keymap (kbd "C-M-k") 'sp-kill-sexp)
-(define-key sp-keymap (kbd "C-M-w") 'sp-copy-sexp)
+(bind-key "C-M-k" 'sp-kill-sexp sp-keymap)
+(bind-key "C-M-w" 'sp-copy-sexp sp-keymap)
 
-(define-key sp-keymap (kbd "M-<delete>") 'sp-unwrap-sexp)
-(define-key sp-keymap (kbd "M-<backspace>") 'sp-backward-unwrap-sexp)
+(bind-key "M-<delete>" 'sp-unwrap-sexp sp-keymap)
+(bind-key "M-<backspace>" 'sp-backward-unwrap-sexp sp-keymap)
 
-(define-key sp-keymap (kbd "C-<right>") 'sp-forward-slurp-sexp)
-(define-key sp-keymap (kbd "C-<left>") 'sp-forward-barf-sexp)
-(define-key sp-keymap (kbd "C-M-<left>") 'sp-backward-slurp-sexp)
-(define-key sp-keymap (kbd "C-M-<right>") 'sp-backward-barf-sexp)
+(bind-key "C-<right>" 'sp-forward-slurp-sexp sp-keymap)
+(bind-key "C-<left>" 'sp-forward-barf-sexp sp-keymap)
+(bind-key "C-M-<left>" 'sp-backward-slurp-sexp sp-keymap)
+(bind-key "C-M-<right>" 'sp-backward-barf-sexp sp-keymap)
 
-(define-key sp-keymap (kbd "M-D") 'sp-splice-sexp)
-(define-key sp-keymap (kbd "C-M-<delete>") 'sp-splice-sexp-killing-forward)
-(define-key sp-keymap (kbd "C-M-<backspace>") 'sp-splice-sexp-killing-backward)
-(define-key sp-keymap (kbd "C-S-<backspace>") 'sp-splice-sexp-killing-around)
+(bind-key "M-D" 'sp-splice-sexp sp-keymap)
+(bind-key "C-M-<delete>" 'sp-splice-sexp-killing-forward sp-keymap)
+(bind-key "C-M-<backspace>" 'sp-splice-sexp-killing-backward sp-keymap)
+(bind-key "C-S-<backspace>" 'sp-splice-sexp-killing-around sp-keymap)
 
-(define-key sp-keymap (kbd "C-]") 'sp-select-next-thing-exchange)
-(define-key sp-keymap (kbd "C-\"") 'sp-select-previous-thing)
-(define-key sp-keymap (kbd "C-'") 'sp-select-next-thing)
+(bind-key "C-]" 'sp-select-next-thing-exchange sp-keymap)
+(bind-key "C-\"" 'sp-select-previous-thing sp-keymap)
+(bind-key "C-'" 'sp-select-next-thing sp-keymap)
 
-(define-key sp-keymap (kbd "M-F") 'sp-forward-symbol)
-(define-key sp-keymap (kbd "M-B") 'sp-backward-symbol)
+(bind-key "M-F" 'sp-forward-symbol sp-keymap)
+(bind-key "M-B" 'sp-backward-symbol sp-keymap)
 
-(define-key sp-keymap (kbd "H-t") 'sp-prefix-tag-object)
-(define-key sp-keymap (kbd "H-p") 'sp-prefix-pair-object)
-(define-key sp-keymap (kbd "H-s c") 'sp-convolute-sexp)
-(define-key sp-keymap (kbd "H-s a") 'sp-absorb-sexp)
-(define-key sp-keymap (kbd "H-s e") 'sp-emit-sexp)
-(define-key sp-keymap (kbd "H-s p") 'sp-add-to-previous-sexp)
-(define-key sp-keymap (kbd "H-s n") 'sp-add-to-next-sexp)
-(define-key sp-keymap (kbd "H-s j") 'sp-join-sexp)
-(define-key sp-keymap (kbd "H-s s") 'sp-split-sexp)
+(bind-key "H-t" 'sp-prefix-tag-object sp-keymap)
+(bind-key "H-p" 'sp-prefix-pair-object sp-keymap)
+(bind-key "H-s c" 'sp-convolute-sexp sp-keymap)
+(bind-key "H-s a" 'sp-absorb-sexp sp-keymap)
+(bind-key "H-s e" 'sp-emit-sexp sp-keymap)
+(bind-key "H-s p" 'sp-add-to-previous-sexp sp-keymap)
+(bind-key "H-s n" 'sp-add-to-next-sexp sp-keymap)
+(bind-key "H-s j" 'sp-join-sexp sp-keymap)
+(bind-key "H-s s" 'sp-split-sexp sp-keymap)
 
 ;;;;;;;;;;;;;
 ;; paredit ;;
@@ -437,31 +441,31 @@
 ;;;;;;;;;;
 
 (global-unset-key (kbd "C-\\"))
-(define-key global-map (kbd "C-\\") 'set-mark-command)
+(bind-key "C-\\" 'set-mark-command )
 
 ;; (global-unset-key (kbd "C-x C-b"))
-;; (define-key global-map (kbd "C-x C-b") 'ibuffer)
+;; (bind-key "C-x C-b" 'ibuffer )
 ;; (add-hook 'ibuffer-mode-hook 'ibuffer-auto-mode)
 
 (require 'view)
 (global-unset-key (kbd "M-RET"))
-(define-key global-map (kbd "M-RET") 'view-mode)
+(bind-key "M-RET" 'view-mode )
 
 (global-unset-key (kbd "C-x C-\\"))
-(define-key global-map (kbd "C-x C-\\") 'pop-global-mark)
+(bind-key "C-x C-\\" 'pop-global-mark )
 
 (global-unset-key (kbd "M-;"))
-(define-key global-map (kbd "M-;") 'comment-dwim-line)
+(bind-key "M-;" 'comment-dwim-line )
 
 (global-unset-key (kbd "C-x C-z"))
-(define-key global-map (kbd "C-x C-z") 'magit-status)
+(bind-key "C-x C-z" 'magit-status )
 
 ;; (global-unset-key (kbd "C-z"))
-;; (define-key global-map (kbd "C-z") 'toggle-hiding)
+;; (bind-key "C-z" 'toggle-hiding )
 ;; (global-unset-key (kbd "C-+"))
-;; (define-key global-map (kbd "C-+") 'toggle-selective-display)
+;; (bind-key "C-+" 'toggle-selective-display )
 
-;; (global-set-key (kbd "C-x C-r") 'recentf-open-files)
+;; (bind-key "C-x C-r" 'recentf-open-files)
 
 (defun iterm-here ()
   (interactive)
@@ -472,16 +476,16 @@
   (dired-smart-shell-command "open $PWD" nil nil))
 
 
-(define-key global-map (kbd "s-i") 'iterm-here)
-(define-key global-map (kbd "s-r") 'reveal-here)
-(define-key global-map (kbd "s-b") 'ido-switch-buffer)
+(bind-key "s-i" 'iterm-here )
+(bind-key "s-r" 'reveal-here )
+(bind-key "s-b" 'ido-switch-buffer )
 
 
-(define-key global-map (kbd "C-0") 'delete-window)
-(define-key global-map (kbd "C-1") 'delete-other-windows)
-(define-key global-map (kbd "C-2") 'split-window-below)
-(define-key global-map (kbd "C-3") 'split-window-right)
-(define-key global-map (kbd "M-p") 'ace-window)
+(bind-key "C-0" 'delete-window )
+(bind-key "C-1" 'delete-other-windows)
+(bind-key "C-2" 'split-window-below )
+(bind-key "C-3" 'split-window-right )
+(bind-key "M-p" 'ace-window )
 
 
 
@@ -495,7 +499,7 @@
 (define-key input-decode-map "\e[1;3C" [M-right])
 (define-key input-decode-map "\e[1;3D" [M-left])
 
-(global-set-key (kbd "M-/") (make-hippie-expand-function
+(bind-key "M-/" (make-hippie-expand-function
                              '(try-expand-dabbrev-visible
                                try-expand-dabbrev
                                try-complete-file-name-partially
@@ -517,7 +521,7 @@
 (require 'popwin)
 (push '(direx:direx-mode :position bottom :width 40 :dedicated t)
       popwin:special-display-config)
-(global-set-key (kbd "C-x C-j") 'direx:jump-to-directory-other-window)
+(bind-key "C-x C-j" 'direx:jump-to-directory-other-window)
 
 
 ;;;;;;;;;;;;;;;
@@ -743,13 +747,14 @@
  '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
-    ("4e262566c3d57706c70e403d440146a5440de056dfaeb3062f004da1711d83fc" "64581032564feda2b5f2cf389018b4b9906d98293d84d84142d90d7986032d33" "0e7da2c7c64fb5d4764250ffa4b8b33c0946577108d1d6444f1020d0dabba784" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "57f8801351e8b7677923c9fe547f7e19f38c99b80d68c34da6fa9b94dc6d3297" default)))
+    ("c5a044ba03d43a725bd79700087dea813abcb6beb6be08c7eb3303ed90782482" "e56f1b1c1daec5dbddc50abd00fcd00f6ce4079f4a7f66052cf16d96412a09a9" "4e262566c3d57706c70e403d440146a5440de056dfaeb3062f004da1711d83fc" "64581032564feda2b5f2cf389018b4b9906d98293d84d84142d90d7986032d33" "0e7da2c7c64fb5d4764250ffa4b8b33c0946577108d1d6444f1020d0dabba784" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "57f8801351e8b7677923c9fe547f7e19f38c99b80d68c34da6fa9b94dc6d3297" default)))
  '(delete-selection-mode t)
  '(desktop-save-mode t)
  '(dired-auto-revert-buffer t)
  '(dired-hide-details-hide-information-lines nil)
  '(dired-hide-details-hide-symlink-targets nil)
  '(dired-isearch-filenames t)
+ '(diredp-highlight-autofiles-mode nil nil (dired+))
  '(dynamic-fonts-preferred-monospace-fonts
    (quote
     ("Monaco" "Consolas" "Menlo" "DejaVu Sans Mono" "Droid Sans Mono Pro" "Droid Sans Mono" "Inconsolata" "Source Code Pro" "Lucida Console" "Envy Code R" "Andale Mono" "Lucida Sans Typewriter" "monoOne" "Lucida Typewriter" "Panic Sans" "Bitstream Vera Sans Mono" "HyperFont" "PT Mono" "Ti92Pluspc" "Excalibur Monospace" "Courier New" "Courier" "Cousine" "Fira Mono" "Lekton" "Ubuntu Mono" "Liberation Mono" "BPmono" "Free Mono" "Anonymous Pro" "ProFont" "ProFontWindows" "Latin Modern Mono" "Code 2002" "ProggyCleanTT" "ProggyTinyTT" "Heiti TC")))
@@ -880,7 +885,7 @@
      ("marmalade" . "http://marmalade-repo.org/packages/"))))
  '(package-selected-packages
    (quote
-    (ace-window change-inner auto-complete persistent-soft cython-mode perspective bind-key anaconda-mode company helm load-relative projectile guru-mode diff-hl volatile-highlights zenburn-theme yaml-mode yagist xterm-color xcscope wgrep-ack web-mode vlf virtualenv undo-tree tabbar ssh-config-mode sr-speedbar solarized-theme smex smartparens smart-operator smart-mode-line-powerline-theme slime realgud rainbow-mode rainbow-delimiters py-autopep8 project-explorer pig-snippets pig-mode phi-search phi-autopair pdf-tools paradox palette osx-plist org-trello org-pandoc org nose nginx-mode neotree multiple-cursors monokai-theme minimap markdown-mode malabar-mode makey magit lua-mode linum-relative latex-preview-pane latex-pretty-symbols latex-extra keyfreq key-chord js2-mode jinja2-mode jedi-direx insert-shebang iedit idomenu ido-vertical-mode htmlize highlight-symbol highlight-stages help-fns+ helm-swoop helm-spotify helm-projectile helm-ls-hg helm-ls-git helm-gtags helm-descbinds helm-ag helm-ack haskell-mode guide-key gtags god-mode gitignore-mode gitconfig-mode gist ggtags fuzzy font-utils flycheck flx-ido floobits fancy-narrow expand-region esxml ensime elpy elnode electric-case ein ecb dirtree dired+ diminish cyberpunk-theme css-eldoc company-math company-auctex company-anaconda command-log-mode cdlatex bookmark+ bm autopair auctex-latexmk anzu afternoon-theme ack ace-jump-mode ac-math 2048-game)))
+    (pyenv-mode helm-bind-key helm-c-yasnippet ace-window change-inner auto-complete persistent-soft cython-mode perspective bind-key anaconda-mode company helm load-relative projectile guru-mode diff-hl volatile-highlights zenburn-theme yaml-mode yagist xterm-color xcscope wgrep-ack web-mode vlf virtualenv undo-tree tabbar ssh-config-mode sr-speedbar solarized-theme smex smartparens smart-operator smart-mode-line-powerline-theme slime realgud rainbow-mode rainbow-delimiters py-autopep8 project-explorer pig-snippets pig-mode phi-search phi-autopair pdf-tools paradox palette osx-plist org-trello org-pandoc org nose nginx-mode neotree multiple-cursors monokai-theme minimap markdown-mode malabar-mode makey magit lua-mode linum-relative latex-preview-pane latex-pretty-symbols latex-extra keyfreq key-chord js2-mode jinja2-mode jedi-direx insert-shebang iedit idomenu ido-vertical-mode htmlize highlight-symbol highlight-stages help-fns+ helm-swoop helm-spotify helm-projectile helm-ls-hg helm-ls-git helm-gtags helm-descbinds helm-ag helm-ack haskell-mode guide-key gtags god-mode gitignore-mode gitconfig-mode gist ggtags fuzzy font-utils flycheck flx-ido floobits fancy-narrow expand-region esxml ensime elpy elnode electric-case ein ecb dirtree dired+ diminish cyberpunk-theme css-eldoc company-math company-auctex company-anaconda command-log-mode cdlatex bookmark+ bm autopair auctex-latexmk anzu afternoon-theme ack ace-jump-mode ac-math 2048-game)))
  '(paradox-automatically-star t)
  '(paradox-display-download-count t)
  '(paradox-execute-asynchronously (quote ask))
@@ -894,6 +899,7 @@
      "}{preview}\\AtBeginDocument{\\ifx\\ifPreview\\undefined" preview-default-preamble "\\fi}\"%' %t")))
  '(projectile-global-mode t)
  '(py-autopep8-options (quote ("\"--max-line-length=100\"")))
+ '(pyenv-mode t)
  '(python-check-command "pyflakes")
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--matplotlib --pdb --nosep")
@@ -918,7 +924,7 @@
  '(show-smartparens-global-mode t)
  '(size-indication-mode t)
  '(smartparens-global-strict-mode t)
- '(sml/theme (quote dark))
+ '(sml/theme (quote powerline))
  '(sml/vc-mode-show-backend t)
  '(syslog-debug-face
    (quote
