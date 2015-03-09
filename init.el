@@ -2,8 +2,8 @@
 (setenv "PATH" (concat "/usr/local/bin" ":" (getenv "PATH")))
 (setenv "PATH" (concat "/usr/texbin" ":" (getenv "PATH")))
 
-(setq mac-command-modifier 'meta) ; make cmd key do Meta
-(setq mac-option-modifier 'super) ; make opt key do Super
+(setq mac-command-modifier 'super) ; make cmd key do Meta
+(setq mac-option-modifier 'meta) ; make opt key do Super
 (setq mac-control-modifier 'control) ; make Control key do Control
 (setq ns-function-modifier 'hyper)  ; make Fn key do Hyper
 
@@ -145,17 +145,17 @@
 ;;;;;;;;;;
 ;; helm ;;
 ;;;;;;;;;;
-(require 'helm)
-(require 'helm-config)
-(require 'helm-projectile)
-(require 'helm-mode)
-(require 'helm-misc)
-(require 'helm-files)
-(require 'helm-locate)
-(require 'helm-buffers)
-(require 'helm-match-plugin)
+;; (require 'helm)
+;; (require 'helm-config)
+;; (require 'helm-projectile)
+;; (require 'helm-mode)
+;; (require 'helm-misc)
+;; (require 'helm-files)
+;; (require 'helm-locate)
+;; (require 'helm-buffers)
+;; (require 'helm-match-plugin)
 
-(helm-projectile-on)
+;; (helm-projectile-on)
 
 
 ;; (defun helm-backspace ()
@@ -185,7 +185,9 @@
 (bind-key "M-s /"   #'helm-multi-swoop)
 (bind-key "C-x r l" #'helm-filtered-bookmarks)
 (bind-key "M-s s"   #'helm-ag)
-(bind-key "C-x C-f" 'helm-find-files)
+(bind-key "C-x C-f" #'helm-find-files)
+
+
 
 
 ;;;;;;;;;;;;;;;
@@ -232,6 +234,7 @@
 ;; org-mode ;;
 ;;;;;;;;;;;;;;
 
+(require 'org)
 (bind-key "C-c %" nil org-mode-map)
 (bind-key "C-c &" nil org-mode-map)
 (bind-key "C-c C-9" 'org-mark-ring-goto org-mode-map)
