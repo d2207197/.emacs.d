@@ -516,13 +516,14 @@
 (require 'smart-mode-line)
 ;; (setq sml/theme 'dark)
 ;; (sml/setup)
+(add-hook 'after-init-hook 'sml/setup)
 
 
 ;;;;;;;;;;;
 ;; direx ;;
 ;;;;;;;;;;;
 (require 'popwin)
-(push '(direx:direx-mode :position bottom :width 40 :dedicated t)
+(push '(direx:direx-mode :position left :width 40 :dedicated t)
       popwin:special-display-config)
 (bind-key "C-x C-j" 'direx:jump-to-directory-other-window)
 
@@ -758,6 +759,8 @@
  '(dired-hide-details-hide-symlink-targets nil)
  '(dired-isearch-filenames t)
  '(diredp-highlight-autofiles-mode nil nil (dired+))
+ '(direx:closed-icon "▶ ")
+ '(direx:open-icon "▼ ")
  '(dynamic-fonts-preferred-monospace-fonts
    (quote
     ("Monaco" "Consolas" "Menlo" "DejaVu Sans Mono" "Droid Sans Mono Pro" "Droid Sans Mono" "Inconsolata" "Source Code Pro" "Lucida Console" "Envy Code R" "Andale Mono" "Lucida Sans Typewriter" "monoOne" "Lucida Typewriter" "Panic Sans" "Bitstream Vera Sans Mono" "HyperFont" "PT Mono" "Ti92Pluspc" "Excalibur Monospace" "Courier New" "Courier" "Cousine" "Fira Mono" "Lekton" "Ubuntu Mono" "Liberation Mono" "BPmono" "Free Mono" "Anonymous Pro" "ProFont" "ProFontWindows" "Latin Modern Mono" "Code 2002" "ProggyCleanTT" "ProggyTinyTT" "Heiti TC")))
@@ -792,7 +795,7 @@
  '(guide-key-mode t)
  '(guide-key/guide-key-sequence (quote ("C-x" "M-s" "C-c")))
  '(guide-key/recursive-key-sequence-flag t)
- '(guru-global-mode t)
+ '(guru-global-mode nil)
  '(helm-adaptive-mode t nil (helm-adaptive))
  '(helm-apropos-fuzzy-match t)
  '(helm-autoresize-mode t)
@@ -909,6 +912,9 @@
  '(recentf-max-saved-items 100)
  '(recentf-mode t)
  '(reftex-plug-into-AUCTeX t)
+ '(rm-blacklist
+   (quote
+    (" hl-p" " Undo-Tree" " Guide" " Anzu" " Wrap" " Helm")))
  '(safe-local-variable-values
    (quote
     ((TeX-command-extra-options . "-shell-escape")
@@ -959,6 +965,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(aw-leading-char-face ((t (:foreground "red" :height 3.0))))
  '(highlight-symbol-face ((t (:background "gray10")))))
 
  ;; '(default ((t (:inherit nil :stipple nil :background "#272822" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "nil" :family "Monaco"))))
