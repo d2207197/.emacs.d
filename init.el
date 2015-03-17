@@ -377,8 +377,8 @@
 (bind-key "C-M-k" 'sp-kill-sexp sp-keymap)
 (bind-key "C-M-w" 'sp-copy-sexp sp-keymap)
 
-(bind-key "M-<delete>" 'sp-unwrap-sexp sp-keymap)
-(bind-key "M-<backspace>" 'sp-backward-unwrap-sexp sp-keymap)
+(bind-key "H-<delete>" 'sp-unwrap-sexp sp-keymap)
+(bind-key "H-<backspace>" 'sp-backward-unwrap-sexp sp-keymap)
 
 (bind-key "C-<right>" 'sp-forward-slurp-sexp sp-keymap)
 (bind-key "C-<left>" 'sp-forward-barf-sexp sp-keymap)
