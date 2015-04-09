@@ -243,7 +243,7 @@
     ("a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "08efabe5a8f3827508634a3ceed33fa06b9daeef9c70a24218b70494acdf7855" "764e3a6472a3a4821d929cdbd786e759fab6ef6c2081884fca45f1e1e3077d1d" "d725097d2547e9205ab6c8b034d6971c2f0fc64ae5f357b61b7de411ca3e7ab2" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "90edd91338ebfdfcd52ecd4025f1c7f731aced4c9c49ed28cfbebb3a3654840b" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "d5de5ffdc352e765d4cdf02716941d932b9587dc2f768912e123cde24221b77e" "ace9f12e0c00f983068910d9025eefeb5ea7a711e774ee8bb2af5f7376018ad2" "18a33cdb764e4baf99b23dcd5abdbf1249670d412c6d3a8092ae1a7b211613d5" "e80932ca56b0f109f8545576531d3fc79487ca35a9a9693b62bf30d6d08c9aaf" "c5a044ba03d43a725bd79700087dea813abcb6beb6be08c7eb3303ed90782482" "e56f1b1c1daec5dbddc50abd00fcd00f6ce4079f4a7f66052cf16d96412a09a9" "4e262566c3d57706c70e403d440146a5440de056dfaeb3062f004da1711d83fc" "64581032564feda2b5f2cf389018b4b9906d98293d84d84142d90d7986032d33" "0e7da2c7c64fb5d4764250ffa4b8b33c0946577108d1d6444f1020d0dabba784" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "57f8801351e8b7677923c9fe547f7e19f38c99b80d68c34da6fa9b94dc6d3297" default)))
  '(custom-theme-load-path
    (quote
-    ("~/.emacs.d/elpa/ample-theme-20150210.802/" "~/.emacs.d/elpa/ujelly-theme-20150117.1729/" "~/.emacs.d/" "~/.emacs.d/elpa/afternoon-theme-20140104.1059/" "~/.emacs.d/elpa/ample-zen-theme-0.3/" "~/.emacs.d/elpa/color-theme-sanityinc-tomorrow-1.10/" "~/.emacs.d/elpa/cyberpunk-theme-20150326.1914/" "/Users/joe/.emacs.d/elpa/firecode-theme-20141115.2302/" "/Users/joe/.emacs.d/elpa/monokai-theme-20150112.442/" "/Users/joe/.emacs.d/elpa/smart-mode-line-powerline-theme-20141229.1046/" "/Users/joe/.emacs.d/elpa/smart-mode-line-20150312.1736/" "/Users/joe/.emacs.d/elpa/solarized-theme-20150326.2320/" "/Users/joe/.emacs.d/elpa/warm-night-theme-20150321.1535/" "/Users/joe/.emacs.d/elpa/zenburn-theme-20150315.1540/" custom-theme-directory t)))
+    ("~/.emacs.d/elpa/ample-theme-20150210.802/" "~/.emacs.d/elpa/ujelly-theme-20150117.1729/" "~/.emacs.d/" "~/.emacs.d/elpa/afternoon-theme-20140104.1059/" "~/.emacs.d/elpa/ample-zen-theme-0.3/" "~/.emacs.d/elpa/color-theme-sanityinc-tomorrow-1.10/" "~/.emacs.d/elpa/cyberpunk-theme-20150326.1914/" "~/.emacs.d/elpa/firecode-theme-20141115.2302/" "~/.emacs.d/elpa/monokai-theme-20150112.442/" "~/.emacs.d/elpa/smart-mode-line-powerline-theme-20141229.1046/" "~/.emacs.d/elpa/smart-mode-line-20150312.1736/" "~/.emacs.d/elpa/solarized-theme-20150326.2320/" "~/.emacs.d/elpa/warm-night-theme-20150321.1535/" "~/.emacs.d/elpa/zenburn-theme-20150315.1540/" custom-theme-directory t)))
  '(delete-selection-mode t)
  '(desktop-save-mode t)
  '(dired-auto-revert-buffer t)
@@ -269,7 +269,7 @@
  '(ensime-auto-connect (quote ask))
  '(exec-path
    (quote
-    ("/usr/local/bin" "/Users/joe/.virtualenvs/linggle-flask/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/usr/local/Cellar/emacs/HEAD/libexec/emacs/24.3.50/i386-apple-darwin12.4.0")))
+    ("/usr/local/bin"  "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/usr/local/Cellar/emacs/HEAD/libexec/emacs/24.3.50/i386-apple-darwin12.4.0")))
  '(flx-ido-mode t)
  '(global-anzu-mode t)
  '(global-auto-revert-mode t)
