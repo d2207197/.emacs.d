@@ -15,6 +15,8 @@
 (require 'package)
 (package-initialize)
 
+(require 'smart-mode-line-powerline-theme)
+
 ;;;;;;;;;;;;;;;
 ;; Customize ;;
 ;;;;;;;;;;;;;;;
