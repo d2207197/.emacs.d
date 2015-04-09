@@ -29,3 +29,4 @@ var/
 helm-adaptive-history
 projectile.cache
 ede-projects.el
+/xkcd/
