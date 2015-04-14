@@ -39,7 +39,7 @@
 (defvar er--space-str " \t\n")
 (defvar er--blank-list (append er--space-str nil))
 
-(set-default 'er--show-expansion-message nil)
+(set-default 'er--show-expansion-message t)
 
 (defvar er/try-expand-list nil
   "A list of functions that are tried when expanding.")
@@ -92,6 +92,7 @@ moving point or mark as little as possible."
     (while try-list
       (save-excursion
         (ignore-errors
+          (setq mark-active nil)
           (funcall (car try-list))
           (when (and (region-active-p)
                      (er--this-expansion-is-better start end best-start best-end))
@@ -182,7 +183,7 @@ before calling `er/expand-region' for the first time."
          (msg (car msg-and-bindings))
          (bindings (cdr msg-and-bindings)))
     (when repeat-key
-      (set-temporary-overlay-map
+      (set-transient-map
        (let ((map (make-sparse-keymap)))
          (dolist (binding bindings map)
            (define-key map (read-kbd-macro (car binding))

@@ -3,8 +3,8 @@
 ;; Copyright (C) 2012 Magnar Sveen <magnars@gmail.com>
 
 ;; Author: Magnar Sveen <magnars@gmail.com>
-;; Version: 20130208.1130
-;; X-Original-Version: 0.2.0
+;; Version: 0.2.0
+;; Package-Version: 20130208.1130
 ;; Keywords: convenience, extensions
 ;; Package-Requires: ((expand-region "0.7"))
 

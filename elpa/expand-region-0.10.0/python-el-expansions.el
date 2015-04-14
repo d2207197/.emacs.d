@@ -42,8 +42,6 @@
 (require 'expand-region-core)
 (require 'python)
 
-(declare-function python-beginning-of-string "python-mode")
-
 (defvar er--python-string-delimiter "'\"")
 
 (defun er/mark-python-statement ()

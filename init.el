@@ -1,10 +1,3 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; environment variable ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setenv "PATH" (concat "/usr/local/bin" ":" (getenv "PATH")))
-(setenv "PATH" (concat "/usr/texbin" ":" (getenv "PATH")))
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;; load other things ;;
 ;;;;;;;;;;;;;;;;;;;;;;;
@@ -317,7 +310,9 @@
  '(ibuffer-saved-filter-groups nil)
  '(ibuffer-saved-filters
    (quote
-    (("e"
+    (("no special"
+      ((name . "^[^*]")))
+     ("e"
       ((name . "^[^*].*")))
      ("gnus"
       ((or
@@ -386,7 +381,7 @@
      ("user42" . "http://download.tuxfamily.org/user42/elpa/packages/"))))
  '(package-selected-packages
    (quote
-    (transpose-frame company-jedi company-statistics smart-mode-line-powerline-theme xkcd ujelly-theme color-theme-sanityinc-tomorrow warm-night-theme firecode-theme tty-format dash direx popup popwin powerline helm-bind-key helm-c-yasnippet ace-window change-inner auto-complete persistent-soft cython-mode perspective bind-key anaconda-mode company helm load-relative projectile guru-mode diff-hl volatile-highlights zenburn-theme yaml-mode yagist xterm-color xcscope wgrep-ack web-mode vlf virtualenv undo-tree tabbar ssh-config-mode sr-speedbar solarized-theme smex smartparens smart-operator slime realgud rainbow-mode rainbow-delimiters py-autopep8 project-explorer pig-snippets pig-mode phi-search phi-autopair pdf-tools paradox palette osx-plist org-trello org-pandoc org nose nginx-mode neotree multiple-cursors monokai-theme minimap markdown-mode malabar-mode makey magit lua-mode linum-relative latex-preview-pane latex-pretty-symbols latex-extra keyfreq key-chord js2-mode jinja2-mode jedi-direx insert-shebang iedit idomenu ido-vertical-mode htmlize highlight-symbol highlight-stages help-fns+ helm-swoop helm-spotify helm-projectile helm-ls-hg helm-ls-git helm-gtags helm-descbinds helm-ag helm-ack haskell-mode guide-key gtags god-mode gitignore-mode gitconfig-mode gist ggtags fuzzy font-utils flycheck flx-ido floobits fancy-narrow expand-region esxml ensime elpy elnode electric-case ein ecb dirtree dired+ diminish cyberpunk-theme css-eldoc company-math company-auctex company-anaconda command-log-mode cdlatex bookmark+ bm autopair auctex-latexmk anzu afternoon-theme ack ace-jump-mode ac-math 2048-game)))
+    (change-inner expand-region tidy transpose-frame company-jedi company-statistics smart-mode-line-powerline-theme xkcd ujelly-theme color-theme-sanityinc-tomorrow warm-night-theme firecode-theme tty-format dash direx popup popwin powerline helm-bind-key helm-c-yasnippet ace-window auto-complete persistent-soft cython-mode perspective bind-key anaconda-mode company helm load-relative projectile guru-mode diff-hl volatile-highlights zenburn-theme yaml-mode yagist xterm-color xcscope wgrep-ack web-mode vlf virtualenv undo-tree tabbar ssh-config-mode sr-speedbar solarized-theme smex smartparens smart-operator slime realgud rainbow-mode rainbow-delimiters py-autopep8 project-explorer pig-snippets pig-mode phi-search phi-autopair pdf-tools paradox palette osx-plist org-trello org-pandoc org nose nginx-mode neotree multiple-cursors monokai-theme minimap markdown-mode malabar-mode makey magit lua-mode linum-relative latex-preview-pane latex-pretty-symbols latex-extra keyfreq key-chord js2-mode jinja2-mode jedi-direx insert-shebang iedit idomenu ido-vertical-mode htmlize highlight-symbol highlight-stages help-fns+ helm-swoop helm-spotify helm-projectile helm-ls-hg helm-ls-git helm-gtags helm-descbinds helm-ag helm-ack haskell-mode guide-key gtags god-mode gitignore-mode gitconfig-mode gist ggtags fuzzy font-utils flycheck flx-ido floobits fancy-narrow esxml ensime elpy elnode electric-case ein ecb dirtree dired+ diminish cyberpunk-theme css-eldoc company-math company-auctex company-anaconda command-log-mode cdlatex bookmark+ bm autopair auctex-latexmk anzu afternoon-theme ack ace-jump-mode ac-math 2048-game)))
  '(paradox-automatically-star t)
  '(paradox-display-download-count t)
  '(paradox-execute-asynchronously (quote ask))
@@ -468,11 +463,13 @@
  '(aw-leading-char-face ((t (:foreground "red" :height 3.0))))
  '(highlight-symbol-face ((t (:background "gray10")))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; environment variable ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setenv "PATH" (concat "/usr/local/bin" ":" (getenv "PATH")))
+(setenv "PATH" (concat "/usr/texbin" ":" (getenv "PATH")))
 
 (require 'bind-key)
-
-;; (require 'code-folding)
-
 
 ;;;;;;;;;;;
 ;; mouse ;;
@@ -614,7 +611,7 @@
 ;; helm ;;
 ;;;;;;;;;;
 ;; (require 'helm)
-;; (require 'helm-config)
+(require 'helm-config)
 ;; (require 'helm-projectile)
 ;; (require 'helm-mode)
 ;; (require 'helm-misc)

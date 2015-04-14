@@ -30,12 +30,9 @@
 
 (defun er/add-enh-ruby-mode-expansions ()
   "Adds Ruby-specific expansions for buffers in enh-ruby-mode"
-  (require 'ruby-mode-expansions)
-
   (set (make-local-variable 'er/try-expand-list) (append
                                                   (remove 'er/mark-defun er/try-expand-list)
-                                                  '(er/mark-ruby-instance-variable
-                                                    er/mark-ruby-block-up))))
+                                                  '(enh-ruby-mark-defun))))
 
 (er/enable-mode-expansions 'enh-ruby-mode 'er/add-enh-ruby-mode-expansions)
 
