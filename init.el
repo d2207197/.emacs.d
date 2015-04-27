@@ -262,7 +262,7 @@
  '(ensime-auto-connect (quote ask))
  '(exec-path
    (quote
-    ("/usr/local/bin"  "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/usr/local/Cellar/emacs/HEAD/libexec/emacs/24.3.50/i386-apple-darwin12.4.0")))
+    ("/usr/local/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/usr/local/Cellar/emacs/HEAD/libexec/emacs/24.3.50/i386-apple-darwin12.4.0")))
  '(flx-ido-mode t)
  '(global-anzu-mode t)
  '(global-auto-revert-mode t)
@@ -334,6 +334,7 @@
  '(ido-everywhere nil)
  '(ido-mode (quote both) nil (ido))
  '(ido-vertical-mode t)
+ '(iedit-toggle-key-default (kbd "C-|"))
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(insert-shebang-custom-headers
@@ -417,7 +418,7 @@
  '(savehist-mode t)
  '(scroll-margin 5)
  '(scroll-step 1)
- '(semantic-mode nil)
+ '(semantic-mode t)
  '(server-mode t)
  '(server-use-tcp t)
  '(show-paren-delay 0.1)
@@ -653,6 +654,7 @@
 (bind-key "C-x r l" #'helm-filtered-bookmarks)
 (bind-key "M-s s"   #'helm-ag)
 (bind-key "C-x C-f" #'helm-find-files)
+(bind-key* "C-c C-j" #'helm-semantic-or-imenu)
 
 ;;;;;;;;;;;;
 ;; buffer ;;
@@ -788,8 +790,13 @@
 	(sbcl ("/usr/local/bin/sbcl"))
 	))
 (require 'slime-autoloads)
-;; (slime-setup '(slime-fancy slime-asdf slime-tramp)) 
+;; (slime-setup '(slime-fancy slime-asdf slime-tramp))
 
+
+;;;;;;;;;;;;;
+;; killing ;;
+;;;;;;;;;;;;;
+(bind-key "C-S-<backspace>" 'kill-whole-line)
 
 ;;;;;;;;;;;;
 ;; parens ;;
@@ -840,9 +847,9 @@
 (bind-key "C-M-<right>" 'sp-backward-barf-sexp sp-keymap)
 
 (bind-key "M-D" 'sp-splice-sexp sp-keymap)
-(bind-key "C-M-<delete>" 'sp-splice-sexp-killing-forward sp-keymap)
-(bind-key "C-M-<backspace>" 'sp-splice-sexp-killing-backward sp-keymap)
-(bind-key "C-S-<backspace>" 'sp-splice-sexp-killing-around sp-keymap)
+;; (bind-key "C-M-<delete>" 'sp-splice-sexp-killing-forward sp-keymap)
+;; (bind-key "C-M-<backspace>" 'sp-splice-sexp-killing-backward sp-keymap)
+;; (bind-key "C-S-<backspace>" 'sp-splice-sexp-killing-around sp-keymap)
 
 (bind-key "C-]" 'sp-select-next-thing-exchange sp-keymap)
 (bind-key "C-\"" 'sp-select-previous-thing sp-keymap)
@@ -911,11 +918,11 @@
 (global-unset-key (kbd "C-x C-\\"))
 (bind-key "C-x C-\\" 'pop-global-mark )
 
-(global-unset-key (kbd "M-;"))
-(bind-key "M-;" 'comment-dwim-line )
+;; (global-unset-key (kbd "M-;"))
+;; (bind-key "M-;" 'comment-dwim-line )
 
-(global-unset-key (kbd "C-x C-z"))
-(bind-key "C-x C-z" 'magit-status )
+;; (global-unset-key (kbd "C-x g"))
+(bind-key "C-x g" 'magit-status )
 
 ;; (global-unset-key (kbd "C-z"))
 ;; (bind-key "C-z" 'toggle-hiding )
@@ -975,10 +982,10 @@
 ;;;;;;;;;;;
 ;; direx ;;
 ;;;;;;;;;;;
-(require 'popwin)
-(push '(direx:direx-mode :position left :width 40 :dedicated t)
-      popwin:special-display-config)
-(bind-key "C-x C-j" 'direx:jump-to-directory-other-window)
+;; (require 'popwin)
+;; (push '(direx:direx-mode :position left :width 40 :dedicated t)
+;;       popwin:special-display-config)
+;; (bind-key "C-x C-j" 'direx:jump-to-directory-other-window)
 
 (setq mac-command-modifier 'super) ; make cmd key do Meta
 (setq mac-option-modifier 'meta) ; make opt key do Super
