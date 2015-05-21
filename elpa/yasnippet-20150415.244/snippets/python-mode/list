@@ -3,5 +3,5 @@
 # key: li
 # group : definitions
 # --
-[${1:el} for $1 in ${2:list}]
+[${3:el} for ${2:el} in ${1:list}]
 $0

@@ -8,7 +8,7 @@
 (require 'package)
 (package-initialize)
 
-(require 'smart-mode-line-powerline-theme)
+
 
 ;;;;;;;;;;;;;;;
 ;; Customize ;;
@@ -21,186 +21,9 @@
  ;; If there is more than one, they won't work right.
  '(TeX-PDF-mode t)
  '(TeX-auto-save t)
- '(TeX-command-list
-   (quote
-    (("TeX" "%(PDF)%(tex) %`%S%(PDFout)%(mode)%' %t" TeX-run-TeX nil
-      (plain-tex-mode texinfo-mode ams-tex-mode)
-      :help "Run plain TeX")
-     ("XeLaTeX" "%`latexmk -xelatex -synctex=1%(mode)   %t" TeX-run-TeX nil t)
-     ("LaTeX" "%`%l%(mode)%' %t" TeX-run-TeX nil
-      (latex-mode doctex-mode)
-      :help "Run LaTeX")
-     ("Makeinfo" "makeinfo %t" TeX-run-compile nil
-      (texinfo-mode)
-      :help "Run Makeinfo with Info output")
-     ("Makeinfo HTML" "makeinfo --html %t" TeX-run-compile nil
-      (texinfo-mode)
-      :help "Run Makeinfo with HTML output")
-     ("AmSTeX" "%(PDF)amstex %`%S%(PDFout)%(mode)%' %t" TeX-run-TeX nil
-      (ams-tex-mode)
-      :help "Run AMSTeX")
-     ("ConTeXt" "texexec --once --texutil %(execopts)%t" TeX-run-TeX nil
-      (context-mode)
-      :help "Run ConTeXt once")
-     ("ConTeXt Full" "texexec %(execopts)%t" TeX-run-TeX nil
-      (context-mode)
-      :help "Run ConTeXt until completion")
-     ("BibTeX" "bibtex %s" TeX-run-BibTeX nil t :help "Run BibTeX")
-     ("Biber" "biber %s" TeX-run-Biber nil t :help "Run Biber")
-     ("View" "%V" TeX-run-discard-or-function t t :help "Run Viewer")
-     ("Print" "%p" TeX-run-command t t :help "Print the file")
-     ("Queue" "%q" TeX-run-background nil t :help "View the printer queue" :visible TeX-queue-command)
-     ("File" "%(o?)dvips %d -o %f " TeX-run-command t t :help "Generate PostScript file")
-     ("Index" "makeindex %s" TeX-run-command nil t :help "Create index file")
-     ("Check" "lacheck %s" TeX-run-compile nil
-      (latex-mode)
-      :help "Check LaTeX file for correctness")
-     ("Spell" "(TeX-ispell-document \"\")" TeX-run-function nil t :help "Spell-check the document")
-     ("Clean" "TeX-clean" TeX-run-function nil t :help "Delete generated intermediate files")
-     ("Clean All" "(TeX-clean t)" TeX-run-function nil t :help "Delete generated intermediate and output files")
-     ("Other" "" TeX-run-command t t :help "Run an arbitrary command"))))
+ '(TeX-command-extra-options "-shell-escape")
  '(TeX-engine (quote xetex))
- '(TeX-expand-list
-   (quote
-    (("%p" TeX-printer-query)
-     ("%q"
-      (lambda nil
-        (TeX-printer-query t)))
-     ("%V"
-      (lambda nil
-        (TeX-source-correlate-start-server-maybe)
-        (TeX-view-command-raw)))
-     ("%vv"
-      (lambda nil
-        (TeX-source-correlate-start-server-maybe)
-        (TeX-output-style-check TeX-output-view-style)))
-     ("%v"
-      (lambda nil
-        (TeX-source-correlate-start-server-maybe)
-        (TeX-style-check TeX-view-style)))
-     ("%r"
-      (lambda nil
-        (TeX-style-check TeX-print-style)))
-     ("%l"
-      (lambda nil
-        (TeX-style-check LaTeX-command-style)))
-     ("%(PDF)"
-      (lambda nil
-        (if
-            (and
-             (eq TeX-engine
-                 (quote default))
-             (or TeX-PDF-mode TeX-DVI-via-PDFTeX))
-            "pdf" "")))
-     ("%(PDFout)"
-      (lambda nil
-        (cond
-         ((and
-           (eq TeX-engine
-               (quote xetex))
-           (not TeX-PDF-mode))
-          " -no-pdf")
-         ((and
-           (eq TeX-engine
-               (quote luatex))
-           (not TeX-PDF-mode))
-          " --output-format=dvi")
-         ((and
-           (eq TeX-engine
-               (quote default))
-           (not TeX-PDF-mode)
-           TeX-DVI-via-PDFTeX)
-          " \"\\pdfoutput=0 \"")
-         (t ""))))
-     ("%(mode)"
-      (lambda nil
-        (if TeX-interactive-mode "" " -interaction=nonstopmode")))
-     ("%(o?)"
-      (lambda nil
-        (if
-            (eq TeX-engine
-                (quote omega))
-            "o" "")))
-     ("%(tex)"
-      (lambda nil
-        (eval
-         (nth 2
-              (assq TeX-engine
-                    (TeX-engine-alist))))))
-     ("%(latex)"
-      (lambda nil
-        (eval
-         (nth 3
-              (assq TeX-engine
-                    (TeX-engine-alist))))))
-     ("%(execopts)" ConTeXt-expand-options)
-     ("%S" TeX-source-correlate-expand-options)
-     ("%dS" TeX-source-specials-view-expand-options)
-     ("%cS" TeX-source-specials-view-expand-client)
-     ("%(outpage)"
-      (lambda nil
-        (or
-         (when TeX-source-correlate-output-page-function
-           (funcall TeX-source-correlate-output-page-function))
-         "1")))
-     ("%s" file nil t)
-     ("%t" file t t)
-     ("%`"
-      (lambda nil
-        (setq TeX-command-pos t TeX-command-text "")))
-     (" \"\\"
-      (lambda nil
-        (if
-            (eq TeX-command-pos t)
-            (setq TeX-command-pos pos pos
-                  (+ 3 pos))
-          (setq pos
-                (1+ pos)))))
-     ("\""
-      (lambda nil
-        (if
-            (numberp TeX-command-pos)
-            (setq TeX-command-text
-                  (concat TeX-command-text
-                          (substring command TeX-command-pos
-                                     (1+ pos)))
-                  command
-                  (concat
-                   (substring command 0 TeX-command-pos)
-                   (substring command
-                              (1+ pos)))
-                  pos TeX-command-pos TeX-command-pos t)
-          (setq pos
-                (1+ pos)))))
-     ("%'"
-      (lambda nil
-        (prog1
-            (if
-                (stringp TeX-command-text)
-                (progn
-                  (setq pos
-                        (+
-                         (length TeX-command-text)
-                         9)
-                        TeX-command-pos
-                        (and
-                         (string-match " "
-                                       (funcall file t t))
-                         "\""))
-                  (concat TeX-command-text " \"\\input\""))
-              (setq TeX-command-pos nil)
-              "")
-          (setq TeX-command-text nil))))
-     ("%n" TeX-current-line)
-     ("%d" file "dvi" t)
-     ("%f" file "ps" t)
-     ("%o"
-      (lambda nil
-        (funcall file
-                 (TeX-output-extension)
-                 t)))
-     ("%b" TeX-current-file-name-master-relative)
-     ("%m" preview-create-subdirectory))))
+ '(TeX-macro-private nil)
  '(TeX-parse-self t)
  '(TeX-source-correlate-method (quote auto))
  '(TeX-source-correlate-mode t)
@@ -217,11 +40,16 @@
      (output-pdf "skim")
      (output-html "xdg-open"))))
  '(ack-and-a-half-executable "ack")
+ '(async-bytecomp-package-mode t)
  '(autopair-global-mode nil)
+ '(awk-mode-hook (quote (er/add-cc-mode-expansions)))
+ '(baud-rate 38400)
  '(before-save-hook (quote (py-autopep8-before-save)))
  '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
+ '(bookmark-version-control (quote nospecial))
  '(browse-url-generic-args (quote ("-a" "Safari")))
  '(browse-url-generic-program "open")
+ '(byte-compile-delete-errors t)
  '(c-default-style
    (quote
     ((java-mode . "java")
@@ -236,13 +64,16 @@
     ("a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "08efabe5a8f3827508634a3ceed33fa06b9daeef9c70a24218b70494acdf7855" "764e3a6472a3a4821d929cdbd786e759fab6ef6c2081884fca45f1e1e3077d1d" "d725097d2547e9205ab6c8b034d6971c2f0fc64ae5f357b61b7de411ca3e7ab2" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "90edd91338ebfdfcd52ecd4025f1c7f731aced4c9c49ed28cfbebb3a3654840b" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "d5de5ffdc352e765d4cdf02716941d932b9587dc2f768912e123cde24221b77e" "ace9f12e0c00f983068910d9025eefeb5ea7a711e774ee8bb2af5f7376018ad2" "18a33cdb764e4baf99b23dcd5abdbf1249670d412c6d3a8092ae1a7b211613d5" "e80932ca56b0f109f8545576531d3fc79487ca35a9a9693b62bf30d6d08c9aaf" "c5a044ba03d43a725bd79700087dea813abcb6beb6be08c7eb3303ed90782482" "e56f1b1c1daec5dbddc50abd00fcd00f6ce4079f4a7f66052cf16d96412a09a9" "4e262566c3d57706c70e403d440146a5440de056dfaeb3062f004da1711d83fc" "64581032564feda2b5f2cf389018b4b9906d98293d84d84142d90d7986032d33" "0e7da2c7c64fb5d4764250ffa4b8b33c0946577108d1d6444f1020d0dabba784" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "57f8801351e8b7677923c9fe547f7e19f38c99b80d68c34da6fa9b94dc6d3297" default)))
  '(custom-theme-load-path
    (quote
-    ("~/.emacs.d/elpa/ample-theme-20150210.802/" "~/.emacs.d/elpa/ujelly-theme-20150117.1729/" "~/.emacs.d/" "~/.emacs.d/elpa/afternoon-theme-20140104.1059/" "~/.emacs.d/elpa/ample-zen-theme-0.3/" "~/.emacs.d/elpa/color-theme-sanityinc-tomorrow-1.10/" "~/.emacs.d/elpa/cyberpunk-theme-20150326.1914/" "~/.emacs.d/elpa/firecode-theme-20141115.2302/" "~/.emacs.d/elpa/monokai-theme-20150112.442/" "~/.emacs.d/elpa/smart-mode-line-powerline-theme-20141229.1046/" "~/.emacs.d/elpa/smart-mode-line-20150312.1736/" "~/.emacs.d/elpa/solarized-theme-20150326.2320/" "~/.emacs.d/elpa/warm-night-theme-20150321.1535/" "~/.emacs.d/elpa/zenburn-theme-20150315.1540/" custom-theme-directory t)))
+    ("~/.emacs.d/elpa/ample-theme-20150210.802/" "~/.emacs.d/elpa/ujelly-theme-20150117.1729/" "~/.emacs.d/" "~/.emacs.d/elpa/afternoon-theme-20140104.1059/" "~/.emacs.d/elpa/ample-zen-theme-0.3/" "~/.emacs.d/elpa/color-theme-sanityinc-tomorrow-1.10/" "~/.emacs.d/elpa/cyberpunk-theme-20150326.1914/" "~/.emacs.d/elpa/firecode-theme-20141115.2302/" "~/.emacs.d/elpa/monokai-theme-20150112.442/" "~/.emacs.d/elpa/smart-mode-line-powerline-theme-20150426.910/" "~/.emacs.d/elpa/smart-mode-line-20150312.1736/" "~/.emacs.d/elpa/solarized-theme-20150326.2320/" "~/.emacs.d/elpa/warm-night-theme-20150321.1535/" "~/.emacs.d/elpa/zenburn-theme-20150315.1540/" custom-theme-directory t)))
+ '(default-input-method "rfc1345")
  '(delete-selection-mode t)
  '(desktop-save-mode t)
+ '(diff-switches "-u")
  '(dired-auto-revert-buffer t)
  '(dired-hide-details-hide-information-lines nil)
  '(dired-hide-details-hide-symlink-targets nil)
  '(dired-isearch-filenames t)
+ '(dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^\\..+$")
  '(diredp-highlight-autofiles-mode nil nil (dired+))
  '(direx:closed-icon "▶ ")
  '(direx:open-icon "▼ ")
@@ -257,13 +88,13 @@
  '(elpy-mode-hook (quote (subword-mode)))
  '(elpy-modules
    (quote
-    (elpy-module-company elpy-module-eldoc elpy-module-flymake elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-yasnippet elpy-module-sane-defaults)))
+    (elpy-module-eldoc elpy-module-flymake elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-yasnippet elpy-module-sane-defaults)))
  '(elpy-rpc-python-command "python")
  '(ensime-auto-connect (quote ask))
+ '(epg-gpg-program "gpg")
  '(exec-path
    (quote
     ("/usr/local/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/usr/local/Cellar/emacs/HEAD/libexec/emacs/24.3.50/i386-apple-darwin12.4.0")))
- '(flx-ido-mode t)
  '(global-anzu-mode t)
  '(global-auto-revert-mode t)
  '(global-diff-hl-mode t)
@@ -271,17 +102,19 @@
  '(global-discover-mode nil)
  '(global-hl-line-mode nil)
  '(global-linum-mode t)
- '(global-semantic-decoration-mode t)
- '(global-semantic-highlight-edits-mode t)
- '(global-semantic-highlight-func-mode t)
- '(global-semantic-idle-local-symbol-highlight-mode t nil (semantic/idle))
+ '(global-semantic-decoration-mode nil)
+ '(global-semantic-highlight-edits-mode nil)
+ '(global-semantic-highlight-func-mode nil)
+ '(global-semantic-idle-local-symbol-highlight-mode nil nil (semantic/idle))
  '(global-semantic-idle-scheduler-mode nil)
  '(global-semantic-idle-summary-mode nil)
  '(global-semantic-mru-bookmark-mode nil)
  '(global-semantic-stickyfunc-mode t)
+ '(global-semanticdb-minor-mode t)
  '(global-subword-mode t)
  '(global-undo-tree-mode t)
  '(global-visual-line-mode t)
+ '(global-wakatime-mode t)
  '(guide-key-mode t)
  '(guide-key/guide-key-sequence (quote ("C-x" "M-s" "C-c")))
  '(guide-key/recursive-key-sequence-flag t)
@@ -331,10 +164,9 @@
         (mode . java-mode)
         (mode . idl-mode)
         (mode . lisp-mode)))))))
- '(ido-everywhere nil)
- '(ido-mode (quote both) nil (ido))
  '(ido-vertical-mode t)
  '(iedit-toggle-key-default (kbd "C-|"))
+ '(image-dired-external-viewer nil)
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(insert-shebang-custom-headers
@@ -342,6 +174,9 @@
     (("py" . "#!/usr/bin/env python
 # -*- coding: utf-8 -*-")
      ("" . ""))))
+ '(jedi:complete-on-dot t)
+ '(jedi:install-imenu t)
+ '(jedi:tooltip-method nil)
  '(keyfreq-mode t)
  '(line-number-mode t)
  '(line-spacing nil)
@@ -351,6 +186,7 @@
  '(mouse-wheel-mode t)
  '(mouse-wheel-progressive-speed nil)
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
+ '(ns-function-modifier (quote hyper))
  '(org-agenda-files
    (quote
     ("~/Google Drive/Org/joe-org/notes/writeAhead/writeAhead.org")))
@@ -370,6 +206,7 @@
      ("" "amssymb" t)
      ("" "hyperref" nil)
      "\\tolerance=1000")))
+ '(org-from-is-user-regexp "\\<顏孜羲\\>")
  '(org-latex-to-pdf-process
    (quote
     ("xelatex -interaction nonstopmode -output-directory %o %f" "xelatex -interaction nonstopmode -output-directory %o %f" "xelatex -interaction nonstopmode -output-directory %o %f")))
@@ -384,7 +221,7 @@
      ("user42" . "http://download.tuxfamily.org/user42/elpa/packages/"))))
  '(package-selected-packages
    (quote
-    (change-inner expand-region tidy transpose-frame company-jedi company-statistics smart-mode-line-powerline-theme xkcd ujelly-theme color-theme-sanityinc-tomorrow warm-night-theme firecode-theme tty-format dash direx popup popwin powerline helm-bind-key helm-c-yasnippet ace-window auto-complete persistent-soft cython-mode perspective bind-key anaconda-mode company helm load-relative projectile guru-mode diff-hl volatile-highlights zenburn-theme yaml-mode yagist xterm-color xcscope wgrep-ack web-mode vlf virtualenv undo-tree tabbar ssh-config-mode sr-speedbar solarized-theme smex smartparens smart-operator slime realgud rainbow-mode rainbow-delimiters py-autopep8 project-explorer pig-snippets pig-mode phi-search phi-autopair pdf-tools paradox palette osx-plist org-trello org-pandoc org nose nginx-mode neotree multiple-cursors monokai-theme minimap markdown-mode malabar-mode makey magit lua-mode linum-relative latex-preview-pane latex-pretty-symbols latex-extra keyfreq key-chord js2-mode jinja2-mode jedi-direx insert-shebang iedit idomenu ido-vertical-mode htmlize highlight-symbol highlight-stages help-fns+ helm-swoop helm-spotify helm-projectile helm-ls-hg helm-ls-git helm-gtags helm-descbinds helm-ag helm-ack haskell-mode guide-key gtags god-mode gitignore-mode gitconfig-mode gist ggtags fuzzy font-utils flycheck flx-ido floobits fancy-narrow esxml ensime elpy elnode electric-case ein ecb dirtree dired+ diminish cyberpunk-theme css-eldoc company-math company-auctex company-anaconda command-log-mode cdlatex bookmark+ bm autopair auctex-latexmk anzu afternoon-theme ack ace-jump-mode ac-math 2048-game)))
+    (wakatime-mode change-inner expand-region tidy transpose-frame company-jedi company-statistics smart-mode-line-powerline-theme xkcd ujelly-theme color-theme-sanityinc-tomorrow warm-night-theme firecode-theme tty-format dash direx popup popwin powerline helm-bind-key helm-c-yasnippet ace-window auto-complete persistent-soft cython-mode perspective bind-key anaconda-mode company helm load-relative projectile guru-mode diff-hl volatile-highlights zenburn-theme yaml-mode yagist xterm-color xcscope wgrep-ack web-mode vlf virtualenv undo-tree tabbar ssh-config-mode sr-speedbar solarized-theme smex smartparens smart-operator slime realgud rainbow-mode rainbow-delimiters py-autopep8 project-explorer pig-snippets pig-mode phi-search phi-autopair pdf-tools paradox palette osx-plist org-trello org-pandoc org nose nginx-mode neotree multiple-cursors monokai-theme minimap markdown-mode malabar-mode makey magit lua-mode linum-relative latex-preview-pane latex-pretty-symbols latex-extra keyfreq key-chord js2-mode jinja2-mode jedi-direx insert-shebang iedit idomenu ido-vertical-mode htmlize highlight-symbol highlight-stages help-fns+ helm-swoop helm-spotify helm-projectile helm-ls-hg helm-ls-git helm-gtags helm-descbinds helm-ag helm-ack haskell-mode guide-key gtags god-mode gitignore-mode gitconfig-mode gist ggtags fuzzy font-utils flycheck flx-ido floobits fancy-narrow esxml ensime elpy elnode electric-case ein ecb dirtree dired+ diminish cyberpunk-theme css-eldoc company-math company-auctex company-anaconda command-log-mode cdlatex bookmark+ bm autopair auctex-latexmk anzu afternoon-theme ack ace-jump-mode ac-math 2048-game)))
  '(paradox-automatically-star t)
  '(paradox-display-download-count t)
  '(paradox-execute-asynchronously (quote ask))
@@ -403,6 +240,7 @@
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--matplotlib --pdb --nosep")
  '(pyvenv-mode nil)
+ '(pyvenv-virtualenvwrapper-python "/usr/bin/python")
  '(recentf-max-saved-items 100)
  '(recentf-mode t)
  '(reftex-plug-into-AUCTeX t)
@@ -450,6 +288,8 @@
     ((t :background unspecified :foreground "#FD971F" :weight bold))))
  '(tool-bar-mode t)
  '(tramp-default-method "sshx")
+ '(wakatime-api-key "f7c5102c-8568-46ac-b20f-69adcf662dad")
+ '(wakatime-cli-path "/usr/local/lib/python3.4/site-packages/wakatime/cli.py")
  '(which-function-mode t)
  '(winner-mode t)
  '(xterm-extra-capabilities (quote (modifyOtherKeys reportBackground)))
@@ -457,7 +297,10 @@
  '(yas-global-mode t nil (yasnippet))
  '(yas-prompt-functions
    (quote
-    (yas-dropdown-prompt yas-ido-prompt yas-completing-prompt yas-x-prompt yas-no-prompt))))
+    (yas-dropdown-prompt yas-ido-prompt yas-completing-prompt yas-x-prompt yas-no-prompt)))
+ '(yas-snippet-dirs
+   (quote
+    ("~/.emacs.d/snippets" yas-installed-snippets-dir "/Users/joe/.emacs.d/elpa/pig-snippets-20130912.2324/snippets")) nil (yasnippet)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -504,6 +347,7 @@
 ;; usage ;;
 ;;;;;;;;;;;
 (setq guru-warn-only t)
+(require 'wakatime-mode)
 
 ;;;;;;;;;;;;;
 ;; comment ;;
@@ -511,10 +355,10 @@
 (bind-key "C-;" #'comment-line)
 
 ;;;;;;;;;;;
-;; font ;;
+;; face  ;;
 ;;;;;;;;;;;
 ;; (when window-system (require 'qiang-font))
-
+(require 'smart-mode-line-powerline-theme)
 
 ;;;;;;;;;;
 ;; move ;;
@@ -566,13 +410,22 @@
 ;;;;;;;;;;;;
 ;; python ;;
 ;;;;;;;;;;;;
-;; (add-hook 'python-mode-hook 'insert-shebang)
-;; (add-hook 'python-mode-hook 'anaconda-mode)
-;; (add-hook 'python-mode-hook 'eldoc-mode)
+(add-hook 'python-mode-hook 'insert-shebang)
+(add-hook 'python-mode-hook 'anaconda-mode)
+(add-hook 'python-mode-hook 'eldoc-mode)
 (add-hook 'python-mode-hook  'elpy-enable)
-(add-hook 'python-mode-hook  'pyvenv-mode)
+;; (add-hook 'python-mode-hook  'pyvenv-mode)
+;; (add-hook 'python-mode-hook  'company-mode)
 
-(require 'py-autopep8)
+(push '("*anaconda-doc*" :position right :dedicated t :width 80 :noselect t) popwin:special-display-config)
+(push '("*Python Doc*" :position right :dedicated t :width 80 ) popwin:special-display-config)
+
+;; (setq jedi:setup-keys t)                      ; optional
+;; (setq jedi:complete-on-dot t)                 ; optional
+;; (add-hook 'python-mode-hook 'jedi:setup)
+
+;; (require 'py-autopep8)
+(add-hook 'python-mode-hook 'py-autopep8)
 
 
 
@@ -595,9 +448,6 @@
 ;;;;;;;;;;
 ;; Jedi ;;
 ;;;;;;;;;;
-;; (setq jedi:setup-keys t)                      ; optional
-;; (setq jedi:complete-on-dot t)                 ; optional
-;; (add-hook 'python-mode-hook 'jedi:setup)
 
 ;;;;;;;;;;;;;;;;
 ;; completion ;;
@@ -772,6 +622,10 @@
 (bind-key "C-(" 'mc/mark-previous-symbol-like-this)
 (bind-key "C-S-c C-S-c" 'mc/edit-lines)
 
+;;;;;;;;;;;;
+;; symbol ;;
+;;;;;;;;;;;;
+(require 'iedit)
 
 ;;;;;;;;;;;;;;;
 ;; Yasnippet ;;
