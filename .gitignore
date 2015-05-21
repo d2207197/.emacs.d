@@ -30,3 +30,4 @@ helm-adaptive-history
 projectile.cache
 ede-projects.el
 /xkcd/
+local-lisp/secrets.el
