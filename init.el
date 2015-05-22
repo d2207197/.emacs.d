@@ -2,7 +2,7 @@
 ;; load other things ;;
 ;;;;;;;;;;;;;;;;;;;;;;;
 (add-to-list 'load-path "~/.emacs.d/local-lisp/")
-(load "~/.emacs.d/local-lisp/secrets.el")
+;; (load "~/.emacs.d/local-lisp/secrets.el")
 
 
 (require 'package)
