@@ -2,7 +2,7 @@
 ;; load other things ;;
 ;;;;;;;;;;;;;;;;;;;;;;;
 (add-to-list 'load-path "~/.emacs.d/local-lisp/")
-;; (load "~/.emacs.d/local-lisp/secrets.el")
+(load "~/.emacs.d/local-lisp/secrets.el")
 
 
 (require 'package)
@@ -39,13 +39,14 @@
      (output-dvi "xdvi")
      (output-pdf "skim")
      (output-html "xdg-open"))))
+ '(ac-use-menu-map t)
  '(ack-and-a-half-executable "ack")
  '(async-bytecomp-package-mode t)
  '(autopair-global-mode nil)
  '(awk-mode-hook (quote (er/add-cc-mode-expansions)))
  '(baud-rate 38400)
  '(before-save-hook (quote (py-autopep8-before-save)))
- '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
+ '(bmkp-last-as-first-bookmark-file "/Users/joe/.emacs.d/bookmarks")
  '(bookmark-version-control (quote nospecial))
  '(browse-url-generic-args (quote ("-a" "Safari")))
  '(browse-url-generic-program "open")
@@ -57,6 +58,7 @@
      (other . "gnu"))))
  '(case-fold-search t)
  '(column-number-mode t)
+ '(company-global-modes t)
  '(current-language-environment "UTF-8")
  '(custom-enabled-themes (quote (firecode)))
  '(custom-safe-themes
@@ -96,7 +98,9 @@
    (quote
     ("/usr/local/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/usr/local/Cellar/emacs/HEAD/libexec/emacs/24.3.50/i386-apple-darwin12.4.0")))
  '(global-anzu-mode t)
+ '(global-auto-complete-mode nil)
  '(global-auto-revert-mode t)
+ '(global-company-mode t)
  '(global-diff-hl-mode t)
  '(global-dired-hide-details-mode nil)
  '(global-discover-mode nil)
@@ -221,7 +225,7 @@
      ("user42" . "http://download.tuxfamily.org/user42/elpa/packages/"))))
  '(package-selected-packages
    (quote
-    (wakatime-mode change-inner expand-region tidy transpose-frame company-jedi company-statistics smart-mode-line-powerline-theme xkcd ujelly-theme color-theme-sanityinc-tomorrow warm-night-theme firecode-theme tty-format dash direx popup popwin powerline helm-bind-key helm-c-yasnippet ace-window auto-complete persistent-soft cython-mode perspective bind-key anaconda-mode company helm load-relative projectile guru-mode diff-hl volatile-highlights zenburn-theme yaml-mode yagist xterm-color xcscope wgrep-ack web-mode vlf virtualenv undo-tree tabbar ssh-config-mode sr-speedbar solarized-theme smex smartparens smart-operator slime realgud rainbow-mode rainbow-delimiters py-autopep8 project-explorer pig-snippets pig-mode phi-search phi-autopair pdf-tools paradox palette osx-plist org-trello org-pandoc org nose nginx-mode neotree multiple-cursors monokai-theme minimap markdown-mode malabar-mode makey magit lua-mode linum-relative latex-preview-pane latex-pretty-symbols latex-extra keyfreq key-chord js2-mode jinja2-mode jedi-direx insert-shebang iedit idomenu ido-vertical-mode htmlize highlight-symbol highlight-stages help-fns+ helm-swoop helm-spotify helm-projectile helm-ls-hg helm-ls-git helm-gtags helm-descbinds helm-ag helm-ack haskell-mode guide-key gtags god-mode gitignore-mode gitconfig-mode gist ggtags fuzzy font-utils flycheck flx-ido floobits fancy-narrow esxml ensime elpy elnode electric-case ein ecb dirtree dired+ diminish cyberpunk-theme css-eldoc company-math company-auctex company-anaconda command-log-mode cdlatex bookmark+ bm autopair auctex-latexmk anzu afternoon-theme ack ace-jump-mode ac-math 2048-game)))
+    (company-anaconda wakatime-mode change-inner tidy transpose-frame company-jedi company-statistics smart-mode-line-powerline-theme xkcd color-theme-sanityinc-tomorrow firecode-theme tty-format dash direx popup popwin helm-bind-key helm-c-yasnippet persistent-soft cython-mode perspective bind-key anaconda-mode company helm load-relative projectile guru-mode volatile-highlights zenburn-theme yaml-mode yagist xterm-color xcscope wgrep-ack web-mode vlf virtualenv undo-tree tabbar ssh-config-mode sr-speedbar solarized-theme smex smart-operator slime rainbow-delimiters py-autopep8 project-explorer pig-snippets pig-mode phi-search pdf-tools paradox palette osx-plist org-pandoc org nose nginx-mode minimap malabar-mode makey lua-mode linum-relative latex-preview-pane latex-pretty-symbols latex-extra keyfreq key-chord jinja2-mode jedi-direx insert-shebang idomenu ido-vertical-mode htmlize highlight-symbol highlight-stages help-fns+ helm-spotify helm-projectile helm-ls-hg helm-ls-git helm-gtags helm-descbinds helm-ag helm-ack haskell-mode guide-key gtags god-mode gitignore-mode gitconfig-mode gist ggtags fuzzy font-utils flycheck flx-ido floobits fancy-narrow esxml ensime elnode electric-case ecb dirtree diminish cyberpunk-theme css-eldoc company-auctex command-log-mode cdlatex bm autopair auctex-latexmk anzu afternoon-theme ack ace-jump-mode 2048-game)))
  '(paradox-automatically-star t)
  '(paradox-display-download-count t)
  '(paradox-execute-asynchronously (quote ask))
@@ -265,7 +269,8 @@
  '(show-paren-style (quote mixed))
  '(show-smartparens-global-mode t)
  '(size-indication-mode t)
- '(smartparens-global-strict-mode t)
+ '(smartparens-global-mode t)
+ '(smartparens-global-strict-mode nil)
  '(sml/name-width (quote (10 . 44)))
  '(sml/no-confirm-load-theme t)
  '(sml/show-client t)
@@ -307,7 +312,20 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(aw-leading-char-face ((t (:foreground "red" :height 3.0))))
+ '(company-scrollbar-bg ((t (:inherit company-tooltip :background "gray15"))))
+ '(company-scrollbar-fg ((t (:background "alternateSelectedControlColor"))))
+ '(company-template-field ((t (:background "gray20" :foreground "gray75"))))
+ '(company-tooltip ((t (:background "gray20" :foreground "gray75"))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :foreground "gray100"))))
+ '(company-tooltip-selection ((t (:inherit company-tooltip :background "RoyalBlue4"))))
  '(highlight-symbol-face ((t (:background "gray10")))))
+
+
+;;;;;;;;;;;;;;;;
+;; completion ;;
+;;;;;;;;;;;;;;;;
+;; (require 'company)
+(require 'auto-complete-config)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; environment variable ;;
@@ -411,22 +429,31 @@
 ;; python ;;
 ;;;;;;;;;;;;
 (add-hook 'python-mode-hook 'insert-shebang)
-(add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'eldoc-mode)
-(add-hook 'python-mode-hook  'elpy-enable)
-;; (add-hook 'python-mode-hook  'pyvenv-mode)
+(add-hook 'python-mode-hook 'anaconda-mode)
+(add-hook 'python-mode-hook 'ac-anaconda-setup)
+(add-hook 'python-mode-hook 'pyvenv-mode)
+
+(add-to-list 'company-backends 'company-anaconda)
+(add-hook 'python-mode-hook 'anaconda-mode)
+(add-hook 'python-mode-hook 'py-autopep8)
+;; (add-hook 'python-mode-hook  'elpy-enable)
+
 ;; (add-hook 'python-mode-hook  'company-mode)
+;; (defun my/python-mode-hook ()
+  ;; (add-to-list 'company-backends 'company-jedi))
+;; (add-hook 'python-mode-hook 'jedi:setup)
+
+;; (add-hook 'python-mode-hook 'my/python-mode-hook)
 
 (push '("*anaconda-doc*" :position right :dedicated t :width 80 :noselect t) popwin:special-display-config)
+(push '("*anaconda-nav*" :position right :dedicated t :width 80 :noselect t) popwin:special-display-config)
 (push '("*Python Doc*" :position right :dedicated t :width 80 ) popwin:special-display-config)
+
 
 ;; (setq jedi:setup-keys t)                      ; optional
 ;; (setq jedi:complete-on-dot t)                 ; optional
 ;; (add-hook 'python-mode-hook 'jedi:setup)
-
-;; (require 'py-autopep8)
-(add-hook 'python-mode-hook 'py-autopep8)
-
 
 
 ;;;;;;;;;;;;;
@@ -445,9 +472,6 @@
 ;;  python-shell-completion-string-code
 ;;  "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
 
-;;;;;;;;;;
-;; Jedi ;;
-;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;
 ;; completion ;;
@@ -869,3 +893,5 @@
 ;;                                        (smex-initialize))
 ;;                                    (global-set-key [(shift meta x)] 'smex-major-mode-commands)
 ;;                                    (smex-major-mode-commands)))
+(define-key dired-mode-map "i" 'diredp-insert-subdirs)
+(define-key dired-mode-map ";" 'dired-kill-subdir)

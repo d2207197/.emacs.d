@@ -544,8 +544,8 @@ IGNORED parameter is the string for which completion is required."
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "M-?") 'anaconda-mode-view-doc)
     (define-key map (kbd "M-r") 'anaconda-mode-usages)
-    (define-key map [remap find-tag] 'anaconda-mode-goto)
-    (define-key map [remap pop-tag-mark] 'anaconda-nav-pop-marker)
+    (define-key map [remap xref-find-definitions] 'anaconda-mode-goto)
+    (define-key map [remap xref-pop-marker-stack] 'anaconda-nav-pop-marker)
     map)
   "Keymap for `anaconda-mode'.")
 
