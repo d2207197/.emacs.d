@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: list
-# key: li
-# group : definitions
-# --
-[${3:el} for ${2:el} in ${1:list}]
-$0

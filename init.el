@@ -3,6 +3,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;
 (add-to-list 'load-path "~/.emacs.d/local-lisp/")
 (load "~/.emacs.d/local-lisp/secrets.el")
+(require 'cask "/usr/local/share/emacs/site-lisp/cask.el")
+(cask-initialize)
+
 
 
 (require 'package)
@@ -46,7 +49,7 @@
  '(awk-mode-hook (quote (er/add-cc-mode-expansions)))
  '(baud-rate 38400)
  '(before-save-hook (quote (py-autopep8-before-save)))
- '(bmkp-last-as-first-bookmark-file "/Users/joe/.emacs.d/bookmarks")
+ '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
  '(bookmark-version-control (quote nospecial))
  '(browse-url-generic-args (quote ("-a" "Safari")))
  '(browse-url-generic-program "open")
@@ -60,13 +63,10 @@
  '(column-number-mode t)
  '(company-global-modes t)
  '(current-language-environment "UTF-8")
- '(custom-enabled-themes (quote (firecode)))
+ '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
-    ("a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "08efabe5a8f3827508634a3ceed33fa06b9daeef9c70a24218b70494acdf7855" "764e3a6472a3a4821d929cdbd786e759fab6ef6c2081884fca45f1e1e3077d1d" "d725097d2547e9205ab6c8b034d6971c2f0fc64ae5f357b61b7de411ca3e7ab2" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "90edd91338ebfdfcd52ecd4025f1c7f731aced4c9c49ed28cfbebb3a3654840b" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "d5de5ffdc352e765d4cdf02716941d932b9587dc2f768912e123cde24221b77e" "ace9f12e0c00f983068910d9025eefeb5ea7a711e774ee8bb2af5f7376018ad2" "18a33cdb764e4baf99b23dcd5abdbf1249670d412c6d3a8092ae1a7b211613d5" "e80932ca56b0f109f8545576531d3fc79487ca35a9a9693b62bf30d6d08c9aaf" "c5a044ba03d43a725bd79700087dea813abcb6beb6be08c7eb3303ed90782482" "e56f1b1c1daec5dbddc50abd00fcd00f6ce4079f4a7f66052cf16d96412a09a9" "4e262566c3d57706c70e403d440146a5440de056dfaeb3062f004da1711d83fc" "64581032564feda2b5f2cf389018b4b9906d98293d84d84142d90d7986032d33" "0e7da2c7c64fb5d4764250ffa4b8b33c0946577108d1d6444f1020d0dabba784" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "57f8801351e8b7677923c9fe547f7e19f38c99b80d68c34da6fa9b94dc6d3297" default)))
- '(custom-theme-load-path
-   (quote
-    ("~/.emacs.d/elpa/ample-theme-20150210.802/" "~/.emacs.d/elpa/ujelly-theme-20150117.1729/" "~/.emacs.d/" "~/.emacs.d/elpa/afternoon-theme-20140104.1059/" "~/.emacs.d/elpa/ample-zen-theme-0.3/" "~/.emacs.d/elpa/color-theme-sanityinc-tomorrow-1.10/" "~/.emacs.d/elpa/cyberpunk-theme-20150326.1914/" "~/.emacs.d/elpa/firecode-theme-20141115.2302/" "~/.emacs.d/elpa/monokai-theme-20150112.442/" "~/.emacs.d/elpa/smart-mode-line-powerline-theme-20150426.910/" "~/.emacs.d/elpa/smart-mode-line-20150312.1736/" "~/.emacs.d/elpa/solarized-theme-20150326.2320/" "~/.emacs.d/elpa/warm-night-theme-20150321.1535/" "~/.emacs.d/elpa/zenburn-theme-20150315.1540/" custom-theme-directory t)))
+    ("05c3bc4eb1219953a4f182e10de1f7466d28987f48d647c01f1f0037ff35ab9a" default)))
  '(default-input-method "rfc1345")
  '(delete-selection-mode t)
  '(desktop-save-mode t)
@@ -223,9 +223,6 @@
      ("elpy" . "http://jorgenschaefer.github.io/packages/")
      ("marmalade" . "http://marmalade-repo.org/packages/")
      ("user42" . "http://download.tuxfamily.org/user42/elpa/packages/"))))
- '(package-selected-packages
-   (quote
-    (company-anaconda wakatime-mode change-inner tidy transpose-frame company-jedi company-statistics smart-mode-line-powerline-theme xkcd color-theme-sanityinc-tomorrow firecode-theme tty-format dash direx popup popwin helm-bind-key helm-c-yasnippet persistent-soft cython-mode perspective bind-key anaconda-mode company helm load-relative projectile guru-mode volatile-highlights zenburn-theme yaml-mode yagist xterm-color xcscope wgrep-ack web-mode vlf virtualenv undo-tree tabbar ssh-config-mode sr-speedbar solarized-theme smex smart-operator slime rainbow-delimiters py-autopep8 project-explorer pig-snippets pig-mode phi-search pdf-tools paradox palette osx-plist org-pandoc org nose nginx-mode minimap malabar-mode makey lua-mode linum-relative latex-preview-pane latex-pretty-symbols latex-extra keyfreq key-chord jinja2-mode jedi-direx insert-shebang idomenu ido-vertical-mode htmlize highlight-symbol highlight-stages help-fns+ helm-spotify helm-projectile helm-ls-hg helm-ls-git helm-gtags helm-descbinds helm-ag helm-ack haskell-mode guide-key gtags god-mode gitignore-mode gitconfig-mode gist ggtags fuzzy font-utils flycheck flx-ido floobits fancy-narrow esxml ensime elnode electric-case ecb dirtree diminish cyberpunk-theme css-eldoc company-auctex command-log-mode cdlatex bm autopair auctex-latexmk anzu afternoon-theme ack ace-jump-mode 2048-game)))
  '(paradox-automatically-star t)
  '(paradox-display-download-count t)
  '(paradox-execute-asynchronously (quote ask))
@@ -243,7 +240,7 @@
  '(python-check-command "pyflakes")
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--matplotlib --pdb --nosep")
- '(pyvenv-mode nil)
+ '(pyvenv-mode t)
  '(pyvenv-virtualenvwrapper-python "/usr/bin/python")
  '(recentf-max-saved-items 100)
  '(recentf-mode t)
@@ -321,11 +318,16 @@
  '(highlight-symbol-face ((t (:background "gray10")))))
 
 
+;;;;;;;;;;;;
+;; window ;;
+;;;;;;;;;;;;
+(require 'popwin)
+
 ;;;;;;;;;;;;;;;;
 ;; completion ;;
 ;;;;;;;;;;;;;;;;
-;; (require 'company)
-(require 'auto-complete-config)
+(require 'company)
+;; (require 'auto-complete-config)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; environment variable ;;
@@ -376,7 +378,7 @@
 ;; face  ;;
 ;;;;;;;;;;;
 ;; (when window-system (require 'qiang-font))
-(require 'smart-mode-line-powerline-theme)
+;; (require 'smart-mode-line-powerline-theme)
 
 ;;;;;;;;;;
 ;; move ;;
@@ -431,12 +433,19 @@
 (add-hook 'python-mode-hook 'insert-shebang)
 (add-hook 'python-mode-hook 'eldoc-mode)
 (add-hook 'python-mode-hook 'anaconda-mode)
-(add-hook 'python-mode-hook 'ac-anaconda-setup)
+;; (add-hook 'python-mode-hook 'ac-anaconda-setup)
 (add-hook 'python-mode-hook 'pyvenv-mode)
 
 (add-to-list 'company-backends 'company-anaconda)
+;; (add-hook 'jedi-mode-hook 'jedi-direx:setup)
+;; (add-to-list 'company-backends 'company-jedi)
+;; (eval-after-load "python"
+  ;; '(define-key python-mode-map "\C-cx" 'jedi-direx:pop-to-buffer))
+
+
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'py-autopep8)
+
 ;; (add-hook 'python-mode-hook  'elpy-enable)
 
 ;; (add-hook 'python-mode-hook  'company-mode)
@@ -853,14 +862,14 @@
 ;; mode-line ;;
 ;;;;;;;;;;;;;;;
 
-(require 'smart-mode-line)
-(add-hook 'after-init-hook 'sml/setup)
+;; (require 'smart-mode-line)
+;; (add-hook 'after-init-hook 'sml/setup)
 
 
 ;;;;;;;;;;;
 ;; direx ;;
 ;;;;;;;;;;;
-;; (require 'popwin)
+
 ;; (push '(direx:direx-mode :position left :width 40 :dedicated t)
 ;;       popwin:special-display-config)
 ;; (bind-key "C-x C-j" 'direx:jump-to-directory-other-window)
