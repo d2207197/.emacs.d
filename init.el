@@ -104,6 +104,7 @@
  '(global-diff-hl-mode t)
  '(global-dired-hide-details-mode nil)
  '(global-discover-mode nil)
+ '(global-flycheck-mode t)
  '(global-hl-line-mode nil)
  '(global-linum-mode t)
  '(global-semantic-decoration-mode nil)
@@ -464,7 +465,8 @@
 
 
 (add-hook 'python-mode-hook 'anaconda-mode)
-(add-hook 'python-mode-hook 'py-autopep8)
+
+(add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
 
 ;; (add-hook 'python-mode-hook  'elpy-enable)
 
