@@ -325,9 +325,9 @@
  '(highlight-symbol-face ((t (:background "gray10")))))
 
 
-;;;;;;;;;;;;
-;; window ;;
-;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;
+;; window/frame ;;
+;;;;;;;;;;;;;;;;;;
 (require 'popwin)
 (require 'transpose-frame)
 
@@ -397,11 +397,11 @@
 ;;;;;;;;;;
 ;; move ;;
 ;;;;;;;;;;
-(bind-key "C-c SPC" 'ace-jump-mode )
 
 (require 'ace-jump-mode)
 
 
+(bind-key "C-c C-SPC" 'ace-jump-mode )
 
 ;;;;;;;;;;;;;;
 ;; bookmark ;;
