@@ -322,6 +322,13 @@
 ;; window ;;
 ;;;;;;;;;;;;
 (require 'popwin)
+(require 'transpose-frame)
+
+
+;;;;;;;;;;;;;;;;;;
+;; syntax check ;;
+;;;;;;;;;;;;;;;;;;
+(require 'flycheck)
 
 ;;;;;;;;;;;;;;;;
 ;; completion ;;
@@ -385,6 +392,10 @@
 ;;;;;;;;;;
 (bind-key "C-c SPC" 'ace-jump-mode )
 
+(require 'ace-jump-mode)
+
+
+
 ;;;;;;;;;;;;;;
 ;; bookmark ;;
 ;;;;;;;;;;;;;;
@@ -430,6 +441,8 @@
 ;;;;;;;;;;;;
 ;; python ;;
 ;;;;;;;;;;;;
+(require 'anaconda-mode)
+(require 'py-autopep8)
 (add-hook 'python-mode-hook 'insert-shebang)
 (add-hook 'python-mode-hook 'eldoc-mode)
 (add-hook 'python-mode-hook 'anaconda-mode)
@@ -832,6 +845,7 @@
 (bind-key "s-b" 'ido-switch-buffer )
 
 
+
 ;;;;;;;;;;;;
 ;; window ;;
 ;;;;;;;;;;;;
@@ -840,6 +854,7 @@
 (bind-key "C-1" 'delete-other-windows)
 (bind-key "C-2" 'split-window-below )
 (bind-key "C-3" 'split-window-right )
+(require 'ace-window)
 (bind-key "M-p" 'ace-window )
 (require 'transpose-frame )
 (bind-key "s-p" 'transpose-frame)

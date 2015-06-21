@@ -3,10 +3,18 @@
 
 
 (depends-on "monokai-theme")
+(depends-on "ace-jump-mode")
+(depends-on "ace-window")
+(depends-on "company-anaconda")
+(depends-on "insert-shebang")
+(depends-on "py-autopep8")
+(depends-on "pyvenv")
+(depends-on "paradox")
 (depends-on "flycheck")
 (depends-on "popwin")
 (depends-on "dired+")
 (depends-on "company")
+(depends-on "anaconda-mode")
 (depends-on "bm")
 (depends-on "undo-tree")
 (depends-on "change-inner")
