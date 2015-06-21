@@ -184,8 +184,8 @@
  '(keyfreq-mode t)
  '(line-number-mode t)
  '(line-spacing nil)
- '(magit-use-overlays nil)
  '(linum-delay t)
+ '(magit-use-overlays nil)
  '(markdown-command "multimarkdown")
  '(markdown-open-command "/Applications/Marked.app/Contents/MacOS/Marked")
  '(mouse-drag-copy-region t)
@@ -797,6 +797,16 @@
 
 
 
+
+;;;;;;;;;;;;;;;;;;;;;
+;; version control ;;
+;;;;;;;;;;;;;;;;;;;;;
+;; (global-unset-key (kbd "C-x g"))
+(bind-key "C-x g" 'magit-status )
+(setq magit-last-seen-setup-instructions "1.4.0")
+(global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
+
+
 ;;;;;;;;;
 ;; ACK ;;
 ;;;;;;;;;
@@ -828,8 +838,9 @@
 ;; (global-unset-key (kbd "M-;"))
 ;; (bind-key "M-;" 'comment-dwim-line )
 
-;; (global-unset-key (kbd "C-x g"))
-(bind-key "C-x g" 'magit-status )
+
+
+
 
 ;; (global-unset-key (kbd "C-z"))
 ;; (bind-key "C-z" 'toggle-hiding )
