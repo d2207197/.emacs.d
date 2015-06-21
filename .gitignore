@@ -31,3 +31,5 @@ projectile.cache
 ede-projects.el
 /xkcd/
 local-lisp/secrets.el
+/network-security.data
+/.cask/
