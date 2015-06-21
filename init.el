@@ -228,6 +228,9 @@
      ("elpy" . "http://jorgenschaefer.github.io/packages/")
      ("marmalade" . "http://marmalade-repo.org/packages/")
      ("user42" . "http://download.tuxfamily.org/user42/elpa/packages/"))))
+ '(package-selected-packages
+   (quote
+    (yasnippet web-mode wakatime-mode use-package undo-tree transpose-frame smex smartparens slime rich-minority pyvenv projectile prodigy powerline popwin paradox pallet nyan-mode multiple-cursors monokai-theme magit iedit idle-highlight-mode htmlize helm flycheck-cask exec-path-from-shell electric-case drag-stuff dired+ company change-inner bm anzu)))
  '(paradox-automatically-star t)
  '(paradox-display-download-count t)
  '(paradox-execute-asynchronously (quote ask))
@@ -323,7 +326,10 @@
  '(company-tooltip ((t (:background "gray20" :foreground "gray75"))))
  '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :foreground "gray100"))))
  '(company-tooltip-selection ((t (:inherit company-tooltip :background "RoyalBlue4"))))
- '(highlight-symbol-face ((t (:background "gray10")))))
+ '(highlight-symbol-face ((t (:background "gray10"))))
+ '(mode-line-buffer-id ((t (:foreground "SkyBlue3" :weight bold))))
+ '(mode-line-emphasis ((t (:foreground "DodgerBlue3" :weight bold))))
+ '(mode-line-highlight ((t (:box (:line-width 2 :color "SkyBlue3" :style released-button))))))
 
 
 ;;;;;;;;;;;;;;;;;;
@@ -502,6 +508,8 @@
 ;;  "';'.join(module_completion('''%s'''))\n"
 ;;  python-shell-completion-string-code
 ;;  "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
+
+
 
 
 ;;;;;;;;;;;;;;;;
