@@ -1,15 +1,21 @@
+
+
+;;; Code:
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;; load other things ;;
 ;;;;;;;;;;;;;;;;;;;;;;;
+
 (add-to-list 'load-path "~/.emacs.d/local-lisp/")
 (load "~/.emacs.d/local-lisp/secrets.el")
 (require 'cask "/usr/local/share/emacs/site-lisp/cask.el")
 (cask-initialize)
-
+(require 'pallet)
+(pallet-mode t)
 
 
 (require 'package)
 (package-initialize)
+
 
 
 
@@ -46,6 +52,7 @@
  '(ack-and-a-half-executable "ack")
  '(async-bytecomp-package-mode t)
  '(autopair-global-mode nil)
+ '(avy-keys (quote (97 111 101 117 104 116 110 115)))
  '(awk-mode-hook (quote (er/add-cc-mode-expansions)))
  '(baud-rate 38400)
  '(before-save-hook (quote (py-autopep8-before-save)))
@@ -75,7 +82,7 @@
  '(dired-hide-details-hide-information-lines nil)
  '(dired-hide-details-hide-symlink-targets nil)
  '(dired-isearch-filenames t)
- '(dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^\\..+$")
+ '(dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^\\..+")
  '(diredp-highlight-autofiles-mode nil nil (dired+))
  '(direx:closed-icon "▶ ")
  '(direx:open-icon "▼ ")
@@ -177,8 +184,7 @@
  '(insert-shebang-custom-headers
    (quote
     (("py" . "#!/usr/bin/env python
-# -*- coding: utf-8 -*-")
-     ("" . ""))))
+# -*- coding: utf-8 -*-"))))
  '(jedi:complete-on-dot t)
  '(jedi:install-imenu t)
  '(jedi:tooltip-method nil)
@@ -230,13 +236,40 @@
      ("user42" . "http://download.tuxfamily.org/user42/elpa/packages/"))))
  '(package-selected-packages
    (quote
-    (yasnippet web-mode wakatime-mode use-package undo-tree transpose-frame smex smartparens slime rich-minority pyvenv projectile prodigy powerline popwin paradox pallet nyan-mode multiple-cursors monokai-theme magit iedit idle-highlight-mode htmlize helm flycheck-cask exec-path-from-shell electric-case drag-stuff dired+ company change-inner bm anzu)))
+    (vlf avy flycheck ensime scala-mode2 helm-ag hydra evil-smartparens evil-dvorak insert-shebang ace-window anaconda-mode company-anaconda helm-swoop py-autopep8 yasnippet web-mode wakatime-mode use-package undo-tree transpose-frame smex smartparens slime rich-minority pyvenv projectile prodigy powerline popwin paradox pallet nyan-mode multiple-cursors monokai-theme magit iedit idle-highlight-mode htmlize helm flycheck-cask exec-path-from-shell electric-case drag-stuff dired+ company change-inner bm anzu)))
+ '(pallet-mode t)
  '(paradox-automatically-star t)
  '(paradox-display-download-count t)
  '(paradox-execute-asynchronously (quote ask))
  '(pdf-latex-command "xelatex")
  '(phi-autopair-global-mode nil)
  '(popwin-mode t)
+ '(popwin:special-display-config
+   (quote
+    ((dired-mode)
+     ("*Python Doc*" :width 69 :position right :dedicated t)
+     ("*anaconda-doc*" :width 69 :position right :noselect t :dedicated t)
+     ("*anaconda-nav*" :width 69 :position right :noselect t :dedicated t :stick t)
+     ("*Miniedit Help*" :noselect t)
+     (help-mode :width 70 :position right :noselect nil :dedicated t)
+     (completion-list-mode :noselect t)
+     (compilation-mode :noselect t)
+     (grep-mode :noselect t)
+     (occur-mode :noselect t)
+     ("*Pp Macroexpand Output*" :noselect t)
+     ("*Shell Command Output*")
+     ("*vc-diff*")
+     ("*vc-change-log*")
+     ("*undo-tree*" :width 60 :position right)
+     ("^\\*anything.*\\*$" :regexp t)
+     ("*slime-apropos*")
+     ("*slime-macroexpansion*")
+     ("*slime-description*")
+     ("*slime-compilation*" :noselect t)
+     ("*slime-xref*")
+     (sldb-mode :stick t)
+     (slime-repl-mode)
+     (slime-connection-list-mode))))
  '(preview-LaTeX-command
    (quote
     ("%`%l \"\\nonstopmode\\nofiles\\PassOptionsToPackage{"
@@ -245,11 +278,10 @@
  '(projectile-global-mode t)
  '(py-autopep8-options (quote ("--max-line-length=100")))
  '(pyenv-mode t)
- '(python-check-command "pyflakes")
+ '(python-check-command "flake8")
  '(python-shell-interpreter "ipython")
- '(python-shell-interpreter-args "--matplotlib --pdb --nosep")
+ '(python-shell-interpreter-args "--matplotlib=osx --pdb --nosep -i")
  '(pyvenv-mode t)
- '(pyvenv-virtualenvwrapper-python "/usr/bin/python")
  '(recentf-max-saved-items 100)
  '(recentf-mode t)
  '(reftex-plug-into-AUCTeX t)
@@ -258,7 +290,8 @@
     (" hl-p" " Undo-Tree" " Guide" " Anzu" " Wrap" " Helm")))
  '(safe-local-variable-values
    (quote
-    ((TeX-command-extra-options . "-shell-escape")
+    ((pyvenv-workon . py3)
+     (TeX-command-extra-options . "-shell-escape")
      (TeX-command-extra-options . -shell-escape)
      (TeX-master . master)
      (TeX-engine . XeLaTeX))))
@@ -304,21 +337,23 @@
  '(wakatime-api-key "f7c5102c-8568-46ac-b20f-69adcf662dad")
  '(wakatime-cli-path "/usr/local/lib/python3.4/site-packages/wakatime/cli.py")
  '(which-function-mode t)
+ '(winner-dont-bind-my-keys t)
  '(winner-mode t)
  '(xterm-extra-capabilities (quote (modifyOtherKeys reportBackground)))
  '(xterm-mouse-mode t)
+ '(yas-also-auto-indent-first-line t)
  '(yas-global-mode t nil (yasnippet))
  '(yas-prompt-functions
    (quote
     (yas-dropdown-prompt yas-ido-prompt yas-completing-prompt yas-x-prompt yas-no-prompt)))
- '(yas-snippet-dirs
-   (quote
-    ("~/.emacs.d/snippets" yas-installed-snippets-dir "/Users/joe/.emacs.d/elpa/pig-snippets-20130912.2324/snippets")) nil (yasnippet)))
+ '(yas-visit-from-menu t)
+ '(yas-wrap-around-region t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(avy-lead-face ((t (:background "#4f57f9" :foreground "white"))))
  '(aw-leading-char-face ((t (:foreground "red" :height 3.0))))
  '(company-scrollbar-bg ((t (:inherit company-tooltip :background "gray15"))))
  '(company-scrollbar-fg ((t (:background "alternateSelectedControlColor"))))
@@ -326,6 +361,10 @@
  '(company-tooltip ((t (:background "gray20" :foreground "gray75"))))
  '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :foreground "gray100"))))
  '(company-tooltip-selection ((t (:inherit company-tooltip :background "RoyalBlue4"))))
+ '(diredp-dir-heading ((t (:background "gray22" :foreground "light green" :overline "gray64" :height 1.2))))
+ '(diredp-dir-priv ((t (:background "#2C2C2C2C2C2C" :foreground "sandy brown"))))
+ '(diredp-file-name ((t (:foreground "gray85"))))
+ '(diredp-file-suffix ((t (:foreground "turquoise3"))))
  '(highlight-symbol-face ((t (:background "gray10"))))
  '(mode-line-buffer-id ((t (:foreground "SkyBlue3" :weight bold))))
  '(mode-line-emphasis ((t (:foreground "DodgerBlue3" :weight bold))))
@@ -335,8 +374,36 @@
 ;;;;;;;;;;;;;;;;;;
 ;; window/frame ;;
 ;;;;;;;;;;;;;;;;;;
+
 (require 'popwin)
+(bind-key "C-z" popwin:keymap)
+
 (require 'transpose-frame)
+
+(bind-key "s-0" 'delete-window )
+(bind-key "s-1" 'delete-other-windows)
+(bind-key "s-2" 'split-window-below )
+(bind-key "s-3" 'split-window-right )
+(require 'ace-window)
+(bind-key "M-p" 'ace-window)
+(require 'transpose-frame)
+(bind-key "s-p" 'transpose-frame)
+(require 'winner)
+(bind-key "s-[" 'winner-undo)
+(bind-key "s-]" 'winner-redo)
+
+
+
+
+(define-key input-decode-map "\e[1;10A" [M-S-up])
+(define-key input-decode-map "\e[1;10B" [M-S-down])
+(define-key input-decode-map "\e[1;10C" [M-S-right])
+(define-key input-decode-map "\e[1;10D" [M-S-left])
+
+(define-key input-decode-map "\e[1;3A" [M-up])
+(define-key input-decode-map "\e[1;3B" [M-down])
+(define-key input-decode-map "\e[1;3C" [M-right])
+(define-key input-decode-map "\e[1;3D" [M-left])
 
 
 ;;;;;;;;;;;;;;;;;;
@@ -361,14 +428,15 @@
 ;;;;;;;;;;;
 ;; mouse ;;
 ;;;;;;;;;;;
-(global-set-key (kbd "<mouse-4>") (lambda () (interactive) (scroll-down 1)))
-(global-set-key (kbd "<mouse-5>") (lambda () (interactive) (scroll-up 1)))
+;; (global-set-key (kbd "<mouse-4>") (lambda () (interactive) (scroll-down 1)))
+;; (global-set-key (kbd "<mouse-5>") (lambda () (interactive) (scroll-up 1)))
 
 ;;;;;;;;;;
 ;; file ;;
 ;;;;;;;;;;
 ;; (global-set-key (kbd "C-x C-u") 'revert-buffer)
 (bind-key "C-x C-u" 'revert-buffer)
+(require 'vlf-setup)
 
 
 ;;;;;;;;;;;;
@@ -405,10 +473,18 @@
 ;; move ;;
 ;;;;;;;;;;
 
-(require 'ace-jump-mode)
+;; (require 'ace-jump-mode)
+(require 'avy)
+;; (global-set-key (kbd "M-g M-j") 'avy-goto-char)
+
+(global-set-key (kbd "M-g M-c") 'avy-goto-char-2)
+(global-set-key (kbd "M-g M-l") 'avy-goto-line)
+;; (global-set-key (kbd "M-g w") 'avy-goto-word-1)
+(global-set-key (kbd "M-g M-w") 'avy-goto-word-0)
 
 
-(bind-key "C-c C-SPC" 'ace-jump-mode )
+
+;; (bind-key "M-g M-j" 'ace-jump-mode )
 
 ;;;;;;;;;;;;;;
 ;; bookmark ;;
@@ -429,7 +505,6 @@
 ;;;;;;;;;;;;;
 ;; package ;;
 ;;;;;;;;;;;;;
-
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
@@ -456,6 +531,10 @@
 ;; python ;;
 ;;;;;;;;;;;;
 (require 'anaconda-mode)
+
+(define-key anaconda-mode-map [remap xref-find-definitions] 'anaconda-mode-goto)
+(define-key anaconda-mode-map [remap xref-pop-marker-stack] 'anaconda-nav-pop-marker)
+
 (require 'py-autopep8)
 (add-hook 'python-mode-hook 'insert-shebang)
 (add-hook 'python-mode-hook 'eldoc-mode)
@@ -469,9 +548,6 @@
 ;; (eval-after-load "python"
   ;; '(define-key python-mode-map "\C-cx" 'jedi-direx:pop-to-buffer))
 
-
-(add-hook 'python-mode-hook 'anaconda-mode)
-
 (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
 
 ;; (add-hook 'python-mode-hook  'elpy-enable)
@@ -483,10 +559,7 @@
 
 ;; (add-hook 'python-mode-hook 'my/python-mode-hook)
 
-(push '("*anaconda-doc*" :position right :dedicated t :width 80 :noselect t) popwin:special-display-config)
-(push '("*anaconda-nav*" :position right :dedicated t :width 80 :noselect t) popwin:special-display-config)
-(push '("*Python Doc*" :position right :dedicated t :width 80 ) popwin:special-display-config)
-
+;; (push "*anaconda-doc*"  popwin:special-display-config)
 
 ;; (setq jedi:setup-keys t)                      ; optional
 ;; (setq jedi:complete-on-dot t)                 ; optional
@@ -523,11 +596,21 @@
                                try-complete-file-name
                                try-expand-dabbrev-all-buffers) t))
 
+(bind-key "s-/" (make-hippie-expand-function
+                             '(try-expand-dabbrev-visible
+                               try-expand-dabbrev
+                               try-complete-file-name-partially
+                               try-complete-file-name
+                               try-expand-dabbrev-all-buffers) t))
+
+(bind-key "s-F" 'comint-dynamic-complete-filename)
+
 ;;;;;;;;;;
 ;; helm ;;
 ;;;;;;;;;;
 ;; (require 'helm)
 (require 'helm-config)
+(require 'helm-swoop)
 ;; (require 'helm-projectile)
 ;; (require 'helm-mode)
 ;; (require 'helm-misc)
@@ -560,20 +643,25 @@
 (bind-key "M-x" 'helm-M-x)
 
 (bind-key "C-x b" 'helm-mini)
+(bind-key "s-b" 'helm-mini)
+
 (bind-key "C-x C-r" 'helm-recentf)
 (bind-key "M-y" 'helm-show-kill-ring)
 (bind-key "M-s o"   'helm-swoop)
 (bind-key "M-s /"   #'helm-multi-swoop)
 (bind-key "C-x r l" #'helm-filtered-bookmarks)
+(require 'helm-ag)
 (bind-key "M-s s"   #'helm-ag)
 (bind-key "C-x C-f" #'helm-find-files)
-(bind-key* "C-c C-j" #'helm-semantic-or-imenu)
+(bind-key* "C-x j" #'helm-semantic-or-imenu)
+(bind-key* "s-M-j" #'helm-semantic-or-imenu)
+
 
 ;;;;;;;;;;;;
 ;; buffer ;;
 ;;;;;;;;;;;;
 (bind-key "C-x C-b" 'ibuffer-other-window)
-(push "*Ibuffer*" popwin:special-display-config)
+;; (push "*Ibuffer*" popwin:special-display-config)
 
 
 ;;;;;;;;;;;;;;;
@@ -581,6 +669,8 @@
 ;;;;;;;;;;;;;;;
 (require 'undo-tree)
 ;; (bind-key "C-?" 'undo-tree-visualize)
+(bind-key "s-Z" 'undo-tree-redo)
+
 
 ;;;;;;;;;;;
 ;; Scala ;;
@@ -610,6 +700,8 @@
 (setq-default dired-omit-files-p t) ; this is buffer-local variable
 (setq dired-omit-files
       (concat dired-omit-files "\\|^\\..+$"))
+;; (push 'dired-mode  popwin:special-display-config)
+
 
 ;;;;;;;;;;
 ;; java ;;
@@ -660,7 +752,7 @@
 ;; (load "semantic/loaddefs.el")
 ;; (semantic-mode 1);;
 ;; (require 'malabar-mode)
-;; (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))     
+;; (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
 
 
 ;; Or enable more if you wish
@@ -702,11 +794,11 @@
 ;; SLIME ;;
 ;;;;;;;;;;;
 
-(setq slime-lisp-implementations
-      '((clisp ("/usr/local/bin/clisp"))
-	(sbcl ("/usr/local/bin/sbcl"))
-	))
-(require 'slime-autoloads)
+;; (setq slime-lisp-implementations
+;;       '((clisp ("/usr/local/bin/clisp"))
+;; 	(sbcl ("/usr/local/bin/sbcl"))
+;; 	))
+;; (require 'slime-autoloads)
 ;; (slime-setup '(slime-fancy slime-asdf slime-tramp))
 
 
@@ -726,8 +818,8 @@
 
 
 (require 'change-inner)
-(bind-key "M-i" 'change-inner)
 (bind-key "M-o" 'change-outer)
+;; (bind-key "H-q H-o" 'change-outer)
 
 (require 'expand-region)
 (bind-key "C-=" 'er/expand-region)
@@ -736,54 +828,164 @@
 
 (require 'smartparens-config)
 
-(bind-key "C-M-f" 'sp-forward-sexp sp-keymap)
-(bind-key "C-M-b" 'sp-backward-sexp sp-keymap)
+(bind-key "C-M-f" 'sp-forward-sexp smartparens-mode-map)
+(bind-key "C-M-b" 'sp-backward-sexp smartparens-mode-map)
+(bind-key "C-M-u" 'sp-up-sexp smartparens-mode-map)
+(bind-key "C-M-d" 'sp-backward-down-sexp smartparens-mode-map)
 
-(bind-key "C-M-d" 'sp-down-sexp sp-keymap)
-(bind-key "C-M-a" 'sp-backward-down-sexp sp-keymap)
-(bind-key "C-S-a" 'sp-beginning-of-sexp sp-keymap)
-(bind-key "C-S-d" 'sp-end-of-sexp sp-keymap)
+(bind-key "H-f" 'sp-next-sexp smartparens-mode-map)
+(bind-key "H-b" 'sp-previous-sexp smartparens-mode-map)
+(bind-key "H-u" 'sp-backward-up-sexp smartparens-mode-map)
+(bind-key "H-d" 'sp-down-sexp smartparens-mode-map)
 
-(bind-key "C-M-e" 'sp-up-sexp sp-keymap)
-(define-key emacs-lisp-mode-map (kbd ")") 'sp-up-sexp)
-(bind-key "C-M-u" 'sp-backward-up-sexp sp-keymap)
-(bind-key "C-M-t" 'sp-transpose-sexp sp-keymap)
+(bind-key "H-a" 'sp-beginning-of-sexp smartparens-mode-map)
+(bind-key "H-e" 'sp-end-of-sexp smartparens-mode-map)
 
-(bind-key "C-M-n" 'sp-next-sexp sp-keymap)
-(bind-key "C-M-p" 'sp-previous-sexp sp-keymap)
 
-(bind-key "C-M-k" 'sp-kill-sexp sp-keymap)
-(bind-key "C-M-w" 'sp-copy-sexp sp-keymap)
 
-(bind-key "H-<delete>" 'sp-unwrap-sexp sp-keymap)
-(bind-key "H-<backspace>" 'sp-backward-unwrap-sexp sp-keymap)
+(bind-key "C-M-t" 'sp-transpose-sexp smartparens-mode-map)
 
-(bind-key "C-<right>" 'sp-forward-slurp-sexp sp-keymap)
-(bind-key "C-<left>" 'sp-forward-barf-sexp sp-keymap)
-(bind-key "C-M-<left>" 'sp-backward-slurp-sexp sp-keymap)
-(bind-key "C-M-<right>" 'sp-backward-barf-sexp sp-keymap)
+(bind-key "H-q H-q"
+          (defhydra smartparens-hydra (:color yellow)
+            "Smartparens"
+            ("d" sp-down-sexp "Down")
+            ("e" sp-up-sexp "Up")
+            ("u" sp-backward-up-sexp "Up")
+            ("a" sp-backward-down-sexp "Down")
+            ("f" sp-forward-sexp "Forward")
+            ("b" sp-backward-sexp "Backward")
+            ("n" sp-next-sexp "Next")
+            ("p" sp-previous-sexp "Prev")
+            ("k" sp-kill-sexp "Kill" :color blue)
+            ("q" nil "Quit" :color blue))
+          smartparens-mode-map)
 
-(bind-key "M-D" 'sp-splice-sexp sp-keymap)
-;; (bind-key "C-M-<delete>" 'sp-splice-sexp-killing-forward sp-keymap)
-;; (bind-key "C-M-<backspace>" 'sp-splice-sexp-killing-backward sp-keymap)
-;; (bind-key "C-S-<backspace>" 'sp-splice-sexp-killing-around sp-keymap)
 
-(bind-key "C-]" 'sp-select-next-thing-exchange sp-keymap)
-(bind-key "C-\"" 'sp-select-previous-thing sp-keymap)
-(bind-key "C-'" 'sp-select-next-thing sp-keymap)
 
-(bind-key "M-F" 'sp-forward-symbol sp-keymap)
-(bind-key "M-B" 'sp-backward-symbol sp-keymap)
 
-(bind-key "H-t" 'sp-prefix-tag-object sp-keymap)
-(bind-key "H-p" 'sp-prefix-pair-object sp-keymap)
-(bind-key "H-s c" 'sp-convolute-sexp sp-keymap)
-(bind-key "H-s a" 'sp-absorb-sexp sp-keymap)
-(bind-key "H-s e" 'sp-emit-sexp sp-keymap)
-(bind-key "H-s p" 'sp-add-to-previous-sexp sp-keymap)
-(bind-key "H-s n" 'sp-add-to-next-sexp sp-keymap)
-(bind-key "H-s j" 'sp-join-sexp sp-keymap)
-(bind-key "H-s s" 'sp-split-sexp sp-keymap)
+(bind-key "C-M-k" 'sp-kill-sexp smartparens-mode-map)
+(bind-key "C-M-w" 'sp-copy-sexp smartparens-mode-map)
+
+(bind-key "H-q <deletechar>" 'sp-unwrap-sexp smartparens-mode-map)
+(bind-key "H-q <backspace>" 'sp-backward-unwrap-sexp smartparens-mode-map)
+
+(bind-key "C-<right>" 'sp-forward-slurp-sexp smartparens-mode-map)
+(bind-key "C-<left>" 'sp-forward-barf-sexp smartparens-mode-map)
+(bind-key "C-M-<left>" 'sp-backward-slurp-sexp smartparens-mode-map)
+(bind-key "C-M-<right>" 'sp-backward-barf-sexp smartparens-mode-map)
+
+(bind-key "H-q <up>" 'sp-splice-sexp smartparens-mode-map)
+(bind-key "H-q <right>" 'sp-splice-sexp-killing-forward smartparens-mode-map)
+(bind-key "H-q <left>" 'sp-splice-sexp-killing-backward smartparens-mode-map)
+(bind-key "H-q <down>" 'sp-splice-sexp-killing-around smartparens-mode-map)
+
+(bind-key "C-]" 'sp-select-next-thing-exchange smartparens-mode-map)
+(bind-key "C-\"" 'sp-select-previous-thing smartparens-mode-map)
+(bind-key "C-'" 'sp-select-next-thing smartparens-mode-map)
+
+(bind-key "M-F" 'sp-forward-symbol smartparens-mode-map)
+(bind-key "M-B" 'sp-backward-symbol smartparens-mode-map)
+
+(bind-key "H-q <" 'sp-prefix-tag-object smartparens-mode-map)
+(bind-key "H-q (" 'sp-prefix-pair-object smartparens-mode-map)
+(bind-key "H-q c" 'sp-convolute-sexp smartparens-mode-map)
+(bind-key "H-q a" 'sp-absorb-sexp smartparens-mode-map)
+(bind-key "H-q e" 'sp-emit-sexp smartparens-mode-map)
+(bind-key "H-q p" 'sp-add-to-previous-sexp smartparens-mode-map)
+(bind-key "H-q n" 'sp-add-to-next-sexp smartparens-mode-map)
+(bind-key "H-q j" 'sp-join-sexp smartparens-mode-map)
+(bind-key "H-q s" 'sp-split-sexp smartparens-mode-map)
+
+
+(defhydra hydra-learn-sp (:hint nil)
+  "
+  _b_ backward-sexp            -----
+  _f_ forward-sexp               _s_ splice-sexp
+  _L_ backward-down-sexp         _df_ splice-sexp-killing-forward
+  _H_ backward-up-sexp           _db_ splice-sexp-killing-backward
+^^------                         _da_ splice-sexp-killing-around
+  _k_ down-sexp                -----
+  _j_ up-sexp                    _C-s_ select-next-thing-exchange
+-^^-----                         _C-p_ select-previous-thing
+  _n_ next-sexp                  _C-n_ select-next-thing
+  _p_ previous-sexp            -----
+  _a_ beginning-of-sexp          _C-f_ forward-symbol
+  _z_ end-of-sexp                _C-b_ backward-symbol
+--^^-                          -----
+  _t_ transpose-sexp             _c_ convolute-sexp
+-^^--                            _g_ absorb-sexp
+  _x_ delete-char                _q_ emit-sexp
+  _dw_ kill-word               -----
+  _dd_ kill-sexp                 _,b_ extract-before-sexp
+-^^--                            _,a_ extract-after-sexp
+  _S_ unwrap-sexp              -----
+-^^--                            _AP_ add-to-previous-sexp
+  _C-h_ forward-slurp-sexp       _AN_ add-to-next-sexp
+  _C-l_ forward-barf-sexp      -----
+  _C-S-h_ backward-slurp-sexp    _ join-sexp
+  _C-S-l_ backward-barf-sexp     _|_ split-sexp
+"
+  ;; TODO: Use () and [] - + * | <space>
+  ("b" sp-backward-sexp );; similiar to VIM b
+  ("f" sp-forward-sexp );; similar to VIM f
+  ;;
+  ("L" sp-backward-down-sexp )
+  ("H" sp-backward-up-sexp )
+  ;;
+  ("k" sp-down-sexp ) ; root - towards the root
+  ("j" sp-up-sexp )
+  ;;
+  ("n" sp-next-sexp )
+  ("p" sp-previous-sexp )
+  ;; a..z
+  ("a" sp-beginning-of-sexp )
+  ("z" sp-end-of-sexp )
+  ;;
+  ("t" sp-transpose-sexp )
+  ;;
+  ("x" sp-delete-char )
+  ("dw" sp-kill-word )
+  ;;("ds" sp-kill-symbol ) ;; Prefer kill-sexp
+  ("dd" sp-kill-sexp )
+  ;;("yy" sp-copy-sexp ) ;; Don't like it. Pref visual selection
+  ;;
+  ("S" sp-unwrap-sexp ) ;; Strip!
+  ;;("wh" sp-backward-unwrap-sexp ) ;; Too similar to above
+  ;;
+  ("C-h" sp-forward-slurp-sexp )
+  ("C-l" sp-forward-barf-sexp )
+  ("C-S-h" sp-backward-slurp-sexp )
+  ("C-S-l" sp-backward-barf-sexp )
+  ;;
+  ;;("C-[" (bind (sp-wrap-with-pair "[")) ) ;;FIXME
+  ;;("C-(" (bind (sp-wrap-with-pair "(")) )
+  ;;
+  ("s" sp-splice-sexp )
+  ("df" sp-splice-sexp-killing-forward )
+  ("db" sp-splice-sexp-killing-backward )
+  ("da" sp-splice-sexp-killing-around )
+  ;;
+  ("C-s" sp-select-next-thing-exchange )
+  ("C-p" sp-select-previous-thing )
+  ("C-n" sp-select-next-thing )
+  ;;
+  ("C-f" sp-forward-symbol )
+  ("C-b" sp-backward-symbol )
+  ;;
+  ;;("C-t" sp-prefix-tag-object)
+  ;;("H-p" sp-prefix-pair-object)
+  ("c" sp-convolute-sexp )
+  ("g" sp-absorb-sexp )
+  ("q" sp-emit-sexp )
+  ;;
+  (",b" sp-extract-before-sexp )
+  (",a" sp-extract-after-sexp )
+  ;;
+  ("AP" sp-add-to-previous-sexp );; Difference to slurp?
+  ("AN" sp-add-to-next-sexp )
+  ;;
+  ("_" sp-join-sexp ) ;;Good
+  ("|" sp-split-sexp )) 
 
 ;;;;;;;;;;;;;
 ;; paredit ;;
@@ -874,31 +1076,6 @@
 
 
 
-;;;;;;;;;;;;
-;; window ;;
-;;;;;;;;;;;;
-
-(bind-key "C-0" 'delete-window )
-(bind-key "C-1" 'delete-other-windows)
-(bind-key "C-2" 'split-window-below )
-(bind-key "C-3" 'split-window-right )
-(require 'ace-window)
-(bind-key "M-p" 'ace-window )
-(require 'transpose-frame )
-(bind-key "s-p" 'transpose-frame)
-
-
-
-(define-key input-decode-map "\e[1;10A" [M-S-up])
-(define-key input-decode-map "\e[1;10B" [M-S-down])
-(define-key input-decode-map "\e[1;10C" [M-S-right])
-(define-key input-decode-map "\e[1;10D" [M-S-left])
-
-(define-key input-decode-map "\e[1;3A" [M-up])
-(define-key input-decode-map "\e[1;3B" [M-down])
-(define-key input-decode-map "\e[1;3C" [M-right])
-(define-key input-decode-map "\e[1;3D" [M-left])
-
 
 
 ;;;;;;;;;;;;;;;
@@ -947,3 +1124,5 @@
 ;;                                    (smex-major-mode-commands)))
 (define-key dired-mode-map "i" 'diredp-insert-subdirs)
 (define-key dired-mode-map ";" 'dired-kill-subdir)
+
+
