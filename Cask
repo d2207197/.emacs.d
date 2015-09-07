@@ -53,6 +53,7 @@
 (depends-on "package-build")
 (depends-on "pallet")
 (depends-on "paradox")
+(depends-on "persp-mode")
 (depends-on "pkg-info")
 (depends-on "popup")
 (depends-on "popwin")

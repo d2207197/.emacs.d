@@ -28,6 +28,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(LaTeX-verbatim-environments (quote ("verbatim" "verbatim*" "minted")))
  '(TeX-PDF-mode t)
  '(TeX-auto-save t)
  '(TeX-command-extra-options "-shell-escape")
@@ -55,7 +56,6 @@
  '(avy-keys (quote (97 111 101 117 104 116 110 115)))
  '(awk-mode-hook (quote (er/add-cc-mode-expansions)))
  '(baud-rate 38400)
- '(before-save-hook (quote (py-autopep8-before-save)))
  '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
  '(bookmark-version-control (quote nospecial))
  '(browse-url-generic-args (quote ("-a" "Safari")))
@@ -103,7 +103,7 @@
  '(epg-gpg-program "gpg")
  '(exec-path
    (quote
-    ("/usr/local/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/usr/local/Cellar/emacs/HEAD/libexec/emacs/24.3.50/i386-apple-darwin12.4.0")))
+    ("/Library/TeX/texbin" "/usr/local/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/usr/local/Cellar/emacs/HEAD/libexec/emacs/24.3.50/i386-apple-darwin12.4.0")))
  '(global-anzu-mode t)
  '(global-auto-complete-mode nil)
  '(global-auto-revert-mode t)
@@ -126,7 +126,7 @@
  '(global-subword-mode t)
  '(global-undo-tree-mode t)
  '(global-visual-line-mode t)
- '(global-wakatime-mode t)
+ '(global-wakatime-mode nil)
  '(guide-key-mode t)
  '(guide-key/guide-key-sequence (quote ("C-x" "M-s" "C-c")))
  '(guide-key/recursive-key-sequence-flag t)
@@ -189,6 +189,7 @@
  '(jedi:install-imenu t)
  '(jedi:tooltip-method nil)
  '(keyfreq-mode t)
+ '(latex-preview-pane-multifile-mode (quote auctex))
  '(line-number-mode t)
  '(line-spacing nil)
  '(linum-delay t)
@@ -236,12 +237,13 @@
      ("user42" . "http://download.tuxfamily.org/user42/elpa/packages/"))))
  '(package-selected-packages
    (quote
-    (vlf avy flycheck ensime scala-mode2 helm-ag hydra evil-smartparens evil-dvorak insert-shebang ace-window anaconda-mode company-anaconda helm-swoop py-autopep8 yasnippet web-mode wakatime-mode use-package undo-tree transpose-frame smex smartparens slime rich-minority pyvenv projectile prodigy powerline popwin paradox pallet nyan-mode multiple-cursors monokai-theme magit iedit idle-highlight-mode htmlize helm flycheck-cask exec-path-from-shell electric-case drag-stuff dired+ company change-inner bm anzu)))
+    (ido-vertical-mode ignoramus persp-mode helm-flycheck company-math latex-preview-pane magic-latex-buffer math-symbol-lists helm-projectile json-mode auctex-latexmk company-auctex auctex py-yapf vlf avy flycheck ensime scala-mode2 helm-ag hydra evil-smartparens evil-dvorak insert-shebang ace-window anaconda-mode company-anaconda helm-swoop py-autopep8 yasnippet web-mode wakatime-mode use-package undo-tree transpose-frame smex smartparens slime rich-minority pyvenv projectile prodigy powerline popwin paradox pallet nyan-mode multiple-cursors monokai-theme magit iedit idle-highlight-mode htmlize helm flycheck-cask exec-path-from-shell electric-case drag-stuff dired+ company change-inner bm anzu)))
  '(pallet-mode t)
  '(paradox-automatically-star t)
  '(paradox-display-download-count t)
  '(paradox-execute-asynchronously (quote ask))
- '(pdf-latex-command "xelatex")
+ '(pdf-latex-command "latexmk")
+ '(persp-keymap-prefix "x")
  '(phi-autopair-global-mode nil)
  '(popwin-mode t)
  '(popwin:special-display-config
@@ -275,6 +277,7 @@
     ("%`%l \"\\nonstopmode\\nofiles\\PassOptionsToPackage{"
      ("," . preview-required-option-list)
      "}{preview}\\AtBeginDocument{\\ifx\\ifPreview\\undefined" preview-default-preamble "\\fi}\"%' %t")))
+ '(preview-fast-dvips-command "pdftops -origpagesizes %s.pdf %m/preview.ps")
  '(projectile-global-mode t)
  '(py-autopep8-options (quote ("--max-line-length=100")))
  '(pyenv-mode t)
@@ -290,7 +293,10 @@
     (" hl-p" " Undo-Tree" " Guide" " Anzu" " Wrap" " Helm")))
  '(safe-local-variable-values
    (quote
-    ((pyvenv-workon . py3)
+    ((reftex-default-bibliography . "0citation.bib")
+     (reftex-default-bibliography . "citation.bib")
+     (TeX-engine . xetex)
+     (pyvenv-workon . py3)
      (TeX-command-extra-options . "-shell-escape")
      (TeX-command-extra-options . -shell-escape)
      (TeX-master . master)
@@ -302,6 +308,7 @@
  '(scroll-step 1)
  '(scroll-up-aggressively 0.1)
  '(semantic-mode t)
+ '(sentence-end-double-space nil)
  '(server-mode t)
  '(server-use-tcp t)
  '(show-paren-delay 0.1)
@@ -341,7 +348,7 @@
  '(winner-mode t)
  '(xterm-extra-capabilities (quote (modifyOtherKeys reportBackground)))
  '(xterm-mouse-mode t)
- '(yas-also-auto-indent-first-line t)
+ '(yas-also-auto-indent-first-line nil)
  '(yas-global-mode t nil (yasnippet))
  '(yas-prompt-functions
    (quote
@@ -374,7 +381,10 @@
 ;;;;;;;;;;;;;;;;;;
 ;; window/frame ;;
 ;;;;;;;;;;;;;;;;;;
-
+(require 'persp-mode)
+(with-eval-after-load "persp-mode-autoloads"
+  ;; (setq wg-morph-on nil) ;; switch off animation
+ (add-hook 'after-init-hook #'(lambda () (persp-mode 1))))
 (require 'popwin)
 (bind-key "C-z" popwin:keymap)
 
@@ -446,6 +456,7 @@
 (global-anzu-mode +1)
 (bind-key "M-%" 'anzu-query-replace)
 (bind-key "C-M-%" 'anzu-query-replace-regexp)
+(bind-key "s-f" 'helm-projectile)
 
 ;;;;;;;;;;;;;;
 ;; register ;;
@@ -535,7 +546,7 @@
 (define-key anaconda-mode-map [remap xref-find-definitions] 'anaconda-mode-goto)
 (define-key anaconda-mode-map [remap xref-pop-marker-stack] 'anaconda-nav-pop-marker)
 
-(require 'py-autopep8)
+;; (require 'py-autopep8)
 (add-hook 'python-mode-hook 'insert-shebang)
 (add-hook 'python-mode-hook 'eldoc-mode)
 (add-hook 'python-mode-hook 'anaconda-mode)
@@ -547,8 +558,9 @@
 ;; (add-to-list 'company-backends 'company-jedi)
 ;; (eval-after-load "python"
   ;; '(define-key python-mode-map "\C-cx" 'jedi-direx:pop-to-buffer))
-
-(add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
+(require 'py-yapf)
+(add-hook 'python-mode-hook 'py-yapf-enable-on-save)
+;; (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
 
 ;; (add-hook 'python-mode-hook  'elpy-enable)
 
@@ -691,6 +703,31 @@
 ;; (add-to-list 'load-path "~/.emacs.d/elpa/auctex-11.87.5")
 ;; (require 'tex-site nil 'noerror)
 ;; (require 'tex-site)
+
+(require 'auctex-latexmk)
+(auctex-latexmk-setup)
+(require 'magic-latex-buffer)
+(add-hook 'latex-mode-hook 'magic-latex-buffer)
+(require 'latex-preview-pane)
+;; (latex-preview-pane-enable)
+(add-to-list 'company-backends 'company-math-symbols-unicode)
+(add-hook 'LaTeX-mode-hook 'reftex-mode)
+
+
+;; (defun my-latex-mode-setup ()
+;;   (setq-local company-backends
+;;               (append '(company-math-symbols-latex company-latex-commands)
+;;                       company-backends)))
+
+;; (add-hook 'TeX-mode-hook 'my-latex-mode-setup)
+
+(require 'reftex)
+(require 'company-auctex)
+(add-hook 'latex-mode-hook 'company-auctex-init)
+
+
+
+
 
 ;;;;;;;;;;;
 ;; dired ;;
@@ -1090,6 +1127,21 @@
 ;; direx ;;
 ;;;;;;;;;;;
 
+
+(define-key dired-mode-map "i" 'diredp-insert-subdirs)
+(define-key dired-mode-map ";" 'dired-kill-subdir)
+
+(add-hook 'dired-load-hook #'(lambda nil (load "dired-x" t)))
+(require 'dired-x)
+
+(require 'ignoramus)
+
+(ignoramus-setup)
+
+(put 'narrow-to-region 'disabled nil)
+(put 'set-goal-column 'disabled nil)
+(put 'dired-find-alternate-file 'disabled nil)
+
 ;; (push '(direx:direx-mode :position left :width 40 :dedicated t)
 ;;       popwin:special-display-config)
 ;; (bind-key "C-x C-j" 'direx:jump-to-directory-other-window)
@@ -1099,9 +1151,6 @@
 (setq mac-control-modifier 'control) ; make Control key do Control
 (setq ns-function-modifier 'hyper)  ; make Fn key do Hyper
 
-(put 'narrow-to-region 'disabled nil)
-(put 'set-goal-column 'disabled nil)
-(put 'dired-find-alternate-file 'disabled nil)
 
 
 
@@ -1122,7 +1171,46 @@
 ;;                                        (smex-initialize))
 ;;                                    (global-set-key [(shift meta x)] 'smex-major-mode-commands)
 ;;                                    (smex-major-mode-commands)))
-(define-key dired-mode-map "i" 'diredp-insert-subdirs)
-(define-key dired-mode-map ";" 'dired-kill-subdir)
 
+;; (eval-after-load "dired-x"
+;;   '(progn
+;;      (defvar dired-omit-regexp-orig (symbol-function 'dired-omit-regexp))
 
+;;      (defun dired-omit-regexp ()
+;;        (let ((file (expand-file-name ".git"))
+;;              parent-dir)
+;;          (while (and (not (file-exists-p file))
+;;                      (progn
+;;                        (setq parent-dir
+;;                              (file-name-directory
+;;                               (directory-file-name
+;;                                (file-name-directory file))))
+;;                        ;; Give up if we are already at the root dir.
+;;                        (not (string= (file-name-directory file)
+;;                                      parent-dir))))
+;;            ;; Move up to the parent dir and try again.
+;;            (setq file (expand-file-name ".git" parent-dir)))
+;;          ;; If we found a change log in a parent, use that.
+;;          (if (file-exists-p file)
+;;              (let ((regexp (funcall dired-omit-regexp-orig)))
+;;                (assert (stringp regexp))
+;;                (concat
+;;                 regexp
+;;                 (if (> (length regexp) 0)
+;;                     "\\|" "")
+;;                 "\\("
+;;                 (mapconcat
+;;                  #'(lambda (str)
+;;                      (concat "^"
+;;                              (regexp-quote
+;;                               (substring str 13
+;;                                          (if (= ?/ (aref str (1- (length str))))
+;;                                              (1- (length str))
+;;                                            nil)))
+;;                              "$"))
+;;                  (split-string (shell-command-to-string
+;;                                 "git clean -d -x -n")
+;;                                "\n" t)
+;;                  "\\|")
+;;                 "\\)"))
+;;            (funcall dired-omit-regexp-orig))))))
