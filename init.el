@@ -1,13 +1,10 @@
-
-
-;;; Code:
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;; load other things ;;
 ;;;;;;;;;;;;;;;;;;;;;;;
 
 (add-to-list 'load-path "~/.emacs.d/local-lisp/")
-(load "~/.emacs.d/local-lisp/secrets.el")
-(require 'cask "/usr/local/share/emacs/site-lisp/cask.el")
+(load-file "~/.emacs.d/local-lisp/secrets.el")
+(require 'cask "/usr/local/share/emacs/site-lisp/cask/cask.el")
 (cask-initialize)
 (require 'pallet)
 (pallet-mode t)
@@ -73,7 +70,7 @@
  '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
-    ("05c3bc4eb1219953a4f182e10de1f7466d28987f48d647c01f1f0037ff35ab9a" default)))
+    ("38ba6a938d67a452aeb1dada9d7cdeca4d9f18114e9fc8ed2b972573138d4664" "05c3bc4eb1219953a4f182e10de1f7466d28987f48d647c01f1f0037ff35ab9a" default)))
  '(default-input-method "rfc1345")
  '(delete-selection-mode t)
  '(desktop-save-mode t)
@@ -148,7 +145,6 @@
  '(helm-gtags-display-style (quote detail))
  '(helm-gtags-suggested-key-mapping t)
  '(helm-gtags-use-input-at-cursor t)
- '(helm-match-plugin-mode t nil (helm-match-plugin))
  '(helm-mode t)
  '(helm-recentf-fuzzy-match t)
  '(helm-swoop-speed-or-color t)
@@ -629,7 +625,7 @@
 ;; (require 'helm-files)
 ;; (require 'helm-locate)
 ;; (require 'helm-buffers)
-;; (require 'helm-match-plugin)
+
 
 ;; (helm-projectile-on)
 
