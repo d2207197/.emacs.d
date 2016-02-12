@@ -1,20 +1,15 @@
 ;;;;;;;;;;;;;;;;;;;;;;;
-;; load other things ;;
+;; package manager   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;
 
 (add-to-list 'load-path "~/.emacs.d/local-lisp/")
-(load-file "~/.emacs.d/local-lisp/secrets.el")
+(load "~/.emacs.d/local-lisp/secrets" t)
 (require 'cask "/usr/local/share/emacs/site-lisp/cask/cask.el")
 (cask-initialize)
 (require 'pallet)
 (pallet-mode t)
-
-
 (require 'package)
 (package-initialize)
-
-
-
 
 ;;;;;;;;;;;;;;;
 ;; Customize ;;
@@ -48,6 +43,7 @@
      (output-html "xdg-open"))))
  '(ac-use-menu-map t)
  '(ack-and-a-half-executable "ack")
+ '(anzu-mode-lighter "")
  '(async-bytecomp-package-mode t)
  '(autopair-global-mode nil)
  '(avy-keys (quote (97 111 101 117 104 116 110 115)))
@@ -101,6 +97,7 @@
  '(exec-path
    (quote
     ("/Library/TeX/texbin" "/usr/local/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/usr/local/Cellar/emacs/HEAD/libexec/emacs/24.3.50/i386-apple-darwin12.4.0")))
+ '(global-aggressive-indent-mode nil)
  '(global-anzu-mode t)
  '(global-auto-complete-mode nil)
  '(global-auto-revert-mode t)
@@ -110,7 +107,8 @@
  '(global-discover-mode nil)
  '(global-flycheck-mode t)
  '(global-hl-line-mode nil)
- '(global-linum-mode t)
+ '(global-linum-mode nil)
+ '(global-nlinum-mode t)
  '(global-semantic-decoration-mode nil)
  '(global-semantic-highlight-edits-mode nil)
  '(global-semantic-highlight-func-mode nil)
@@ -182,8 +180,10 @@
     (("py" . "#!/usr/bin/env python
 # -*- coding: utf-8 -*-"))))
  '(jedi:complete-on-dot t)
+ '(jedi:get-in-function-call-delay 500)
  '(jedi:install-imenu t)
  '(jedi:tooltip-method nil)
+ '(jedi:use-shortcuts t)
  '(keyfreq-mode t)
  '(latex-preview-pane-multifile-mode (quote auctex))
  '(line-number-mode t)
@@ -233,7 +233,7 @@
      ("user42" . "http://download.tuxfamily.org/user42/elpa/packages/"))))
  '(package-selected-packages
    (quote
-    (ido-vertical-mode ignoramus persp-mode helm-flycheck company-math latex-preview-pane magic-latex-buffer math-symbol-lists helm-projectile json-mode auctex-latexmk company-auctex auctex py-yapf vlf avy flycheck ensime scala-mode2 helm-ag hydra evil-smartparens evil-dvorak insert-shebang ace-window anaconda-mode company-anaconda helm-swoop py-autopep8 yasnippet web-mode wakatime-mode use-package undo-tree transpose-frame smex smartparens slime rich-minority pyvenv projectile prodigy powerline popwin paradox pallet nyan-mode multiple-cursors monokai-theme magit iedit idle-highlight-mode htmlize helm flycheck-cask exec-path-from-shell electric-case drag-stuff dired+ company change-inner bm anzu)))
+    (pyenv-mode company-jedi rainbow-mode dired-subtree dired-filter dired-open rainbow-delimiters nlinum org-bullets company-quickhelp aggressive-indent speed-type neotree comment-dwim-2 flycheck-tip flycheck-status-emoji general-close ox-twbs solarized-theme ido-vertical-mode ignoramus persp-mode helm-flycheck company-math latex-preview-pane magic-latex-buffer math-symbol-lists helm-projectile json-mode auctex-latexmk company-auctex auctex py-yapf vlf avy flycheck ensime scala-mode2 helm-ag hydra evil-smartparens evil-dvorak insert-shebang ace-window anaconda-mode company-anaconda helm-swoop py-autopep8 yasnippet web-mode wakatime-mode use-package undo-tree transpose-frame smex smartparens slime rich-minority pyvenv projectile prodigy popwin paradox pallet nyan-mode multiple-cursors monokai-theme magit iedit idle-highlight-mode htmlize helm flycheck-cask exec-path-from-shell electric-case drag-stuff dired+ company change-inner bm anzu)))
  '(pallet-mode t)
  '(paradox-automatically-star t)
  '(paradox-display-download-count t)
@@ -284,9 +284,10 @@
  '(recentf-max-saved-items 100)
  '(recentf-mode t)
  '(reftex-plug-into-AUCTeX t)
+ '(rich-minority-mode t)
  '(rm-blacklist
    (quote
-    (" hl-p" " Undo-Tree" " Guide" " Anzu" " Wrap" " Helm")))
+    (" hl-p" " Undo-Tree" " Guide" " Anzu" " Wrap" " Helm" " yas" " company" " ,")))
  '(safe-local-variable-values
    (quote
     ((reftex-default-bibliography . "0citation.bib")
@@ -337,6 +338,9 @@
     ((t :background unspecified :foreground "#FD971F" :weight bold))))
  '(tool-bar-mode t)
  '(tramp-default-method "sshx")
+ '(use-package-always-ensure t)
+ '(use-package-debug nil)
+ '(use-package-verbose t)
  '(wakatime-api-key "f7c5102c-8568-46ac-b20f-69adcf662dad")
  '(wakatime-cli-path "/usr/local/lib/python3.4/site-packages/wakatime/cli.py")
  '(which-function-mode t)
@@ -351,11 +355,14 @@
     (yas-dropdown-prompt yas-ido-prompt yas-completing-prompt yas-x-prompt yas-no-prompt)))
  '(yas-visit-from-menu t)
  '(yas-wrap-around-region t))
+
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "#272822" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Hack"))))
  '(avy-lead-face ((t (:background "#4f57f9" :foreground "white"))))
  '(aw-leading-char-face ((t (:foreground "red" :height 3.0))))
  '(company-scrollbar-bg ((t (:inherit company-tooltip :background "gray15"))))
@@ -369,9 +376,11 @@
  '(diredp-file-name ((t (:foreground "gray85"))))
  '(diredp-file-suffix ((t (:foreground "turquoise3"))))
  '(highlight-symbol-face ((t (:background "gray10"))))
+ '(idle-highlight ((t (:background "#303f4e"))))
  '(mode-line-buffer-id ((t (:foreground "SkyBlue3" :weight bold))))
  '(mode-line-emphasis ((t (:foreground "DodgerBlue3" :weight bold))))
  '(mode-line-highlight ((t (:box (:line-width 2 :color "SkyBlue3" :style released-button))))))
+
 
 
 ;;;;;;;;;;;;;;;;;;
@@ -448,27 +457,43 @@
 ;;;;;;;;;;;;
 ;; search ;;
 ;;;;;;;;;;;;
-(require 'anzu)
-(global-anzu-mode +1)
-(bind-key "M-%" 'anzu-query-replace)
-(bind-key "C-M-%" 'anzu-query-replace-regexp)
-(bind-key "s-f" 'helm-projectile)
+(use-package anzu
+  :bind
+  ("M-%" . anzu-query-replace)
+  ("C-M-%" . anzu-query-replace-regexp)
+  :config
+  (global-anzu-mode +1)
+  )
+(use-package helm-swoop
+  :bind
+  ("M-s o" . helm-swoop)
+  ("M-s /" . helm-multi-swoop)
+  )
+(use-package helm-ag
+  :bind
+  ("M-s s" . helm-ag)
+  )
+
 
 ;;;;;;;;;;;;;;
 ;; register ;;
 ;;;;;;;;;;;;;;
-(bind-key "C-x r i" 'helm-register)
+(use-package helm
+  :bind ("C-x r i" . helm-register))
+
 
 ;;;;;;;;;;;
 ;; usage ;;
 ;;;;;;;;;;;
-(setq guru-warn-only t)
-(require 'wakatime-mode)
+(use-package wakatime-mode)
 
 ;;;;;;;;;;;;;
 ;; comment ;;
 ;;;;;;;;;;;;;
 (bind-key "C-;" #'comment-line)
+(use-package comment-dwim-2
+  :bind
+  ("M-;" . comment-dwim-2))
 
 ;;;;;;;;;;;
 ;; face  ;;
@@ -476,18 +501,29 @@
 ;; (when window-system (require 'qiang-font))
 ;; (require 'smart-mode-line-powerline-theme)
 
+(use-package rich-minority
+  :config
+  (rich-minority-mode 1)
+  )
+
 ;;;;;;;;;;
 ;; move ;;
 ;;;;;;;;;;
 
 ;; (require 'ace-jump-mode)
 (require 'avy)
+(use-package avy
+  :bind
+  ("M-g M-c" . avy-goto-char-2)
+  ("M-g M-l" . avy-goto-line)
+  ("M-g M-w" . avy-goto-word-0)
+  )
 ;; (global-set-key (kbd "M-g M-j") 'avy-goto-char)
 
-(global-set-key (kbd "M-g M-c") 'avy-goto-char-2)
-(global-set-key (kbd "M-g M-l") 'avy-goto-line)
+;; (global-set-key (kbd "M-g M-c") 'avy-goto-char-2)
+;; (global-set-key (kbd "M-g M-l") 'avy-goto-line)
 ;; (global-set-key (kbd "M-g w") 'avy-goto-word-1)
-(global-set-key (kbd "M-g M-w") 'avy-goto-word-0)
+;; (global-set-key (kbd "M-g M-w") 'avy-goto-word-0)
 
 
 
@@ -537,25 +573,39 @@
 ;;;;;;;;;;;;
 ;; python ;;
 ;;;;;;;;;;;;
-(require 'anaconda-mode)
+;; (require 'anaconda-mode)
 
-(define-key anaconda-mode-map [remap xref-find-definitions] 'anaconda-mode-goto)
-(define-key anaconda-mode-map [remap xref-pop-marker-stack] 'anaconda-nav-pop-marker)
+;; (define-key anaconda-mode-map [remap xref-find-definitions] 'anaconda-mode-goto)
+;; (define-key anaconda-mode-map [remap xref-pop-marker-stack] 'anaconda-nav-pop-marker)
 
 ;; (require 'py-autopep8)
 (add-hook 'python-mode-hook 'insert-shebang)
-(add-hook 'python-mode-hook 'eldoc-mode)
-(add-hook 'python-mode-hook 'anaconda-mode)
+;; (add-hook 'python-mode-hook 'eldoc-mode)
+;; (add-hook 'python-mode-hook 'anaconda-mode)
 ;; (add-hook 'python-mode-hook 'ac-anaconda-setup)
-(add-hook 'python-mode-hook 'pyvenv-mode)
+;; (add-hook 'python-mode-hook 'pyvenv-mode)
 
-(add-to-list 'company-backends 'company-anaconda)
+;; (add-to-list 'company-backends 'company-anaconda)
 ;; (add-hook 'jedi-mode-hook 'jedi-direx:setup)
-;; (add-to-list 'company-backends 'company-jedi)
+(use-package company-jedi
+  :init
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (add-to-list 'company-backends 'company-jedi)
+              (define-key python-mode-map [remap xref-find-references] 'jedi:show-doc)
+              ;; (define-key python-mode-map [remap xref-find-definitions] 'jedi:goto-definition)
+              ;; (define-key python-mode-map [remap xref-pop-marker-stack] 
+              ;; 'jedi:goto-definition-pop-marker)))
+              (jedi-mode t)
+              )
+))
+
 ;; (eval-after-load "python"
   ;; '(define-key python-mode-map "\C-cx" 'jedi-direx:pop-to-buffer))
-(require 'py-yapf)
-(add-hook 'python-mode-hook 'py-yapf-enable-on-save)
+(use-package py-yapf
+  :init
+  (add-hook 'python-mode-hook 'py-yapf-enable-on-save))
+
 ;; (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
 
 ;; (add-hook 'python-mode-hook  'elpy-enable)
@@ -613,12 +663,18 @@
 
 (bind-key "s-F" 'comint-dynamic-complete-filename)
 
+
+;;;;;;;;;;;;;
+;; project ;;
+;;;;;;;;;;;;;
+(use-package helm-projectile
+  :bind ("s-f" . helm-projectile))
+
 ;;;;;;;;;;
 ;; helm ;;
 ;;;;;;;;;;
 ;; (require 'helm)
 (require 'helm-config)
-(require 'helm-swoop)
 ;; (require 'helm-projectile)
 ;; (require 'helm-mode)
 ;; (require 'helm-misc)
@@ -627,39 +683,16 @@
 ;; (require 'helm-buffers)
 
 
-;; (helm-projectile-on)
-
-
-;; (defun helm-backspace ()
-;;   "Forward to `backward-delete-char'.
-;; On error (read-only), quit without selecting."
-;;   (interactive)
-;;   (condition-case nil
-;;       (backward-delete-char 1)
-;;     (error
-;;      (helm-keyboard-quit))))
-;; (bind-key "DEL" 'helm-backspace helm-map)
-;; (defun fu/helm-find-files-navigate-forward (orig-fun &rest args)
-;;   (if (file-directory-p (helm-get-selection))
-;;       (apply orig-fun args)
-;;     (helm-maybe-exit-minibuffer)))
-;; (advice-add 'helm-execute-persistent-action :around #'fu/helm-find-files-navigate-forward)
-;; (bind-key "RET" 'helm-execute-persistent-action helm-find-files-map)
-
 
 ;; (setq helm-M-x-fuzzy-match t)
 (bind-key "M-x" 'helm-M-x)
 
-(bind-key "C-x b" 'helm-mini)
+;; (bind-key "C-x b" 'helm-mini)
 (bind-key "s-b" 'helm-mini)
 
 (bind-key "C-x C-r" 'helm-recentf)
 (bind-key "M-y" 'helm-show-kill-ring)
-(bind-key "M-s o"   'helm-swoop)
-(bind-key "M-s /"   #'helm-multi-swoop)
 (bind-key "C-x r l" #'helm-filtered-bookmarks)
-(require 'helm-ag)
-(bind-key "M-s s"   #'helm-ag)
 (bind-key "C-x C-f" #'helm-find-files)
 (bind-key* "C-x j" #'helm-semantic-or-imenu)
 (bind-key* "s-M-j" #'helm-semantic-or-imenu)
@@ -675,10 +708,11 @@
 ;;;;;;;;;;;;;;;
 ;; Undo Tree ;;
 ;;;;;;;;;;;;;;;
+(use-package undo-tree
+  :bind ("s-Z" . undo-tree-redo))
 (require 'undo-tree)
 ;; (bind-key "C-?" 'undo-tree-visualize)
 (bind-key "s-Z" 'undo-tree-redo)
-
 
 ;;;;;;;;;;;
 ;; Scala ;;
@@ -687,6 +721,11 @@
 (require 'electric-case)
 (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
+
+;;;;;;;;;;
+;; java ;;
+;;;;;;;;;;
+(add-hook 'java-mode-hook 'electric-case-java-init)
 
 ;;;;;;;;;;;
 ;; LaTeX ;;
@@ -736,16 +775,12 @@
 ;; (push 'dired-mode  popwin:special-display-config)
 
 
-;;;;;;;;;;
-;; java ;;
-;;;;;;;;;;
-(add-hook 'java-mode-hook 'electric-case-java-init)
-
 ;;;;;;;;;;;;;;
 ;; org-mode ;;
 ;;;;;;;;;;;;;;
 
 (require 'org)
+(require 'org-bullets)
 (bind-key "C-c %" nil org-mode-map)
 (bind-key "C-c &" nil org-mode-map)
 (bind-key "C-c C-9" 'org-mark-ring-goto org-mode-map)
@@ -755,6 +790,8 @@
 ;; (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
 ;; ;; Set to the location of your Org files on your local system
 ;; (setq org-directory "~/Google Drive/Org")
 ;; ;; Set to the name of the file where new notes will be stored
@@ -929,9 +966,9 @@
 (bind-key "H-q j" 'sp-join-sexp smartparens-mode-map)
 (bind-key "H-q s" 'sp-split-sexp smartparens-mode-map)
 
-
-(defhydra hydra-learn-sp (:hint nil)
-  "
+(bind-key "H-q q" 
+          (defhydra hydra-learn-sp (:hint nil)
+            "
   _b_ backward-sexp            -----
   _f_ forward-sexp               _s_ splice-sexp
   _L_ backward-down-sexp         _df_ splice-sexp-killing-forward
@@ -958,67 +995,68 @@
   _C-S-h_ backward-slurp-sexp    _ join-sexp
   _C-S-l_ backward-barf-sexp     _|_ split-sexp
 "
-  ;; TODO: Use () and [] - + * | <space>
-  ("b" sp-backward-sexp );; similiar to VIM b
-  ("f" sp-forward-sexp );; similar to VIM f
-  ;;
-  ("L" sp-backward-down-sexp )
-  ("H" sp-backward-up-sexp )
-  ;;
-  ("k" sp-down-sexp ) ; root - towards the root
-  ("j" sp-up-sexp )
-  ;;
-  ("n" sp-next-sexp )
-  ("p" sp-previous-sexp )
-  ;; a..z
-  ("a" sp-beginning-of-sexp )
-  ("z" sp-end-of-sexp )
-  ;;
-  ("t" sp-transpose-sexp )
-  ;;
-  ("x" sp-delete-char )
-  ("dw" sp-kill-word )
-  ;;("ds" sp-kill-symbol ) ;; Prefer kill-sexp
-  ("dd" sp-kill-sexp )
-  ;;("yy" sp-copy-sexp ) ;; Don't like it. Pref visual selection
-  ;;
-  ("S" sp-unwrap-sexp ) ;; Strip!
-  ;;("wh" sp-backward-unwrap-sexp ) ;; Too similar to above
-  ;;
-  ("C-h" sp-forward-slurp-sexp )
-  ("C-l" sp-forward-barf-sexp )
-  ("C-S-h" sp-backward-slurp-sexp )
-  ("C-S-l" sp-backward-barf-sexp )
-  ;;
-  ;;("C-[" (bind (sp-wrap-with-pair "[")) ) ;;FIXME
-  ;;("C-(" (bind (sp-wrap-with-pair "(")) )
-  ;;
-  ("s" sp-splice-sexp )
-  ("df" sp-splice-sexp-killing-forward )
-  ("db" sp-splice-sexp-killing-backward )
-  ("da" sp-splice-sexp-killing-around )
-  ;;
-  ("C-s" sp-select-next-thing-exchange )
-  ("C-p" sp-select-previous-thing )
-  ("C-n" sp-select-next-thing )
-  ;;
-  ("C-f" sp-forward-symbol )
-  ("C-b" sp-backward-symbol )
-  ;;
-  ;;("C-t" sp-prefix-tag-object)
-  ;;("H-p" sp-prefix-pair-object)
-  ("c" sp-convolute-sexp )
-  ("g" sp-absorb-sexp )
-  ("q" sp-emit-sexp )
-  ;;
-  (",b" sp-extract-before-sexp )
-  (",a" sp-extract-after-sexp )
-  ;;
-  ("AP" sp-add-to-previous-sexp );; Difference to slurp?
-  ("AN" sp-add-to-next-sexp )
-  ;;
-  ("_" sp-join-sexp ) ;;Good
-  ("|" sp-split-sexp )) 
+            ;; TODO: Use () and [] - + * | <space>
+            ("b" sp-backward-sexp );; similiar to VIM b
+            ("f" sp-forward-sexp );; similar to VIM f
+            ;;
+            ("L" sp-backward-down-sexp )
+            ("H" sp-backward-up-sexp )
+            ;;
+            ("k" sp-down-sexp ) ; root - towards the root
+            ("j" sp-up-sexp )
+            ;;
+            ("n" sp-next-sexp )
+            ("p" sp-previous-sexp )
+            ;; a..z
+            ("a" sp-beginning-of-sexp )
+            ("z" sp-end-of-sexp )
+            ;;
+            ("t" sp-transpose-sexp )
+            ;;
+            ("x" sp-delete-char )
+            ("dw" sp-kill-word )
+            ;;("ds" sp-kill-symbol ) ;; Prefer kill-sexp
+            ("dd" sp-kill-sexp )
+            ;;("yy" sp-copy-sexp ) ;; Don't like it. Pref visual selection
+            ;;
+            ("S" sp-unwrap-sexp ) ;; Strip!
+            ;;("wh" sp-backward-unwrap-sexp ) ;; Too similar to above
+            ;;
+            ("C-h" sp-forward-slurp-sexp )
+            ("C-l" sp-forward-barf-sexp )
+            ("C-S-h" sp-backward-slurp-sexp )
+            ("C-S-l" sp-backward-barf-sexp )
+            ;;
+            ;;("C-[" (bind (sp-wrap-with-pair "[")) ) ;;FIXME
+            ;;("C-(" (bind (sp-wrap-with-pair "(")) )
+            ;;
+            ("s" sp-splice-sexp )
+            ("df" sp-splice-sexp-killing-forward )
+            ("db" sp-splice-sexp-killing-backward )
+            ("da" sp-splice-sexp-killing-around )
+            ;;
+            ("C-s" sp-select-next-thing-exchange )
+            ("C-p" sp-select-previous-thing )
+            ("C-n" sp-select-next-thing )
+            ;;
+            ("C-f" sp-forward-symbol )
+            ("C-b" sp-backward-symbol )
+            ;;
+            ;;("C-t" sp-prefix-tag-object)
+            ;;("H-p" sp-prefix-pair-object)
+            ("c" sp-convolute-sexp )
+            ("g" sp-absorb-sexp )
+            ("q" sp-emit-sexp )
+            ;;
+            (",b" sp-extract-before-sexp )
+            (",a" sp-extract-after-sexp )
+            ;;
+            ("AP" sp-add-to-previous-sexp );; Difference to slurp?
+            ("AN" sp-add-to-next-sexp )
+            ;;
+            ("_" sp-join-sexp ) ;;Good
+            ("|" sp-split-sexp ))
+          smartparens-mode-map)
 
 ;;;;;;;;;;;;;
 ;; paredit ;;
@@ -1066,19 +1104,19 @@
 ;; misc ;;
 ;;;;;;;;;;
 
-(global-unset-key (kbd "C-\\"))
-(bind-key "C-\\" 'set-mark-command )
+;; (global-unset-key (kbd "C-\\"))
+;; (bind-key "C-\\" 'set-mark-command )
 
 ;; (global-unset-key (kbd "C-x C-b"))
 ;; (bind-key "C-x C-b" 'ibuffer )
 ;; (add-hook 'ibuffer-mode-hook 'ibuffer-auto-mode)
 
-(require 'view)
-(global-unset-key (kbd "M-RET"))
-(bind-key "M-RET" 'view-mode )
+;; (require 'view)
+;; (global-unset-key (kbd "M-RET"))
+;; (bind-key "M-RET" 'view-mode )
 
-(global-unset-key (kbd "C-x C-\\"))
-(bind-key "C-x C-\\" 'pop-global-mark )
+;; (global-unset-key (kbd "C-x C-\\"))
+;; (bind-key "C-x C-\\" 'pop-global-mark )
 
 ;; (global-unset-key (kbd "M-;"))
 ;; (bind-key "M-;" 'comment-dwim-line )
@@ -1105,7 +1143,7 @@
 
 (bind-key "s-i" 'iterm-here )
 (bind-key "s-r" 'reveal-here )
-(bind-key "s-b" 'ido-switch-buffer )
+;; (bind-key "s-b" 'ido-switch-buffer )
 
 
 
@@ -1124,15 +1162,31 @@
 ;;;;;;;;;;;
 
 
-(define-key dired-mode-map "i" 'diredp-insert-subdirs)
-(define-key dired-mode-map ";" 'dired-kill-subdir)
+;; (define-key dired-mode-map "i" 'diredp-insert-subdirs)
+;; (define-key dired-mode-map ";" 'dired-kill-subdir)
+
+(require 'use-package)
 
 (add-hook 'dired-load-hook #'(lambda nil (load "dired-x" t)))
-(require 'dired-x)
 
-(require 'ignoramus)
+(use-package dired-filter
+  :init
+  (add-hook 'dired-mode-hook #'dired-filter-mode))
 
-(ignoramus-setup)
+(use-package dired-subtree
+  :init
+  (bind-key  "<right>" 'dired-subtree-toggle dired-mode-map)
+  (bind-key  "<left>" 'dired-subtree-up dired-mode-map)
+  )
+
+(use-package ignoramus
+  :config
+  (ignoramus-setup))
+
+
+
+
+
 
 (put 'narrow-to-region 'disabled nil)
 (put 'set-goal-column 'disabled nil)
